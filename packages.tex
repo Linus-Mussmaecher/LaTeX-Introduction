@@ -64,11 +64,21 @@
 \defaultfontfeatures{Ligatures={TeX}}
 \setmainfont{TeX Gyre Pagella}
 \setmathfont{Euler Math}[Scale=MatchLowercase]
+% Color
+\usepackage[dvipsnames]{xcolor} % Colors
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{linkblue}{RGB}{58, 103, 181}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
 % Symbols
 \usepackage{csquotes}           % Prettier quote signs
 \usepackage{ellipsis}           % Fixes spacing of ellipsis
 \usepackage{fontspec}           % German special characters with luatex. Needs to be after mathpazo.
 \usepackage[
+	colorlinks=true,
+	linkcolor=black,
+	urlcolor=linkblue,
 	final=true,                 % always treat as final
 	pdfpagelabels,              % use pdf page labels
 ]{hyperref}                     % hyperrefs are cool!
@@ -91,12 +101,6 @@
 \usepackage{titling}            % allows use of thetitle
 \usepackage[cleanlook]{isodate} % Prettier date
 \usepackage{booktabs}           % Improved table formatting options
-\usepackage[dvipsnames]{xcolor} % Colors
-\usepackage{color}              % Colors
-\definecolor{codegreen}{rgb}{0,0.6,0}
-\definecolor{codegray}{rgb}{0.5,0.5,0.5}
-\definecolor{codepurple}{rgb}{0.58,0,0.82}
-\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
 \usepackage{enumitem}           % Better formatting for enumerations
 \setlist{nosep}
 \setlist[enumerate,1]{label=(\roman*)}
