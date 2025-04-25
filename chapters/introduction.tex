@@ -1,0 +1,56 @@
+\chapter{Einführung}
+
+\paragraph{Eine kurze Historie}
+Die Vorform von \LaTeX{}, \TeX{}, entstand, als der amerikanische Mathematikprofessor Donald Knuth sein -- inzwischen auf mehrere Volumen und viele tausend Seiten angewachsenes -- Monumentalwerk \emph{The Art of Computer Programming} in den Druck geben lassen wollte und mit dem \emph{Schriftsatz}, d.h. der Art und Weise wie sein Text vom Herausgeber auf den Seiten angeordet und formatiert wurde, höchst unzufrieden war.
+Typografie hatte damals erst kürzlich den Schritt von manuellem Layouten auf den Computer gemacht und steckte noch in den Kinderschuhen.
+Knuth begann daher, das Programm \TeX{} zu entwickeln, dass eben genausolche Aufgaben -- wie beispielsweise die Positionierung von Zeilenumbrüchen und das Strecken und Stauchen von Leerzeichen zum Erreichen eines schönen Blocksatzes -- übernimmt und aus einem \texttt{.tex}-File voll mit dem Text des zu druckenden Werkes so wie vielen Anweisungen, wie denn dieser Text nun zu formatieren ist, ein fertiges druckbares Dokument erstellt.
+Damals war der Output von \TeX{} noch ein \texttt{.dvi}-File, im Laufe der Zeit wurde \TeX{}, das inzwischen weite Verbreitung unter amerikanischen und europäischen Akademikern gefunden hatte, aber immer weiter entwickelt und der Output-Standard wandelte langsam zu \texttt{.pdf}.
+
+Insbesondere Leslie Lamport veröffentlichte eine Sammlung von \TeX{}-Macros, Konfigurationen und Hilsfprogrammen, die so populär wurde, dass sie unter dem Namen Lamport-\TeX{}, kurz \LaTeX{}, heute den Standard darstellt.
+Donald Knuth selbst arbeitet auch heute noch am \TeX{}-Kern, der immer noch tief in \LaTeX{} enthalten ist, weiter.
+
+\paragraph{\LaTeX{} vs. WYSIWIG-Editoren}
+\LaTeX{} unterscheidet sich in der Bedienung deutlich von den weiter verbreiteten Texteditoren wie Microsoft Word, Libre Office Writer oder Google Docs.
+Diesen Programmen basieren auf der WYSIWIG-Methode (= What You See Is What You Get), bei der Nutzer direkt Modifikationen in einem interaktiven, grafisch dargestellten Dokument vornimmt, das bereits genauso aussieht wie das finale Produkt und direkt gedruckt oder auch als \texttt{.pdf} exportiert werden kann.
+
+In \LaTeX{} hingegen modifiziert der Nutzer eines oder mehrere \texttt{.tex}-Dokumente, die nur reinen Text enthalten und mit jedem beliebigen Text-Editor bearbeitet werden können.
+Dieser Text besteht zum Einen aus dem Inhalt des Dokuments, zum anderen aus sogenannten \emph{Commands}, die \LaTeX{} mitteilen, wie der Text später formatiert werden soll. Das Command \latexcommand{section} beispielsweise markiert einen neuen Abschnitt und veranlasst \LaTeX{} zum Einfügen von Abständen und dazu, den Titel des Abschnitts fett zu drucken, zu nummerieren und ins Inhaltsverzeichnis aufzunehmen.
+
+
+\paragraph{Vorteile der \LaTeX{}-Methode}
+\begin{itemize}
+	\item Style und Inhalt werden getrennt und können unabhängig voneinander modifiziert und weiterverwendet werden.
+	\item Klare semantische Markierung von Textelementen.
+	\item Große Erweiterbarkeit und Anpassbarkeit.
+	\item Kein festes Programm, sondern anpassbare Sammlung.
+	\item Simples und zeitloses Speicherformat.
+	\item Kostenlos \& Open Source, unabhängig von Konzernpolitik oder ungewollten Programmupdates.
+	\item Bessere Perfomance, gerade bei längeren Dokumenten.
+	\item Mehr Fähigkeiten, mehr Features.
+	\item Professionelleres Typografie-Algorithmen.
+\end{itemize}
+
+\paragraph{Vorteile von WYSIWIG}
+\begin{itemize}
+	\item Einfache Installation.
+	\item Einfache Bedienung.
+	\item Keine technischen Kenntnisse notwendig.
+\end{itemize}
+
+~
+
+Der Leser mag bemerken, dass der Autor nicht ganz unvoreingenommen ist.
+
+\paragraph{Ein Wort zur Semantik}
+Ein Thema, dass in diesem Skript und im Seminar immer wieder aufkommt ist die \emph{Semantik}.
+Was ist hiermit gemeint?
+Wer in Microsoft Word eine Zeile als Überschrift hervorheben will, markiert das Wort mit seiner Maus und verändert manuell die Schriftgröße und vielleicht den Fettheitsgrad\footnote{Oder kennt sich etwas besser mit Word aus und verwendet Formatvorlagen.}.
+In \LaTeX{} hingegen markieren wir die Zeile etwa wie folgt:
+\begin{latexlisting}
+	\section{Ein Wort zur Semantik}
+\end{latexlisting}
+Statt also das Format direkt einzustellen, teilen wir \LaTeX{} semantisch mit, um welche Art von Text es sich hier handelt (eine Überschrift).
+An einer anderen Stelle wird dann definiert, wie genau eine Überschrift in unserem Dokument aussehen soll (beispielsweise fett, zentriert, nummeriert, etc.).
+Aus ähnlichen Gründen stellen wir Worte in \LaTeX{} auch nicht einfach kursiv (mit dem Command \latexcommand{textit} für \emph{italic}), sondern markieren, ob wir ein Wort beispielsweise einfach hervorherben wollen (\latexcommand{emph} für \emph{emphasize}) oder es sich um ein Zitat (\latexcommand{quote}) handelt.
+\LaTeX{} übernimmt dann die Formatierung.
+Diese mag kursiv sein, aber falls wir später beispielweise entscheiden, dass wir Hervorhebungen doch gerne unterstrichen hätten\footnote{Bitte nicht.}, so können wir die Bedeutung von \latexcommand{emph} zentral ändern -- und schon sind alle Hervorhebungen unterstrichen, ohne dass wir einzeln durch das Dokument gehen müssen, während alle Zitate weiterhin kursiv sind.
