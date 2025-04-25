@@ -1,0 +1,66 @@
+\documentclass[
+	11pt,
+	% draft, % for easier editing
+	ngerman,
+]{scrbook}
+
+\KOMAoptions{
+  numbers=noenddot,
+  headings=standardclasses,
+  chapterprefix=false,
+  fontsize=11pt
+}
+
+% === Packages ===
+\input{packages}
+
+% === Layout ===
+\input{layout}
+
+% === Macros ===
+\input{macros}
+
+% === Bibliography ===
+\addbibresource{bibliography.bib}
+
+% === Document ===
+
+\begin{document}
+
+	\frontmatter
+
+	\input{title}
+
+	\chapter{Vorwort}
+
+	Das vorliegende Skript bietet eine Einführung in die Grundlagen der Typesetting Engine \LaTeX{} für Studenten ohne Vorerfahrung in \LaTeX{} oder anderen Systemen wie \TeX{} oder \texttt{Typst}.
+	Es ist im Rahmen des Seminars \enquote{Erstellen wissenschaftlicher Arbeiten in \LaTeX{}} an der Julius-Maximilians-Universität Würzburg im Sommersemester 2025 entstanden und basiert unter anderem auf Vorerfahrung aus der gleichnamigen Veranstaltung im vorausgehenden Semester.
+
+	Diskutiert werden sämtliche Voraussetzungen zur Erstellung einer wissenschaftlichen Arbeit, z.B.\ einer Abschlussarbeit, in \LaTeX{}, von der Installation der benögtiten Programme über grundlegende Befehle bis hin zu tieferen Themen wie Bibliographien und eigenen nutzerdefinierten Commands.
+	Der Leser wird freundlich aufgefordert, die zahlreichen Codebeispiele und Aufgaben in diesem Text selbständig zu komplieren, auszuprobieren und zu bearbeiten.
+
+	Neben den techischen Informationen enthält dieses Dokument auch eine Reihe an Nutzungsempfehlungen, Best Practices und typographischen Anmerkungen.
+	Besucher des Seminares werden den Begriff \enquote{Semantik} zu schätzen wissen.
+
+	Eventuelle Fehler, Wünsche oder Anmerkungen können an den Autor, Linus Mußmächer (\texttt{linus.mussmaecher@gmail.de}), gemeldet werden.
+
+	\input{chapters/introduction.tex}
+
+	\newpage
+
+	\tableofcontents
+
+	% Vorwort etc.
+
+	\mainmatter
+
+	\input{chapters/installation.tex}
+	\input{chapters/first-document.tex}
+	\input{chapters/structuring.tex}
+
+	\backmatter
+
+	\printbibliography
+	
+\end{document}
+	

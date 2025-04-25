@@ -1,0 +1,91 @@
+% Taken from Florian Kranhold and Philipp Schwarz.
+
+% ----- 
+% Utility Commands
+% -----
+
+\usepackage{accsupp}
+\makeatletter
+% Command that displays the text given in it's second argument, but when copying text out of the pdf-file, puts the first argument into the clipboard.
+\newcommand*{\@changeClipboardCopy}[2]{\texorpdfstring{%
+    \protect\BeginAccSupp{%
+      method=pdfstringdef,%
+      ActualText=#1%
+    }%
+    #2%
+    \protect\EndAccSupp{}}%
+  {#1}%
+}
+
+% ------
+% Special fonts
+% ------
+
+% Font commands
+\newcommand*{\name}[1]{\@changeClipboardCopy{#1}{\textsc{\textls[40]{\MakeLowercase{#1}}}}}
+\newcommand*{\tableHead}[1]{\@changeClipboardCopy{#1}{\textsc{\textls[60]{\MakeLowercase{#1}}}}}
+
+% small caps with different spacing
+\SetTracking[spacing={100*,166,}]{encoding=*,shape=ssc}{15}
+\newcommand*{\SAC}[1]{\@changeClipboardCopy{#1}{\textls{\MakeUppercase{#1}}}}    % spaced all caps
+\newcommand*{\SLSC}[1]{\@changeClipboardCopy{#1}{\textssc{#1}}}  % spaced lowercase small caps
+\makeatother
+
+% -----
+% Headers
+% ---
+
+% Paragraph
+%\setkomafont{paragraph}{\sscshape\mdseries}
+
+% Sections
+\addtokomafont{section}{\large\bfseries}
+\renewcommand*{\sectionformat}{\upshape\bfseries\thesection\enskip\hspace*{2px}}
+\RedeclareSectionCommand[afterskip=1\baselineskip plus 2pt minus 2pt]{section}
+
+% Subsections
+\addtokomafont{subsection}{\normalsize\mdseries\scshape}
+\renewcommand*{\subsectionformat}{\upshape\mdseries\scshape\thesubsection\enskip}
+\RedeclareSectionCommand[beforeskip=2\baselineskip,afterskip=1.0\baselineskip plus 2pt minus 2pt]{subsection}
+
+% Chapter
+\RedeclareSectionCommand[beforeskip=0\baselineskip,afterskip=1\baselineskip,afterindent=false]{chapter}
+\addtokomafont{chapter}{\mdseries\normalsize\lsstyle}
+\renewcommand*{\chapterformat}{\thechapter}%\normalsize\textssc{kapitel \thechapter}}
+\renewcommand{\chapterlinesformat}[3]{%
+  \MakeUppercase{#3}\par%
+  \marginnote{\smash{\fontsize{70}{60}\selectfont #2}}
+  \rule[-.15\baselineskip]{\linewidth}{.5pt}\par\nobreak
+  \thispagestyle{scrheadings}
+}%
+
+% ------
+% Page Design
+% ------
+% \pagestyle{plain}
+
+% page size
+%\KOMAoptions{DIV=10}
+% \areaset{288pt}{480pt}%
+% \setlength{\marginparwidth}{8em}%
+% \setlength{\marginparsep}{1.5em}%
+% \setlength{\footskip}{2.5\baselineskip}
+
+% footnote
+% \usepackage{footmisc}
+% \setlength{\footnotemargin}{0em}
+% \deffootnote{0em}{0em}{%
+%   \textsuperscript{\normalfont\thefootnotemark\ }}
+
+% header and footer
+\makeatletter
+\ihead{}
+\ohead{}
+\chead{}
+\ifoot{\normalfont\footnotesize\leftmark}
+\cfoot{}
+\ofoot{%
+%\normalfont\footnotesize \gitAuthorIsoDate{} Hash: \texttt{\gitAbbrevHash}
+\normalfont\thepage
+}
+\makeatother
