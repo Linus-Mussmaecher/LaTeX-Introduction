@@ -1,1 +1,71 @@
 \chapter{Unser erstes Dokument}
+Nun, da die Installation abgeschlossen ist, können wir unser erstes \LaTeX{}-File erstellen.
+
+Im Gegensatz zu traditionellen Textverarbeitungsprogrammen besteht ein \LaTeX{}-Projekt meist nicht aus einem einzigen File, sondern wird jeweils in einem eigenen Ordner verwaltet.
+Wir erstellen daher an einem angemessenen Ort, z.B. \texttt{Dokumente/LaTeX-Seminar/}, einen Ordner für unser erstes Dokument und in diesem Order legen wir ein neues File an.
+Bei angemessener Benennung sollte der Pfad diese Files dann \texttt{Dokumente/LaTeX-Seminar/my-first-document/my-first-document.tex} sein.
+Dieses File können wir nun mit dem Editor unserer Wahl, z.B.~TeXStudio, öffnen und mit dem folgenden Text füllen:
+\begin{latexlisting}
+	\documentclass{article}
+
+	\begin{document}
+		Hallo, LaTeX!
+	\end{document}
+\end{latexlisting}
+Drücken wir nun in TeXStudio auf den grünen \enquote{Kompilieren}-Pfeil, so wird unser erstes LaTeX-Dokument kompiliert und wir sollten ein PDF mit dem einsamen Satz \enquote{Hallo, LaTeX!} vor uns sehen.
+Wenn wir jetzt in den vorhin erstellten Ordner sehen, so ist unser \filetype{tex}-File nicht mehr alleine.
+\LaTeX{} hat nicht nur ein \filetype{pdf}-File erstellt und im Ordner abgelegt, sondern auch eine Vielzahl andere Hilfs- und Cache-Files, die zukünftige Kompilierungen beschleunigen und für verschiedenste Features von TeXStudio benötigt werden.
+Insbesondere kann \LaTeX{} bei der Kompilierung nicht \enquote{in die Zukunft schauen}, d.h. wenn das Inhaltsverzeichnis kompiliert wird, weiß \LaTeX{} noch gar nicht, welche Kapitel etc. überhaupt im Dokument vorkommen.
+Daher werden Kapitel in das \filetype{toc}-File geschrieben, damit zukünftige Kompilierung ein sinnvolles Inhaltsverzeichnis erzeugen können.
+Die meisten \LaTeX{}-Dokumente müssen deswegen mehrmals kompiliert werden, glücklicherweise übernimmt diesen Schritt TeXStudio für uns.
+Diese Nebenprodukte jedes Kompilierungsvorgangs sind einer der Gründe, warum jedes \LaTeX{}-Projekt generell einen eigenen Ordner verdient.
+
+\section{Nebenprodukte \& Dokumentstruktur}
+Wir betrachten in \autoref{tab:out-files} kurz einige der wichtigen Filetypen, die beim Kompilieren entstehen und in \autoref{tab:source-files} einige Filetypen, die beim Kompilieren als Quelldokumente verwendet werden und deren Einbindung wir in zukünftigen Kapiteln behandeln werden.
+
+Aufgrund dieser Vielzahl an Files ist es wie bereits erwähnt wichtig, jedes \LaTeX{}-Projekt in einem eigenen Ordner zu verwalten.
+Es kann sich auch lohnen, ein Projekt in mehrere \filetype{tex}-Files aufzuteilen, wie wir in späteren Kapiteln noch lernen werden.
+
+\begin{table}
+	\begin{tabular}{l p{10cm}}
+		\toprule
+		\textbf{Filetyp} & \textbf{Beschreibung} \tabularnewline
+		\midrule
+		\filetype{aux} &
+		Hilfsfile, das Informationen speichert, die zukünftigen Kompilierungen die Nutzung von Referenzen und Zitationen ermöglicht. \tabularnewline
+		\filetype{out} &
+		Hilfsfile, das von \latexpackage{hyperref} verwendet wird, um PDF-Lesezeichen zu erzeugen. \tabularnewline
+		\filetype{log} &
+		Logfile, das die Kompilierung protokolliert und auch eventuell aufgetretene Fehler oder Warnungen enthält.
+		Erlaubt TeXStudio, eine Zusammenfassung dieser Fehler anzuzeigen. \tabularnewline
+		\filetype{synctex} &
+		File, das es TeXStudio ermöglicht, den Nutzer von Code zu PDF und umgekehrt springen zu lassen.
+		\tabularnewline
+		\filetype{toc} &
+		File, das Informationen über Kapitel und Abschnitte enthält, damit zukünftige Kompilierungen ein Inhaltsverzeichnis erzeugen können. \tabularnewline
+		\filetype{fls}, \filetype{bbl}, \filetype{bcl} &
+		Files für verschiedenste Packages. \tabularnewline
+		\bottomrule
+	\end{tabular}
+	\caption{Nebenprodukte einer Kompilierung}
+	\label{tab:out-files}
+\end{table}
+
+\begin{table}
+	\begin{tabular}{l p{10cm}}
+		\toprule
+		\textbf{Filetyp} & \textbf{Beschreibung} \tabularnewline
+		\midrule
+		\filetype{tex} & File, dass \LaTeX{}-Quellcode enthält. \tabularnewline
+		\filetype{bib} & Bibliographie-File, in dem Quellen gelistet sind. \tabularnewline
+		\filetype{ttf} & Schriftart-File \tabularnewline
+		\filetype{sty} & Package-File für ein eigenes, lokale Package. \tabularnewline
+		\filetype{cls} & Klassen-File für eine eigene Dokumentklasse. \tabularnewline
+		\filetype{png}, \filetype{jpeg}, \filetype{jpg} & Bild-File für die Inklusion von Bildern im Dokument. \tabularnewline
+		\bottomrule
+	\end{tabular}
+	\caption{Weitere Quell-Files}
+	\label{tab:source-files}
+\end{table}
+
+\section{Dokumentklasse}
