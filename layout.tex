@@ -41,6 +41,10 @@
 % Sections
 \addtokomafont{section}{\large\bfseries}
 \renewcommand*{\sectionformat}{\upshape\bfseries\thesection\enskip\hspace*{2px}}
+\renewcommand{\sectionlinesformat}[3]{%
+  \rule[-.15\baselineskip]{\linewidth}{.5pt}\par\nobreak%
+  #3% 
+}
 \RedeclareSectionCommand[afterskip=1\baselineskip plus 2pt minus 2pt]{section}
 
 % Subsections
@@ -53,10 +57,21 @@
 \addtokomafont{chapter}{\mdseries\normalsize\lsstyle}
 \renewcommand*{\chapterformat}{\thechapter}%\normalsize\textssc{kapitel \thechapter}}
 \renewcommand{\chapterlinesformat}[3]{%
-  \MakeUppercase{#3}\par%
-  \marginnote{\smash{\fontsize{70}{60}\selectfont #2}}
-  \rule[-.15\baselineskip]{\linewidth}{.5pt}\par\nobreak
-  \thispagestyle{scrheadings}
+  % \rule[-.3\baselineskip]{\linewidth}{.5pt}\par\nobreak%
+  % {\center\MakeUppercase{#3}\par}%
+  % \marginnote{\smash{\fontsize{50}{60}\selectfont #2}}
+  % \rule[-.15\baselineskip]{\linewidth}{.5pt}\par\nobreak%
+  \setlength{\aboverulesep}{4pt}
+  \setlength{\belowrulesep}{8pt}
+  \begin{tabular}{>{\centering}m{1cm} >{\centering}m{\textwidth-3.2cm} >{\centering}m{1cm}}
+      \midrule
+      {\fontsize{50}{60}\selectfont \phantom{X}} & %
+      \MakeUppercase{#3} & %
+      {\fontsize{50}{60}\selectfont #2\phantom{X}}%
+      \tabularnewline
+      \midrule
+  \end{tabular}%
+  \thispagestyle{scrheadings}%
 }%
 
 % ------
@@ -82,8 +97,10 @@
 \ihead{}
 \ohead{}
 \chead{}
-\ifoot{\normalfont\footnotesize\leftmark}
-\cfoot{\normalfont\footnotesize \gitAuthorIsoDate{} Hash: \texttt{\gitAbbrevHash}}
+% \ifoot{\normalfont\footnotesize\leftmark}
+\lofoot{\normalfont\footnotesize \gitAuthorIsoDate{} Hash: \texttt{\gitAbbrevHash}}
+\refoot{\normalfont\footnotesize\leftmark}
+\cfoot{}
 \ofoot{%
 % \normalfont\footnotesize \gitAuthorIsoDate{} Hash: \texttt{\gitAbbrevHash}
 \normalfont\thepage
