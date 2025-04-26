@@ -1,1 +1,91 @@
 \chapter{Installation}
+Bevor wir \LaTeX{} verwenden können, müssen wir es zuerst installieren.
+Hier beginnen bereits die ersten Schwierigkeiten im Vergleich zu traditionellen Textverarbeitungsprogrammen: \LaTeX{} ist nicht einfach ein einziges Programm, sondern eine ganze Sammlung von Programmen, die auf unterschiedlichen Ebenen agieren.
+Wir klären also zuerst ein paar Begrifflichkeiten.
+
+\begin{table}[h]
+	\begin{tabular}{>{\itshape}l p{8cm} >{\raggedright}p{3cm}}
+		\toprule
+		\emph{\textbf{Begriff}} & \textbf{Beschreibung} & \textbf{Beispiele} \tabularnewline
+		\midrule
+		\TeX{} &
+		Grundlegendes Typesetting-Programm.
+		Enthält Algorithmen für Zeilenumbrüche, Seitenumbrüche, Hyphenation (Setzung von Bindestrichen), Kerning, Linespacing, Positionierung von Bilder \& Tabellen, etc. & \tabularnewline
+		Format &
+		Makro-Sammlung, die \TeX{} auf nutzerfreundliche Art und Weise erweitert, beispielsweise durch Befehle für Kapitel und Abschnitte, Mathematikumgebungen, etc. &
+		\LaTeX{}, ConTeXt, plainTeX, OpTeX \tabularnewline
+		Package &
+		Gebündelte Sammlung an Befehlen, die für bestimmte Zwecke geeignet sind. &
+		\latexpackage{amsmath}, \latexpackage{booktabs}, \latexpackage{babel} \tabularnewline
+		Engines &
+		Programm, das \TeX{}- oder \LaTeX{}-Code einliest und zu einem Output-File (\filetype{pdf}, \filetype{dvi}, \filetype{html}) kompiliert.
+		Manche Features stehen dabei nur bestimmten Engines zur Verfügung. &
+		pdfTeX, XeTeX, LuaTeX, Tectonic \tabularnewline
+		Distribution &
+		Bündelt \TeX, eine oder mehrere Engines, Formate und eine grundlegende Sammlung an Packages mit weiteren Hilfsprogrammen wie latexmk und Package Managern. &
+		TeXLive, MikTeX \tabularnewline
+		Editoren &
+		Programm, mit dem \filetype{tex}-Files bearbeitet werden und das eventuell auch Engines oder Hilfsprogramme aufrufen kann. &
+		Overleaf, TeXStudio, VSCode, Emacs, Vim, Helix, Notepad \tabularnewline
+		\bottomrule
+	\end{tabular}
+	\caption{Bestandteile von \LaTeX{}}
+\end{table}
+
+Wir verwenden im Folgenden den Begriff \LaTeX{} -- wie in der Umgangssprache üblich -- gleichzeitig für die Sprache, in der \filetype{tex}-Files verfasst werden, als auch für das Format und den Compiler.
+
+Um \LaTeX{} also auf einem handelsüblichen PC installieren zu können, benötigen wir zwei Dinge -- eine Distribution und einen Editor.
+Wir stellen im Folgenden zwei Möglichkeiten, \LaTeX{} zu installieren kurz vor.
+
+\section{Overleaf}
+\emph{Overleaf} bricht das obige Schema: Es ist kein Editor, der auf einem Computer installiert wird, sondern eine Web-Applikation.
+Damit vereinigt Overleaf alle obigen Bestandteile in sich und es ist keine Installation notwendig -- nach Erstellung eines Accounts kann sofort losgelegt werden.
+Außerdem ist es auch nicht nötig, die eigene \TeX{}-Installation zu warten und regelmäßig mit Updates zu versorgen, da sich der Overleaf-Server hier um alles kümmern.
+Innerhalb von Overleaf können dann verschiedene Dokumente angelegt und bearbeitet werden, welches Format und welche Engine dabei verwendet wird lässt sich pro Projekt einzeln konfigurieren.
+Die Online-Natur von Overleaf macht es außerdem leicht, \LaTeX{}-Projekte mit anderen zu teilen und gemeinsam an Ihnen zu arbeiten.
+
+Auch die Nachteile von Overleaf basieren auf der Tatsache, dass es sich um eine Web-Anwendung handelt:
+Hat man gerade keine Internetverbindung oder findet gerade eine Serverwartung statt, so kann Overleaf nicht verwendet werden\footnote{Dies geschah während einer Sitzung des Seminars im Wintersemester 2024/25.}.
+Außerdem gibt man die Verantwortung über seine Files an eine dritte Partei ab.
+Letztlich wird die Kompilation auf dem Overleaf-Server durchgeführt, dessen Ressourcen zwischen allen Nutzern geteilt werden, wobei nicht-zahlende Nutzer verständlicherweise benachteiligt werden.
+Kompilation in Overleaf ist daher oft langsamer als lokal (insbesondere bei performancestarken Computern) und in seltenen Fällen auch gar nicht verfügbar.
+
+Overleaf kann unter \url{https://www.overleaf.com} verwendet werden.
+
+\section{TeXStudio \& MikTeX/TeXLive}
+Eine traditionellere Methode zur Verwendung von \LaTeX{} ist die Kombination des Editors \emph{TeXStudio} mit einer betriebssystemangepassten \LaTeX{}-Distribution.
+Dabei sind die folgenden Distributionen empfohlen:
+\begin{table}[h]
+	\begin{tabular}{l l}
+		\toprule
+		Linux & TeXLive \tabularnewline
+		MacOS & TeXLive/MacTeX \tabularnewline
+		Windows & MikTeX \tabularnewline
+		\bottomrule
+	\end{tabular}
+	\caption{\LaTeX{}-Distributionen je Betriebssytem}
+\end{table}
+
+\subsection{TeXStudio}
+TeXStudio ist ein speziell für \LaTeX{} entwickelter Editor und bietet eine grafische Benutzeroberfläche, die die wichtigsten Funktionalitäten und Konfigurationsoptionen beim Arbeiten mit \LaTeX{} kompakt darstellt.
+
+TeXStudio kann unter \url{https://www.texstudio.org/#download} für alle oben genannten Betriebssysteme heruntergeladen werden.
+
+\subsection{MikTeX}
+MikTeX ist eine \LaTeX -Distribution, die wie oben beschrieben verschiedene Hilfsprogramme und Packages bereitstellt, die dann von TeXStudio verwendet werden.
+MikTeX integriert nach der Installation nahtlos in TeXStudio und es ist selten nötig, direkt mit MikTeX zu interagieren.
+Insbesondere bemerkt MikTeX während der Kompilierung von \LaTeX -Files, welche Packages benötigt werden und lädt diese on-demand herunter.
+
+MikTeX kann unter \url{https://miktex.org/download} heruntergeladen werden.
+Nach der Installation sollte MikTeX über den System Try gestartet werden, um dann alle Packages zu updaten.
+Je nach Internetverbindung und PC-Leistung kann dies eine Weile dauern.
+Das Updaten der Packages sollte regelmäßig (in etwa monatlich) oder falls Kompilierungsprobleme auftreten wiederholt werden.
+
+\subsection{TeXLive}
+Unter Linux kann TeXLive über den hoffentlich in der Linux-Distribution enthaltenen Package-Manager installiert werden und integriert dann ähnlich wie MikTeX nahtlos in TeXStudio (oder einen anderen \LaTeX -Editor).
+TeXLive sollte dann vom Package Manager up-to-date gehalten werden und es ist keine weitere Interaktion notwendig.
+
+Unter MacOS sollte die Mac-spezifische Variante MacTeX verwendet werden, die unter \url{https://www.tug.org/mactex/} zur Verfügung steht.
+Dem Autor sind hier nähere Details nicht bekannt, der Leser mag, falls er Mac-User ist, diese gerne beisteuern.
+
+

@@ -3,17 +3,17 @@
 \paragraph{Eine kurze Historie}
 Die Vorform von \LaTeX{}, \TeX{}, entstand, als der amerikanische Mathematikprofessor Donald Knuth sein -- inzwischen auf mehrere Volumen und viele tausend Seiten angewachsenes -- Monumentalwerk \emph{The Art of Computer Programming} in den Druck geben lassen wollte und mit dem \emph{Schriftsatz}, d.h. der Art und Weise wie sein Text vom Herausgeber auf den Seiten angeordet und formatiert wurde, höchst unzufrieden war.
 Typografie hatte damals erst kürzlich den Schritt von manuellem Layouten auf den Computer gemacht und steckte noch in den Kinderschuhen.
-Knuth begann daher, das Programm \TeX{} zu entwickeln, dass eben genausolche Aufgaben -- wie beispielsweise die Positionierung von Zeilenumbrüchen und das Strecken und Stauchen von Leerzeichen zum Erreichen eines schönen Blocksatzes -- übernimmt und aus einem \texttt{.tex}-File voll mit dem Text des zu druckenden Werkes so wie vielen Anweisungen, wie denn dieser Text nun zu formatieren ist, ein fertiges druckbares Dokument erstellt.
-Damals war der Output von \TeX{} noch ein \texttt{.dvi}-File, im Laufe der Zeit wurde \TeX{}, das inzwischen weite Verbreitung unter amerikanischen und europäischen Akademikern gefunden hatte, aber immer weiter entwickelt und der Output-Standard wandelte langsam zu \texttt{.pdf}.
+Knuth begann daher, das Programm \TeX{} zu entwickeln, dass eben genausolche Aufgaben -- wie beispielsweise die Positionierung von Zeilenumbrüchen und das Strecken und Stauchen von Leerzeichen zum Erreichen eines schönen Blocksatzes -- übernimmt und aus einem \filetype{tex}-File voll mit dem Text des zu druckenden Werkes so wie vielen Anweisungen, wie denn dieser Text nun zu formatieren ist, ein fertiges druckbares Dokument erstellt.
+Damals war der Output von \TeX{} noch ein \filetype{dvi}-File, im Laufe der Zeit wurde \TeX{}, das inzwischen weite Verbreitung unter amerikanischen und europäischen Akademikern gefunden hatte, aber immer weiter entwickelt und der Output-Standard wandelte langsam zu \filetype{pdf}.
 
 Insbesondere Leslie Lamport veröffentlichte eine Sammlung von \TeX{}-Macros, Konfigurationen und Hilsfprogrammen, die so populär wurde, dass sie unter dem Namen Lamport-\TeX{}, kurz \LaTeX{}, heute den Standard darstellt.
 Donald Knuth selbst arbeitet auch heute noch am \TeX{}-Kern, der immer noch tief in \LaTeX{} enthalten ist, weiter.
 
 \paragraph{\LaTeX{} vs. WYSIWIG-Editoren}
-\LaTeX{} unterscheidet sich in der Bedienung deutlich von den weiter verbreiteten Texteditoren wie Microsoft Word, Libre Office Writer oder Google Docs.
-Diesen Programmen basieren auf der WYSIWIG-Methode (= What You See Is What You Get), bei der Nutzer direkt Modifikationen in einem interaktiven, grafisch dargestellten Dokument vornimmt, das bereits genauso aussieht wie das finale Produkt und direkt gedruckt oder auch als \texttt{.pdf} exportiert werden kann.
+\LaTeX{} unterscheidet sich in der Bedienung deutlich von den weiter verbreiteten Texteditoren wie Microsoft Word, Libre Office Writer, Google Docs oder dem großartigen Word Star.
+Diesen Programmen basieren auf der WYSIWIG-Methode (= What You See Is What You Get), bei der Nutzer direkt Modifikationen in einem interaktiven, grafisch dargestellten Dokument vornimmt, das bereits genauso aussieht wie das finale Produkt und direkt gedruckt oder auch als \filetype{pdf} exportiert werden kann.
 
-In \LaTeX{} hingegen modifiziert der Nutzer eines oder mehrere \texttt{.tex}-Dokumente, die nur reinen Text enthalten und mit jedem beliebigen Text-Editor bearbeitet werden können.
+In \LaTeX{} hingegen modifiziert der Nutzer eines oder mehrere \filetype{tex}-Dokumente, die nur reinen Text enthalten und mit jedem beliebigen Text-Editor bearbeitet werden können.
 Dieser Text besteht zum Einen aus dem Inhalt des Dokuments, zum anderen aus sogenannten \emph{Commands}, die \LaTeX{} mitteilen, wie der Text später formatiert werden soll. Das Command \latexcommand{section} beispielsweise markiert einen neuen Abschnitt und veranlasst \LaTeX{} zum Einfügen von Abständen und dazu, den Titel des Abschnitts fett zu drucken, zu nummerieren und ins Inhaltsverzeichnis aufzunehmen.
 
 
