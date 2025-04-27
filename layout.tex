@@ -61,17 +61,19 @@
   % {\center\MakeUppercase{#3}\par}%
   % \marginnote{\smash{\fontsize{50}{60}\selectfont #2}}
   % \rule[-.15\baselineskip]{\linewidth}{.5pt}\par\nobreak%
-  \setlength{\aboverulesep}{4pt}
-  \setlength{\belowrulesep}{8pt}
-  \begin{tabular}{>{\centering}m{1cm} >{\centering}m{\textwidth-3.2cm} >{\centering}m{1cm}}
+  \begin{center}
+  \setlength{\aboverulesep}{4pt}%
+  \setlength{\belowrulesep}{8pt}%
+  \begin{tabular}{>{\raggedright}m{1.5cm} >{\centering}m{\textwidth-4.3cm} >{\raggedleft}m{1.5cm}}
       \midrule
-      {\fontsize{50}{60}\selectfont \phantom{X}} & %
-      \MakeUppercase{#3} & %
-      {\fontsize{50}{60}\selectfont #2\phantom{X}}%
+      {\fontsize{40}{48}\selectfont\makebox[0pt]{\phantom{X}}}&%
+      \MakeUppercase{#3}&%
+      {\fontsize{40}{48}\selectfont\makebox[0pt]{\phantom{X}}#2}%
       \tabularnewline
       \midrule
   \end{tabular}%
   \thispagestyle{scrheadings}%
+  \end{center}
 }%
 
 % ------

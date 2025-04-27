@@ -6,7 +6,7 @@ Wir erstellen daher an einem angemessenen Ort, z.B. \texttt{Dokumente/LaTeX-Semi
 Bei angemessener Benennung sollte der Pfad diese Files dann \texttt{Dokumente/LaTeX-Seminar/my-first-document/my-first-document.tex} sein.
 Dieses File können wir nun mit dem Editor unserer Wahl, z.B.~TeXStudio, öffnen und mit dem folgenden Text füllen:
 \begin{latexlisting}
-	\documentclass{article}
+	\documentclass[12pt, german]{article}
 
 	\begin{document}
 		Hallo, LaTeX!
@@ -69,3 +69,349 @@ Es kann sich auch lohnen, ein Projekt in mehrere \filetype{tex}-Files aufzuteile
 \end{table}
 
 \section{Dokumentklasse}
+
+Wir betrachten unser erstes Dokument noch einmal Zeile für Zeile:
+\begin{latexlisting}
+	\documentclass[12pt, german]{article}
+\end{latexlisting}
+In der ersten Zeile setzen wir die Dokumentklasse mittels eines \emph{Commands}.
+Ein Command (auch: Befehl, Anweisung, Makro, Macro, seltener Funktion, Methode, Prozedur oder Sub) in \LaTeX{} ist eine Anweisung an den \LaTeX{}-Prozessor, die verschiedenste Auswirkungen haben kann.
+Ein Command hat folgende Bestandteile:
+\begin{itemize}
+	\item \texttt{\textbackslash}: Jedes Command beginnt mit einem \emph{Backslash}, der \LaTeX{} mitteilt, dass nun ein Command kommt (\key{Strg + Alt + ß} oder \key{Alt Gr + ß}, nicht \key{Shift + 7}).
+	\item Der \emph{Name} des Commands -- er kann alle Buchstaben enthalten, aber keine Zahlen oder Sonderzeichen, außer er besteht nur aus einem einzelnen Sonderzeichen wie z.B. \latexcommand{\%}.
+	\item \emph{Optionale Argumente} in eckigen Klammern.
+	Diese müssen nicht übergeben werden und werden sonst durch Standardwerte ersetzt.
+	\item \emph{Argumente} in geschweiften Klammern.
+	Alle Argumente (auch optionale) beeinflussen das verhalten des Makros genauer.
+\end{itemize}
+Wir werden uns später noch genauer mit Commands und ihren Anwendungen beschäftigen.
+Das Command \latexcommand{documentclass} wird genau einmal, ganz am Anfang eines Dokuments, verwendet und setzt die Klasse des Dokuments.
+Es lädt dazu ein \emph{Classfile}, dass selbst viele weitere Makros, z.B. zur Definition von Kapiteln und Abschnitten, definiert und weitere Einstellungen bezüglich des Aussehen des Dokuments, z.B. die Größe des Papiers, der Seitenränder und der Schrift tätigt.
+Mit den optionalen Argumenten können diese Einstellungen weiter konfiguriert werden.
+Einige mögliche optinale Argumente werden in \autoref{tab:documentclass-options} aufgeführt.
+
+\begin{table}[hb]
+	\begin{tabular}{l p{10cm}}
+		\toprule
+		\textbf{Argument} & \textbf{Auswirkung} \tabularnewline
+		\midrule
+		\latexargument{12pt}, \latexargument{11pt}, \ldots &
+		Setzt die Schriftgröße.
+		\tabularnewline
+		\latexargument{english}, \latexargument{german}, \latexargument{ngerman} \ldots &
+		Setzt die Dokumentsprache, dies ist für den Silbentrennungsalgorithmus relevant.
+		\latexargument{ngerman} steht hier für neue deutsche Rechtschreibung und sollte daher vorwiegend genutzt werden.
+		\tabularnewline
+		\latexargument{letterpaper}, \latexargument{a4paper}, \ldots &
+		Setzt die Papiergröße.
+		\tabularnewline
+		\latexargument{onecolumn}, \latexargument{twocolumn}, \ldots &
+		Setzt Text in einer oder zwei Spalten.
+		\tabularnewline
+		\latexargument{landscape}&
+		Horizontale Ausrichtung.
+		\tabularnewline
+		\ldots & \ldots
+		\tabularnewline
+		\bottomrule
+	\end{tabular}
+	\caption{Optionale Argumente von \latexcommand{documentclass}}
+	\label{tab:documentclass-options}
+\end{table}
+
+Das nicht-optionale Argument von \latexcommand{documentclass} ist die bereits erwähnte Dokumentklasse.
+Hier können Nutzer auch eigene Klassen definieren, üblich ist es jedoch, eine der mit \LaTeX{} mitgelieferten Optionen zu nutzen.
+
+\subsection{Article}
+Die Klasse \latexargument{article} ist der de-facto Standard für kurze ($<100$ Seiten) Dokumente wie Abschlussarbeiten, Arbeitsblätter oder kurze Vorlesungsskripte.
+Article ist \emph{einseitig}, d.h. es gibt anders als bei Büchern keinen Unterschied zwischen rechten und linken Seiten und definiert Commands für Abschnitte, Unterabschnitte und Unterunterabschnitte.
+Zu beachten ist, dass die Standardseitengröße von Article das im englischen Sprachraum gebräuchliche \emph{letterpaper} ist, welches vom in Kontinentaleuropa gebräuchlichen\footnote{und eindeutig überlegenen} A4 leicht abweicht.
+Auch einige andere typografische Einstellungen (Abstände, Seitenränder) sind auf amerikanische Standards angepasst. 
+
+\subsection{Book}
+Die Klasse \latexargument{book} ist die Klasse, die für längere Dokumente mit vielen Seiten und Teilen wie Bücher oder längere Skript verwendet wird.
+Sie ist zweiseitig, d.h. unterscheidet zwischen linken und rechten Seiten, und definiert neben den in Article verfügbaren Strukturcommands auch Kapitel und Teile (\latexcommand{chapter} und \latexcommand{part}).
+Auch Book folgt eher amerikanischen Typografiegebräuchen als europäischen.
+
+\subsection{Minimal}
+Die Klasse \latexargument{minimal} definiert fast gar nichts und ist ausschließlich für Testzwecke gedacht.
+
+\subsection{Beamer}
+Die Klasse \latexargument{beamer} wird von der \latexpackage{beamer}-Package bereitgestellt und für Präsentationen verwendet.
+
+\subsection{Scrartcl}
+Die Klasse \latexargument{scrartcl} wird von der KOMA-Package-Sammlung definiert und ist eine europäische Variante von \latexargument{article}, die außerdem viele andere praktische Commands definiert und (im Gegensatz zum im \LaTeX{}-Kern enthaltenen und daher recht statischen \latexargument{article}) stets von aktiven Entwicklern verbessert und up-to-date gehalten wird.
+Dies ist die Klasse, die man (als Europäer) per default für alle kürzeren Dokumente verwenden sollte, auch wenn das Internet oft naiv einfach \latexargument{article} empfiehlt.
+Insbesondere sollten wir die Dokumentklasse unseres Beispiels nun ändern:
+
+\subsection{Scrbook}
+Die Klasse \latexargument{scrbook} ist zu \latexargument{book} was \latexargument{scrartcl} zu \latexargument{article} ist und sollte der Standard für alle längeren, zweiseitigen Dokumente sein.
+\begin{latexlisting}
+	\documentclass[12pt, ngerman]{scrartcl}
+
+	\begin{document}
+	\end{document}
+	Hallo, LaTeX!
+\end{latexlisting}
+
+
+\section{Umgebungen}
+Wir schreiten in unseren Dokument fort:
+\begin{latexlisting}
+	\begin{document}
+		Hallo, LaTeX!
+	\end{document}
+\end{latexlisting}
+Mit \latexcommand{begin} und \latexcommand{end} werden in \LaTeX{} sogenannte \emph{Umgebungen markiert}.
+Die \latexargument{document}-Umgebung teilt \LaTeX{} hier zum Beispiel mit, dass alles in ihr Teil des Dokuments sein soll und gedruckt wird.
+Vergleichweise wird im folgenden Code nichts angezeigt:
+\begin{latexlisting}
+	\documentclass[12pt, ngerman]{scrartcl}
+
+	\begin{document}
+	\end{document}
+	Hallo, LaTeX!
+\end{latexlisting}
+während der folgende Code sogar einen Fehler wirft:
+\begin{latexlisting}
+	\documentclass[12pt, ngerman]{scrartcl}
+	Hallo, LaTeX!
+	\begin{document}
+	\end{document}
+\end{latexlisting}
+Dies teilt ein \LaTeX{}-Dokument in zwei Teile:
+Vor \latexcommand{begin\{document\}} können Commands ausgeführt und das Layout des Dokuments festgelegt werden.
+Dieser Teil heißt die \emph{Präambel} oder englisch \emph{preamble}.
+Zwischen \latexcommand{begin\{document\}} und \latexcommand{end\{document\}} liegt dann das tatsächlich Dokument, man nennt diesen Teil oft den \emph{Inhalt} oder \emph{Content}.
+
+\subsection{Whitespace}
+Testen wir den Code
+\begin{latexlisting}
+	\documentclass[12pt, ngerman]{scrartcl}
+	\begin{document}
+		Hallo, LaTeX!
+		Guten Tag, LaTeX!
+	\end{document}
+\end{latexlisting}
+so sehen, dass -- vielleicht wider Erwarten -- beide Sätze in der selben Zeile landen.
+\LaTeX{} verschluckt nämlich einzelne Zeilenumbrüche und wandelt sie in ein Leerzeichen um, damit diese zur Strukturierung genutzt werden können.
+Wollen einen Zeilenumbruch im Output-Dokument, so müssen wir im Quellcode eine Leerzeile lassen:
+\begin{latexlisting}
+	\documentclass[12pt, ngerman]{scrartcl}
+	\begin{document}
+		Hallo, LaTeX!
+
+		Guten Tag, LaTeX!
+	\end{document}
+\end{latexlisting}
+Im Internet findet man oft den Vorschlag, stattdessen das Command \latexcommand{\textbackslash} zu verwenden, das ebenfalls einen Zeilenumbruch erzeugt.
+Dies ist, außer in Tabellen, \emph{immer schlechter Stil} und sollte niemals getan werden!
+Dies liegt daran, dass \latexcommand{\textbackslash} lediglich einen \emph{Zeilenumbruch} erzeugt, aber keinen \emph{Absatzumbruch}, was einen semantischen Unterschied darstellt und von \LaTeX{} intern mit anderen Abstandsalgorithmen bearbeitet wird.
+Außerdem ist es semantisch unsinnvoller und auch aus dem Quellcode schwerer herauszulesen.
+
+Ebenso wie Zeilenumbrüche verschluckt \LaTeX{} auch Leerzeichen:
+\begin{latexlisting}
+	\documentclass[12pt, ngerman]{scrartcl}
+	\begin{document}
+		Hallo, LaTeX!           Guten Tag, LaTeX!
+	\end{document}
+\end{latexlisting}
+Leerzeichen am Anfang einer Zeile werden kategorisch ignoriert, was es uns erlaubt, Code in Umgebungen zur besseren Lesbarkeit einzurücken, ohne den Output zu verändern.
+Mehrere Leerzeichen an anderen Stellen in der Zeile werden zusammengefasst.
+
+\section{Kommentare}
+Ein \LaTeX{}-File besteht nicht nur aus Quellcode, sondern kann auch Anmerkungen enthalten, die nur für den Autor aber nicht für den Leser gedacht sind, beispielsweise:
+\begin{latexlisting}
+	\documentclass[12pt, ngerman]{scrartcl}
+	\begin{document}
+		% Wir begrüßen LaTeX:
+		Hallo, LaTeX!
+	\end{document}
+\end{latexlisting}
+Alle Zeichen hinter einem Prozentzeichen werden LaTeX vollständig ignoriert.
+Dies kann z.B. auch genutzt werden, um mehrere Versionen eines Satzes bereitzuhalten und je nach Gefühl auszutauschen, etwa:
+\begin{latexlisting}
+	\documentclass[12pt, ngerman]{scrartcl}
+	\begin{document}
+		% Wir begrüßen LaTeX:
+		Hallo, LaTeX!
+		% Vielleicht klingt das hier besser?
+		% Guten Tag, Herr LaTex!
+		% Oder zu förmlich? Vielleicht auch einfach
+		% Hi, LaTeX!
+	\end{document}
+\end{latexlisting}
+Hier sehen wir einen weiteren Vorteil davon, dass \LaTeX{} Zeilenumbrüche verschluckt.
+Der folgende Code
+\begin{latexlisting}
+	\documentclass[12pt, ngerman]{scrartcl}
+	\begin{document}
+		LaTeX, eines der
+		am weitestens verbreiteten % Quelle? Vielleicht:
+		% beliebtesten
+		% populärsten
+		Textsatzprogramme.
+	\end{document}
+\end{latexlisting}
+lässt nach der Kompilierung kein Zeichen der Unentschlossenheit mehr erkennen.
+
+\section{Commands}
+Wie bereits diskutiert stellen Commands einen Großteil der Funktionalität von \LaTeX{} dar.
+\begin{latexlisting}
+	\documentclass[12pt, ngerman]{scrartcl}
+	\begin{document}
+		Hallo, \LaTeX!
+	\end{document}
+\end{latexlisting}
+Zu beachten ist, dass Commands ohne Argumente alle ihnen folgende Leerzeichen verschlucken:
+\begin{latexlisting}
+	\documentclass[12pt, ngerman]{scrartcl}
+	\begin{document}
+		\LaTeX ist ein Textsatzprogramm.
+	\end{document}
+\end{latexlisting}
+Der obige Code hat ein fehlendes Leerzeichen, dies können wir beispielsweise wie folgt beheben:
+\begin{latexlisting}
+	\documentclass[12pt, ngerman]{scrartcl}
+	\begin{document}
+		\LaTeX{} ist ein Textsatzprogramm.
+
+		\LaTeX\ ist ein Textsatzprogramm.
+	\end{document}
+\end{latexlisting}
+Wir verwenden also entweder ein Command mit leeren Argumenten oder fügen mittels des \latexcommand{ }-Commands, das ein geschütztes Leerzeichen erzeugt, manuelle Leerraum ein.
+Das Leerzeichen-verschuckende Verhalten ist beispielweise nützlich wenn wir folgendes Schreiben wollen:
+\begin{latexlisting}
+	\documentclass[12pt, ngerman]{scrartcl}
+	\begin{document}
+		\LaTeX editoren gibt es viele.
+
+		\LaTeXeditoren gibt es viele.
+	\end{document}
+\end{latexlisting}
+Hier wirft die zweite Zeile einen Fehler, da das Command \latexcommand{LaTeXeditoren} nicht existiert.
+Commands in \LaTeX{} sind case-sensitive, d.h. Groß- und Kleinschreibung sind relevant.
+Wir werden im Laufe dieses Skripts noch sehr viele Commands variabler Komplexität kennenlernen, \autoref{tab:basic-commands} stellt ein paar der einfachsten und grundlegendsten Standardbefehle vor.
+
+
+\begin{table}
+	\begin{tabular}{l p{8cm}}
+		\toprule
+		\textbf{Filetyp} & \textbf{Beschreibung} \tabularnewline
+		\midrule
+		\latexcommand{textbackslash}, \latexcommand{\%}, \latexcommand{\&} &
+		Erzeugen Sonderzeichen, die sonst von \LaTeX{} reserviert sind.
+		\tabularnewline
+		\latexcommand{ }, \latexcommand{quad}, \latexcommand{qquad} &
+		Erzeugen Leerraum.
+		\tabularnewline
+		\latexcommand{LaTeX}, \latexcommand{TeX} &
+		\LaTeX{} und \TeX{}
+		\tabularnewline
+		\latexcommand{today} &
+		Aktuelles Datum (beim Kompilieren).
+		\tabularnewline
+		\latexcommand{star} &
+		\star
+		\tabularnewline
+		\latexcommand{thepage} &
+		Aktuelle Seitenzahl: \thepage
+		\tabularnewline
+		\latexcommand{thesection} &
+		Aktuelle Abschnittszahl: \thesection
+		\tabularnewline
+		\bottomrule
+	\end{tabular}
+	\caption{Grundlegende Commands}
+	\label{tab:basic-commands}
+\end{table}
+
+\section{Hervorhebungen}
+Weitere wichtige Commands sind solche, die Text hervorheben:
+\begin{latexlisting}
+	\documentclass[12pt, ngerman]{scrartcl}
+	\begin{document}
+		\LaTeX{} ist \emph{so toll}!
+		\LaTeX{} ist \textit{so toll}!
+		\LaTeX{} ist \textbf{so toll}!
+		\LaTeX{} ist \textsc{so toll}!
+		\LaTeX{} ist \textunderline{so toll}!
+		\LaTeX{} ist \texttt{so toll}!
+	\end{document}
+\end{latexlisting}
+Wie bereits im Vorwort diskutiert, sollten die letzten fünf Commands generell niemals verwendet werden, da sie keine semantische Aussage treffen.
+Stattdessen sollte sich der Nutzer überlegen, \emph{warum} er gewisse Worte hervorhebt und entsprechende Commands definieren (wie man das tut, werden wir später noch sehen).
+Die Präambel dieses Skripts zum Beispiel enthält die folgenden Zeilen:
+\begin{latexlisting}
+	\newcommand{\latexpackage}[1]{\texttt{#1}}
+	\newcommand{\filepath}[1]{\texttt{#1}}
+\end{latexlisting}
+Hier werden zwei neue Commands definiert, die \latexcommand{texttt} verwenden, um \LaTeX{}-Packages und Dateipfade in Monospace-Schrift hervorzuheben.
+In Definitionen von Commands oder dem Format von Überschriften etc. können die direkten \latexcommand{text}-Commands natürlich frei verwendet werden.
+Typografisch sei noch erwähnt, dass das Verwenden von Unterstreichungen zur Hervorhebung im Fließtext von gedruckten Dokumenten sehr schlechter Stil ist und niemals getan werden sollte, das Verwenden von Fettung ist nur ein wenig besser.
+Zur Hervorhebung im Fließtext ist immer Kursivität, Kapitälchen oder Monospace zu nutzen.
+Auch zum Hervorheben von Überschriften ist eine Unterstreichung ungeeignet, hier kann Kursivität, Kapitälchen, Fettdruck oder Letterspacing (das Erhöhen des Abstandes zwischen Buchstaben innerhalb eines Wortes) verwendet werden.
+
+\section{Metadaten \& Titel}
+In der Präambel eines \LaTeX{}-Dokuments können auch einige Metadaten über das Dokument festgelegt werden:
+\begin{latexlisting}
+	\documentclass[12pt, ngerman]{scrartcl}
+
+	\title{Mein erstes Dokument}
+	\author{Linus Mußmächer}
+	\date{\today}
+
+	\begin{document}
+		Hallo, LaTeX!
+	\end{document}
+\end{latexlisting}
+Diese haben verschieden Zwecke, können aber insbesondere mit dem \latexcommand{maketitle}-Command verwendet werden, um einen simplen, ansprechenden Titel zu erzeugen:
+\begin{latexlisting}
+	\documentclass[12pt, ngerman]{scrartcl}
+
+	\title{Mein erstes Dokument}
+	\author{Linus Mußmächer}
+	\date{\today}
+
+	\begin{document}
+		\maketitle
+
+		Hallo, LaTeX!
+	\end{document}
+\end{latexlisting}
+
+\section{Packages}
+Obwohl \LaTeX{} bereits viele Konfigurationsmöglichkeiten und Commands bereitstellt, gibt es doch eine Vielzahl von Anwendungen, für die wir speziellere Commands benötigen.
+Hierzu verwenden wir sogenannte \emph{Packages}, Makro-Sammlungen die entweder selbst geschrieben oder aus dem Internet heruntergeladen werden und die Commands für gewisse Zwecke bündeln.
+Die Package \latexpackage{blindtext} beispielsweise stellt das Command \latexcommand{blindtext} zur Verfügung, das uns erlaubt einen längeren Testtext schnell einzufügen:
+\begin{latexlisting}
+	\documentclass[12pt, ngerman]{scrartcl}
+
+	\usepackage{blindtext}
+
+	\begin{document}
+		Hallo, LaTeX!
+		\blindtext
+	\end{document}
+\end{latexlisting}
+Packages werden mittels des \latexcommand{usepackage}-Commands in der Präambel eingebunden, traditionell direkt nach dem \latexcommand{documentclass}-Command.
+Die von ihnen definierten Commands können dann in der Präambel oder im Content verwendet werden.
+In seltenen Fällen kann die Reihenfolge, in der Packages eingebunden werden relevant sein.
+Packages können mittels des optionalen Arguments von \latexcommand{usepackage} noch genauer konfiguriert werden, im folgenden Beispiel etwa führt das Übergeben des Arguments \latexargument{landscape} an die Package \latexpackage{geometry} dazu, dass unser Dokument im Querformat gesetzt wird.
+Das Package \latexpackage{xcolor} wiederum definiert Commands, mit denen wir Text einfärben können:
+\begin{latexlisting}
+	\documentclass[12pt, ngerman]{scrartcl}
+
+	\usepackage{blindtext}
+	\usepackage[landscape]{geometry}
+	\usepackage{xcolor}
+	\definecolor{my_blue}{RGB}{69,100,186}
+
+	\begin{document}
+		Hallo, LaTeX!
+		\blindtext
+		Hallo, \textcolor{my_blue}{LaTeX}!
+	\end{document}
+\end{latexlisting}
+In \LaTeX{} hängt sehr viel Funktionalität von Packages ab, und wir werden in den folgenden Kapiteln sehr viele solche Packages kennenlernen, von denen einige auch so grundlegend sind, dass jedes \LaTeX{}-Dokument sie einbinden sollte.
