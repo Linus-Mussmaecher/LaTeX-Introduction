@@ -151,8 +151,8 @@ Die Klasse \latexargument{scrbook} ist zu \latexargument{book} was \latexargumen
 	\documentclass[12pt, ngerman]{scrartcl}
 
 	\begin{document}
+		Hallo, LaTeX!
 	\end{document}
-	Hallo, LaTeX!
 \end{latexlisting}
 
 
@@ -184,26 +184,22 @@ Dies teilt ein \LaTeX{}-Dokument in zwei Teile:
 Vor \latexcommand{begin\{document\}} können Commands ausgeführt und das Layout des Dokuments festgelegt werden.
 Dieser Teil heißt die \emph{Präambel} oder englisch \emph{preamble}.
 Zwischen \latexcommand{begin\{document\}} und \latexcommand{end\{document\}} liegt dann das tatsächlich Dokument, man nennt diesen Teil oft den \emph{Inhalt} oder \emph{Content}.
+Im folgenden werden unsere Codebeispiele die Marker \latexcommand{begin\{document\}} und \latexcommand{end\{document\}} sowie das Command \latexcommand{documentclass} nicht mehr enthalten.
+Es darf, solange es nicht anders im Codebeispiel markiert ist, angenommen werden, dass alle Codebeispiele im Inhalt und nicht in der Präambel existieren sollten. 
 
 \subsection{Whitespace}
 Testen wir den Code
 \begin{latexlisting}
-	\documentclass[12pt, ngerman]{scrartcl}
-	\begin{document}
-		Hallo, LaTeX!
-		Guten Tag, LaTeX!
-	\end{document}
+	Hallo, LaTeX!
+	Guten Tag, LaTeX!
 \end{latexlisting}
 so sehen, dass -- vielleicht wider Erwarten -- beide Sätze in der selben Zeile landen.
 \LaTeX{} verschluckt nämlich einzelne Zeilenumbrüche und wandelt sie in ein Leerzeichen um, damit diese zur Strukturierung genutzt werden können.
 Wollen einen Zeilenumbruch im Output-Dokument, so müssen wir im Quellcode eine Leerzeile lassen:
 \begin{latexlisting}
-	\documentclass[12pt, ngerman]{scrartcl}
-	\begin{document}
-		Hallo, LaTeX!
+	Hallo, LaTeX!
 
-		Guten Tag, LaTeX!
-	\end{document}
+	Guten Tag, LaTeX!
 \end{latexlisting}
 Im Internet findet man oft den Vorschlag, stattdessen das Command \latexcommand{\textbackslash} zu verwenden, das ebenfalls einen Zeilenumbruch erzeugt.
 Dies ist, außer in Tabellen, \emph{immer schlechter Stil} und sollte niemals getan werden!
@@ -212,10 +208,7 @@ Außerdem ist es semantisch unsinnvoller und auch aus dem Quellcode schwerer her
 
 Ebenso wie Zeilenumbrüche verschluckt \LaTeX{} auch Leerzeichen:
 \begin{latexlisting}
-	\documentclass[12pt, ngerman]{scrartcl}
-	\begin{document}
-		Hallo, LaTeX!           Guten Tag, LaTeX!
-	\end{document}
+	Hallo, LaTeX!           Guten Tag, LaTeX!
 \end{latexlisting}
 Leerzeichen am Anfang einer Zeile werden kategorisch ignoriert, was es uns erlaubt, Code in Umgebungen zur besseren Lesbarkeit einzurücken, ohne den Output zu verändern.
 Mehrere Leerzeichen an anderen Stellen in der Zeile werden zusammengefasst.
@@ -223,72 +216,51 @@ Mehrere Leerzeichen an anderen Stellen in der Zeile werden zusammengefasst.
 \section{Kommentare}
 Ein \LaTeX{}-File besteht nicht nur aus Quellcode, sondern kann auch Anmerkungen enthalten, die nur für den Autor aber nicht für den Leser gedacht sind, beispielsweise:
 \begin{latexlisting}
-	\documentclass[12pt, ngerman]{scrartcl}
-	\begin{document}
-		% Wir begrüßen LaTeX:
-		Hallo, LaTeX!
-	\end{document}
+	% Wir begrüßen LaTeX:
+	Hallo, LaTeX!
 \end{latexlisting}
 Alle Zeichen hinter einem Prozentzeichen werden LaTeX vollständig ignoriert.
 Dies kann z.B. auch genutzt werden, um mehrere Versionen eines Satzes bereitzuhalten und je nach Gefühl auszutauschen, etwa:
 \begin{latexlisting}
-	\documentclass[12pt, ngerman]{scrartcl}
-	\begin{document}
-		% Wir begrüßen LaTeX:
-		Hallo, LaTeX!
-		% Vielleicht klingt das hier besser?
-		% Guten Tag, Herr LaTex!
-		% Oder zu förmlich? Vielleicht auch einfach
-		% Hi, LaTeX!
-	\end{document}
+	% Wir begrüßen LaTeX:
+	Hallo, LaTeX!
+	% Vielleicht klingt das hier besser?
+	% Guten Tag, Herr LaTex!
+	% Oder zu förmlich? Vielleicht auch einfach
+	% Hi, LaTeX!
 \end{latexlisting}
 Hier sehen wir einen weiteren Vorteil davon, dass \LaTeX{} Zeilenumbrüche verschluckt.
 Der folgende Code
 \begin{latexlisting}
-	\documentclass[12pt, ngerman]{scrartcl}
-	\begin{document}
-		LaTeX, eines der
-		am weitestens verbreiteten % Quelle? Vielleicht:
-		% beliebtesten
-		% populärsten
-		Textsatzprogramme.
-	\end{document}
+	LaTeX, eines der
+	am weitestens verbreiteten % Quelle? Vielleicht:
+	% beliebtesten
+	% populärsten
+	Textsatzprogramme.
 \end{latexlisting}
 lässt nach der Kompilierung kein Zeichen der Unentschlossenheit mehr erkennen.
 
 \section{Commands}
 Wie bereits diskutiert stellen Commands einen Großteil der Funktionalität von \LaTeX{} dar.
 \begin{latexlisting}
-	\documentclass[12pt, ngerman]{scrartcl}
-	\begin{document}
-		Hallo, \LaTeX!
-	\end{document}
+	Hallo, \LaTeX!
 \end{latexlisting}
 Zu beachten ist, dass Commands ohne Argumente alle ihnen folgende Leerzeichen verschlucken:
 \begin{latexlisting}
-	\documentclass[12pt, ngerman]{scrartcl}
-	\begin{document}
-		\LaTeX ist ein Textsatzprogramm.
-	\end{document}
+	\LaTeX ist ein Textsatzprogramm.
 \end{latexlisting}
 Der obige Code hat ein fehlendes Leerzeichen, dies können wir beispielsweise wie folgt beheben:
 \begin{latexlisting}
-	\documentclass[12pt, ngerman]{scrartcl}
-	\begin{document}
-		\LaTeX{} ist ein Textsatzprogramm.
+	\LaTeX{} ist ein Textsatzprogramm.
 
-		\LaTeX\ ist ein Textsatzprogramm.
-	\end{document}
+	\LaTeX\ ist ein Textsatzprogramm.
 \end{latexlisting}
 Wir verwenden also entweder ein Command mit leeren Argumenten oder fügen mittels des \latexcommand{ }-Commands, das ein geschütztes Leerzeichen erzeugt, manuelle Leerraum ein.
 Das Leerzeichen-verschuckende Verhalten ist beispielweise nützlich wenn wir folgendes Schreiben wollen:
 \begin{latexlisting}
-	\documentclass[12pt, ngerman]{scrartcl}
-	\begin{document}
-		\LaTeX editoren gibt es viele.
+	\LaTeX editoren gibt es viele.
 
-		\LaTeXeditoren gibt es viele.
-	\end{document}
+	\LaTeXeditoren gibt es viele.
 \end{latexlisting}
 Hier wirft die zweite Zeile einen Fehler, da das Command \latexcommand{LaTeXeditoren} nicht existiert.
 Commands in \LaTeX{} sind case-sensitive, d.h. Groß- und Kleinschreibung sind relevant.
@@ -298,7 +270,7 @@ Wir werden im Laufe dieses Skripts noch sehr viele Commands variabler Komplexit�
 \begin{table}
 	\begin{tabular}{l p{8cm}}
 		\toprule
-		\textbf{Filetyp} & \textbf{Beschreibung} \tabularnewline
+		\textbf{Command} & \textbf{Effekt} \tabularnewline
 		\midrule
 		\latexcommand{textbackslash}, \latexcommand{\%}, \latexcommand{\&} &
 		Erzeugen Sonderzeichen, die sonst von \LaTeX{} reserviert sind.
@@ -321,6 +293,9 @@ Wir werden im Laufe dieses Skripts noch sehr viele Commands variabler Komplexit�
 		\latexcommand{thesection} &
 		Aktuelle Abschnittszahl: \thesection
 		\tabularnewline
+		\latexcommand{dots} &
+		Ellipsis: \dots
+		\tabularnewline
 		\bottomrule
 	\end{tabular}
 	\caption{Grundlegende Commands}
@@ -330,20 +305,18 @@ Wir werden im Laufe dieses Skripts noch sehr viele Commands variabler Komplexit�
 \section{Hervorhebungen}
 Weitere wichtige Commands sind solche, die Text hervorheben:
 \begin{latexlisting}
-	\documentclass[12pt, ngerman]{scrartcl}
-	\begin{document}
-		\LaTeX{} ist \emph{so toll}!
-		\LaTeX{} ist \textit{so toll}!
-		\LaTeX{} ist \textbf{so toll}!
-		\LaTeX{} ist \textsc{so toll}!
-		\LaTeX{} ist \textunderline{so toll}!
-		\LaTeX{} ist \texttt{so toll}!
-	\end{document}
+	\LaTeX{} ist \emph{so toll}!
+	\LaTeX{} ist \textit{so toll}!
+	\LaTeX{} ist \textbf{so toll}!
+	\LaTeX{} ist \textsc{so toll}!
+	\LaTeX{} ist \textunderline{so toll}!
+	\LaTeX{} ist \texttt{so toll}!
 \end{latexlisting}
 Wie bereits im Vorwort diskutiert, sollten die letzten fünf Commands generell niemals verwendet werden, da sie keine semantische Aussage treffen.
 Stattdessen sollte sich der Nutzer überlegen, \emph{warum} er gewisse Worte hervorhebt und entsprechende Commands definieren (wie man das tut, werden wir später noch sehen).
 Die Präambel dieses Skripts zum Beispiel enthält die folgenden Zeilen:
 \begin{latexlisting}
+	% Präambel
 	\newcommand{\latexpackage}[1]{\texttt{#1}}
 	\newcommand{\filepath}[1]{\texttt{#1}}
 \end{latexlisting}
@@ -353,32 +326,99 @@ Typografisch sei noch erwähnt, dass das Verwenden von Unterstreichungen zur Her
 Zur Hervorhebung im Fließtext ist immer Kursivität, Kapitälchen oder Monospace zu nutzen.
 Auch zum Hervorheben von Überschriften ist eine Unterstreichung ungeeignet, hier kann Kursivität, Kapitälchen, Fettdruck oder Letterspacing (das Erhöhen des Abstandes zwischen Buchstaben innerhalb eines Wortes) verwendet werden.
 
+\subsection{Schriftgröße}
+Zur Vollständig sei noch erwähnt, wie in \LaTeX -Dokumenten die Schriftgröße von Elementen verändert werden kann.
+Der Syntax ist hier etwas komplizierter als bisher, ein \TeX -Relikt:
+\begin{latexlisting}
+	Dies ist ein Text {\fontsize{4}{5}\selectfont kleiner Text} wieder normalgroß {\fontsize{20}{25}\selectfont großer Text} wieder normalgroß.
+\end{latexlisting}
+Das Command \latexcommand{fontsize} erhält zwei Argumente:
+\begin{itemize}
+	\item Das erste Argument ist die gewünschte Schriftgröße.
+	\item Das zweite Arguement ist das gewünschte \emph{Linespacing}, also die Höhe einer Zeile.
+	Es sollte normalerweise etwa das $1.2$-fache der Schriftgröße betragen.
+\end{itemize}
+Weiterhin hat \latexcommand{fontsize} selbst keinen Effekt, erst mit Aufruf des Commands \latexcommand{selectfont} wird die Schriftgröße geändert\footnote{Der Grund hierfür ist, dass es dieses Vorgehen erlaubt, mehrere Änderungen an der Schriftgröße, -art, -farbe, etc. auf einmal durchzuführen, ein in der Entstehungszeit von \TeX{} sehr relevanter Performancegewinn}.
+Die geändert Schriftgröße verbleibt dann bis zur nächsten Änderung, oder, wie hier sichtbar, bis zum Ende des \emph{Blocks}.
+Ein Block kann deklariert werden in dem Textteile in geschweifte Klammern gesetzt werden.
+Alternativ bietet \LaTeX{} noch eine Reihe an Kurzcommands für wichtige Schriftgrößen in Relation zur zu Beginn festgelegten Standardschriftgröße.
+In \autoref{tab:font-sizes} sind diese Commands und ihre Größen (für die in diesem Skript verwendete Standardschriftgröße von 11pt aufgelistet).
+
+\begin{table}
+	\begin{tabular}{l p{3cm} p{4cm}}
+		\toprule
+		\textbf{Command} & \textbf{Schriftgröße} & \textbf{Beispiel} \tabularnewline
+		\midrule
+		\latexcommand{tiny} &
+		6pt &
+		{\tiny Schrift}
+		\tabularnewline
+		\latexcommand{scriptsize} &
+		8pt &
+		{\scriptsize Schrift}
+		\tabularnewline
+		\latexcommand{footnotesize} &
+		9pt &
+		{\footnotesize Schrift}
+		\tabularnewline
+		\latexcommand{small} &
+		10pt &
+		{\small Schrift}
+		\tabularnewline
+		\latexcommand{normalsize} &
+		10.95pt &
+		{\normalsize Schrift}
+		\tabularnewline
+		\latexcommand{large} &
+		12pt &
+		{\large Schrift}
+		\tabularnewline
+		\latexcommand{Large} &
+		14.4pt &
+		{\Large Schrift}
+		\tabularnewline
+		\latexcommand{LARGE} &
+		17.28pt &
+		{\LARGE Schrift}
+		\tabularnewline
+		\latexcommand{huge} &
+		20.74pt &
+		{\huge Schrift}
+		\tabularnewline
+		\latexcommand{Huge} &
+		24.88pt &
+		{\Huge Schrift}
+		\tabularnewline
+		\bottomrule
+	\end{tabular}
+	\caption{Schriftgrößen-Commands in \LaTeX}
+	\label{tab:font-sizes}
+\end{table}
+
+Typografisch gesehen ist das Ändern der Schriftgröße nur selten und nur mit Vorsicht zu nutzen.
+Innerhalb des Textkörpers sollte sich an deine Schriftgröße gehalten, und nur innhalb von Titeln und Abschnittsüberschriften solte die Schriftgröße variieren.
+
+
 \section{Metadaten \& Titel}
 In der Präambel eines \LaTeX{}-Dokuments können auch einige Metadaten über das Dokument festgelegt werden:
 \begin{latexlisting}
-	\documentclass[12pt, ngerman]{scrartcl}
-
+	% Präambel
 	\title{Mein erstes Dokument}
 	\author{Linus Mußmächer}
 	\date{\today}
-
-	\begin{document}
-		Hallo, LaTeX!
-	\end{document}
 \end{latexlisting}
 Diese haben verschieden Zwecke, können aber insbesondere mit dem \latexcommand{maketitle}-Command verwendet werden, um einen simplen, ansprechenden Titel zu erzeugen:
 \begin{latexlisting}
-	\documentclass[12pt, ngerman]{scrartcl}
-
+	% Präambel
 	\title{Mein erstes Dokument}
 	\author{Linus Mußmächer}
 	\date{\today}
+\end{latexlisting}
+\begin{latexlisting}
+	% Inhalt
+	\maketitle
 
-	\begin{document}
-		\maketitle
-
-		Hallo, LaTeX!
-	\end{document}
+	Hallo, LaTeX!
 \end{latexlisting}
 
 \section{Packages}
@@ -386,14 +426,13 @@ Obwohl \LaTeX{} bereits viele Konfigurationsmöglichkeiten und Commands bereitst
 Hierzu verwenden wir sogenannte \emph{Packages}, Makro-Sammlungen die entweder selbst geschrieben oder aus dem Internet heruntergeladen werden und die Commands für gewisse Zwecke bündeln.
 Die Package \latexpackage{blindtext} beispielsweise stellt das Command \latexcommand{blindtext} zur Verfügung, das uns erlaubt einen längeren Testtext schnell einzufügen:
 \begin{latexlisting}
-	\documentclass[12pt, ngerman]{scrartcl}
-
+	% Präambel
 	\usepackage{blindtext}
-
-	\begin{document}
-		Hallo, LaTeX!
-		\blindtext
-	\end{document}
+\end{latexlisting}
+\begin{latexlisting}
+	% Inhalt
+	Hallo, LaTeX!
+	\blindtext
 \end{latexlisting}
 Packages werden mittels des \latexcommand{usepackage}-Commands in der Präambel eingebunden, traditionell direkt nach dem \latexcommand{documentclass}-Command.
 Die von ihnen definierten Commands können dann in der Präambel oder im Content verwendet werden.
@@ -414,4 +453,24 @@ Das Package \latexpackage{xcolor} wiederum definiert Commands, mit denen wir Tex
 		Hallo, \textcolor{my_blue}{LaTeX}!
 	\end{document}
 \end{latexlisting}
-In \LaTeX{} hängt sehr viel Funktionalität von Packages ab, und wir werden in den folgenden Kapiteln sehr viele solche Packages kennenlernen, von denen einige auch so grundlegend sind, dass jedes \LaTeX{}-Dokument sie einbinden sollte.
+In \LaTeX{} hängt sehr viel Funktionalität von Packages ab, und wir werden in den folgenden Kapiteln sehr viele solche Packages kennenlernen. 
+
+Einige dieser Packages sind so wichtig, dass jedes \LaTeX -Dokument sie immer einbinden sollte.
+In Tabelle \autoref{tab:important-packages} sind einige dieser Packages aufgeführt.
+
+\begin{table}
+	\begin{tabular}{l p{10cm}}
+		\toprule
+		\textbf{Package} & \textbf{Auswirkung} \tabularnewline
+		\midrule
+		\latexpackage{microtype} &
+		Verbesserter Blocksatzalgorithmus.
+		\tabularnewline
+		\latexpackage{ellipsis} &
+		Verbesserte Abstände um \latexcommand{dots}.
+		\tabularnewline
+		\bottomrule
+	\end{tabular}
+	\caption{Unerlässliche Packages}
+	\label{tab:important-packages}
+\end{table}
