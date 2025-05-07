@@ -302,7 +302,7 @@ Wir werden im Laufe dieses Skripts noch sehr viele Commands variabler Komplexit�
 	\label{tab:basic-commands}
 \end{table}
 
-\section{Hervorhebungen}
+\subsection{Hervorhebungen}
 Weitere wichtige Commands sind solche, die Text hervorheben:
 \begin{latexlisting}
 	\LaTeX{} ist \emph{so toll}!
@@ -340,7 +340,7 @@ Das Command \latexcommand{fontsize} erhält zwei Argumente:
 \end{itemize}
 Weiterhin hat \latexcommand{fontsize} selbst keinen Effekt, erst mit Aufruf des Commands \latexcommand{selectfont} wird die Schriftgröße geändert\footnote{Der Grund hierfür ist, dass es dieses Vorgehen erlaubt, mehrere Änderungen an der Schriftgröße, -art, -farbe, etc. auf einmal durchzuführen, ein in der Entstehungszeit von \TeX{} sehr relevanter Performancegewinn}.
 Die geändert Schriftgröße verbleibt dann bis zur nächsten Änderung, oder, wie hier sichtbar, bis zum Ende des \emph{Blocks}.
-Ein Block kann deklariert werden in dem Textteile in geschweifte Klammern gesetzt werden.
+Ein Block kann deklariert werden indem Textteile in geschweifte Klammern gesetzt werden.
 Alternativ bietet \LaTeX{} noch eine Reihe an Kurzcommands für wichtige Schriftgrößen in Relation zur zu Beginn festgelegten Standardschriftgröße.
 In \autoref{tab:font-sizes} sind diese Commands und ihre Größen (für die in diesem Skript verwendete Standardschriftgröße von 11pt aufgelistet).
 
@@ -398,6 +398,39 @@ In \autoref{tab:font-sizes} sind diese Commands und ihre Größen (für die in d
 Typografisch gesehen ist das Ändern der Schriftgröße nur selten und nur mit Vorsicht zu nutzen.
 Innerhalb des Textkörpers sollte sich an deine Schriftgröße gehalten, und nur innhalb von Titeln und Abschnittsüberschriften solte die Schriftgröße variieren.
 
+\subsection{Umgebungen}
+Eine besondere Form von Commands sind \emph{Umgebungen}, die wie die bereits kennengelernte \latexenvironment{document}-Umgebung mit \latexcommand{begin} und \latexcommand{end} begrenzt werden.
+\begin{latexlisting}
+	\begin{center}
+		Dieser Text ist zentriert!
+	\end{center}
+\end{latexlisting}
+Diese Umgebungen können zur Formatierung oder semantischen Markierung größerer Codeblöcke verwendet.
+Einige Umgebungen, die Text ausrichten, sind in \autoref{tab:important-environments} aufgeführt.
+Weitere Umgebungen, insbesondere solche wie \latexenvironment{definition}, die in der Mathematik viel Anwendung finden, werden wir im Verlauf dieses Skripts noch kennenlernen.
+
+\begin{table}
+	\begin{tabular}{l p{10cm}}
+		\toprule
+		\textbf{Umgebung} & \textbf{Effekt} \tabularnewline
+		\midrule
+		\latexenvironment{center} &
+		Zentrierter Text.
+		\tabularnewline
+		\latexenvironment{quote} &
+		Eingerückter, kursiver Text.
+		\tabularnewline
+		\latexenvironment{flushleft} &
+		Linksbündiger Text.
+		\tabularnewline
+		\latexenvironment{flushright} &
+		Rechtsbündiger Text.
+		\tabularnewline
+		\bottomrule
+	\end{tabular}
+	\caption{Ausrichtungsumgebungen}
+	\label{tab:important-environments}
+\end{table}
 
 \section{Metadaten \& Titel}
 In der Präambel eines \LaTeX{}-Dokuments können auch einige Metadaten über das Dokument festgelegt werden:
@@ -457,6 +490,7 @@ In \LaTeX{} hängt sehr viel Funktionalität von Packages ab, und wir werden in 
 
 Einige dieser Packages sind so wichtig, dass jedes \LaTeX -Dokument sie immer einbinden sollte.
 In Tabelle \autoref{tab:important-packages} sind einige dieser Packages aufgeführt.
+Weiterhin sollte erwähnt werden, dass die häufig empfohlene Package \latexpackage{inputenc} seit 2018 keine Auswirkungen mehr hat, da UTF-8-Encoding als neuer Standard von der \LaTeX -Community umgesetzt wurde.
 
 \begin{table}
 	\begin{tabular}{l p{10cm}}
@@ -469,8 +503,44 @@ In Tabelle \autoref{tab:important-packages} sind einige dieser Packages aufgefü
 		\latexpackage{ellipsis} &
 		Verbesserte Abstände um \latexcommand{dots}.
 		\tabularnewline
+		\latexpackage{babel} &
+		Sprachanpassungen. Als optionales Argument wird die Sprache (z.B. \latexargument{[ngerman]}) übergeben.
+		\tabularnewline
+		\latexpackage{floatrow} &
+		Zentriert Abbildungen, Tabellen etc.
+		\tabularnewline
+		\latexpackage{csquotes} &
+		Verbesserte Anführungszeichen.
+		\tabularnewline
+		\latexpackage{xurl} &
+		Zeilenumbrüche in Links.
+		\tabularnewline
+		\latexpackage{hyperref} &
+		PDF-interne Links für Referenzen, Inhaltsverzeichnis, etc..
+		\tabularnewline
+		\latexpackage{titling} &
+		Verbesserte Titel-Metadaten.
+		\tabularnewline
+		\latexpackage{enumitem} &
+		Verbesserte Aufzählungen.
+		\tabularnewline
+		\latexpackage{array} &
+		Verbesserte Tabellen.
+		\tabularnewline
+		\latexpackage{booktabs} &
+		Verbesserte Tabellen.
+		\tabularnewline
+		\latexpackage{isodate} &
+		Verbessertes Datum.
+		\tabularnewline
+		\latexpackage{fontenc} &
+		Mit Option \latexargument{[T1]}: Besseres Output-Endocing erlaubt für Nicht-ASCII-Buchstaben wie Ä.
+		Mit LuaTeX nicht nötig.
+		\tabularnewline
 		\bottomrule
 	\end{tabular}
 	\caption{Unerlässliche Packages}
 	\label{tab:important-packages}
 \end{table}
+
+\section{Spacing}
