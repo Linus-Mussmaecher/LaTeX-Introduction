@@ -1,1 +1,274 @@
 \chapter{Struktur}
+In diesem Kapitel behandeln wir \LaTeX -Commands, die es uns erlauben, etwas Struktur in unsere Dokumente zu bringen.
+Erneut ist hier die Semantik wichtig:
+Strukturcommands wie \latexcommand{chapter} in \LaTeX{} haben nicht nur Formatierungsauswirkungen (Schriftgröße, neue Seite, etc.) sondern teilen dem Compiler auch semantisch mit, dass hier ein neuer Abschnitt beginnt.
+
+\section{Seitenumbrüche}
+Um eine neue Seite zu beginnen, gibt es in \LaTeX{} verschiedene Commands, die wir kurz durchgehen:
+\begin{itemize}
+	\item \latexcommand{newpage}: Beginnt auf der Stelle eine neue Seite.
+	Im zweispaltigen Modus wird nur eine neue Spalte begonnen.
+	\item \latexcommand{clearpage}: Beginnt ebenfalls eine neue Seite.
+	Außerdem werden sogenannte \emph{float-Objekte} wie Abbildungen oder Tabellen noch abgedruckt (man nennt dies \emph{flushing}), bevor die neue Seite beginnte.
+	Generell das vorzuziehende Command.
+	\item \latexcommand{cleardoublepage}: Selbe Effekte wie \latexcommand{clearpage}, aber eventuell wird eine Leerseite gelassen, so dass die neue Seite auf einer ungeraden Seite beginnt.
+	Dies ist insbesondere für doppelseitige Dokumente wie Bücher nützlich.
+	\item \latexcommand{pagebreak}: Dieses Command erzeugt nicht zwangsweise einen Seitenumbruch.
+	Stattdessen wird es nach dem Schreiben des Textes verwendet, um \LaTeX{} Stellen mitzuteilen, an denen natürliche Seitenumbrüche (also solche, die aufgrund der Textlänge nötig sind), bevorzugt werden sollen, falls einen die automatische Wahl des Algorithmus nicht gefällt.
+	Mit einem optionalen Argument im Bereich $[0,4] \cap \mathbb{N}$ kann die Stärke dieser Bevorzugung gesetzt werden.
+
+	Wird \latexcommand{pagebreak} fälschlicherweise verwendet, um eine neue Seite nach beispielsweise einem Absatz zu beginnen, wird der Content der vorherigen Seite vertikal gleichmäßig verteilt, was nicht immer erwünscht ist.
+\end{itemize}
+
+\section{Abschnitte \& Anverwandte}
+
+Einen neuen Abschnitt erzeugen wir mit dem Command \latexcommand{section}:
+\begin{latexlisting}
+	\section{Loomings}
+	Call me Ishmael.
+	Some years ago -- never mind how long precisely -- having little or no money in my purse, and nothing particular to interest me on shore, I thought I would sail about a little and see the watery part of the world.
+\end{latexlisting}
+Dies hat mehrere Effekte:
+\begin{itemize}
+	\item An der angebenen Stelle wird der Titel mit passender Formatierung gedruckt.
+	\item Der Abschnitt bekommt eine passende Nummer zugewiesen.
+	\item Die Zähler von Unterabschnitten werden zurückgesetzt.
+	\item Der Inhalt von \latexcommand{thesection} wird aktualisiert.
+	\item Das Kapitel wird im Inhaltsverzeichnis registriert und taucht beim nächsten Kompilieren dort auf.
+	\item Übriger vertikaler Platz auf einer Seite wird bevorzugt vor dem Abschnitt verteilt.
+	\item \dots
+\end{itemize}
+Ähnlich zu \latexcommand{section} existieren auch die Commands \latexcommand{subsection} und \latexcommand{subsubsection} (jeweils mit eigener Formatierung), die zu \latexcommand{section} untergeordnet gezählt werden.
+Weiterhin existiert noch das Command \latexcommand{paragraph}, mit dem ein einzelner Absatz mit einem einleitenden, hervorgehobenen Titel versehen werden kann.
+Letzteres sehen wir beispielsweise in \hyperref[sec:introduction]{der Einführung}.
+
+Generell wird empfohlen, \latexcommand{subsubsection} eher zu vermeiden und sich auf die anderen Commands zu verlassen.
+Wer das Gefühl hat, \latexcommand{subsubsubsection} zu benötigen (ein Command, das aus gutem Grund nicht existiert), sollte vermutlich eher seine Textstruktur überdenken.
+
+Die Auswahl an verfügbaren Abschnittsebenen hängt von der gewählten Dokumentklasse ab -- oben genanntes gilt für \latexargument{article} oder \latexargument{scrartcl}.
+Die Klasse \latexargument{minimal} stellt keinerlei solche Commands zu Verfügung, die Klasse \latexargument{beamer} für Präsentationsfolien definiert zwar auch \latexcommand{section} und \latexcommand{subsection}, diese haben allerdings andere Auswirkungen und erzeugen je nach Konfiguration z.B. eigene Titelfolien für Abschnitte.
+Die Klassen \latexargument{book} und \latexargument{scrbook} bietet zusätzlich zu oben genannten noch die Commands \latexcommand{chapter} und \latexcommand{part}, die den Abschnitten übergeordnet sind.
+Diese haben zusätzlich noch die Auswirkungen, dass ein Kapitel (chapter) stets auf einer neuen, ungeraden Seite beginnt, während bei einem Teil (part) der Titel sogar alleine auf einer sonst leeren, ungeraden Seite steht.
+\begin{latexlisting}
+	\chapter{The Carpet-Bag}
+	I stuffed a shirt or two into my old carpet-bag, tucked it under my arm, and started for Cape Horn and the Pacific.
+\end{latexlisting}
+All diese Commands besitzen außerdem sogenannte \emph{gesternte} Versionen.
+Gesternte Commands in \LaTeX{} werden für leichte Abwandlungen anderer Commands verwendet:
+\begin{latexlisting}
+	\subsection*{The Spouter-Inn}
+	Entering that gable-ended Spouter-Inn, you found yourself in a wide, low, straggling entry with old-fashioned wainscots, reminding one of the bulwarks of some condemned old craft.
+\end{latexlisting}
+Bei den Commands für die Abschnittsebenen hat dies den Effekt eines unnummerierten Abschnitts (Kapitels, Unterabschnitts, etc.), der auch nicht im Inhaltsverzeichnis geführt wird.
+
+\section{Inhaltsverzeichnis}
+Wenn man im Textkörper brav die obigen Commands verwendet, dann ist das Erstellen eines Inhaltsverzeichnises sehr einfach:
+\begin{latexlisting}
+	\tableofcontents
+\end{latexlisting}
+Das Inhaltsverzeichnis erhält, je nach Dokumentklasse, ein unnumeriertes Chapter oder Section mit dem Titel \enquote{Content}.
+Wird die Package \latexpackage{babel} verwendet, so wird der Titel des Inhaltsverzeichnises automatisch an die gewählte Sprache angepasst:
+\begin{latexlisting}
+	% Präambel
+	\usepackage[ngerman]{babel}
+\end{latexlisting}
+Dieses Verhalten wird sich bei vielen \LaTeX -Elementen wiederholen -- es ist daher immer gut, die \latexpackage{babel}-Package stets einzubinden.
+Wird nur eine Sprache verwendet, so genügt es, diese im optionalen Argument von \latexcommand{documentclass} zu nennen und \latexpackage{babel} ohne optionales Argument zu inkludieren; wird im Dokument zwischen mehreren Sprachen gewechselt, so sollten diese alle im optionalen Argument genannt werden.
+Die erste Sprache ist hierbei die primäre:
+\begin{latexlisting}
+	% Präambel
+	\documentclass{scrbook}
+	\usepackage[ngerman, english]{babel}
+	% ODER
+	\documentclass[ngerman]{scrbook}
+	\usepackage{babel}
+\end{latexlisting}
+
+Soll nach dem Inhaltsverzeichnis eine neue Seite beginnen, so kann dies manuell mit \latexcommand{clearpage} getan werden.
+Vor Einfügen des Verzeichnisses kann mittels des Commands
+\begin{latexlisting}
+	\setcounter{tocdepth}{3}
+\end{latexlisting}
+festgelegt werden, bis zu welcher Ebene Abschnitte im Inhaltsverzeichnis inkludiert werden sollen.
+Die Nummerierung verhält sich wie in Tabelle \autoref{tab:tocdepth} aufgelistet.
+
+\begin{table}
+	\begin{tabular}{l p{5cm} p{5cm}}
+		\toprule
+		\textbf{Nummer} & \textbf{Command} & \textbf{Ebene} \tabularnewline
+		\midrule
+		$-1$ &
+		\latexcommand{part} &
+		 Teil
+		\tabularnewline
+		$0$ &
+		\latexcommand{chapter} &
+		Kapitel
+		\tabularnewline
+		$1$ &
+		\latexcommand{section} &
+		Abschnitt
+		\tabularnewline
+		$2$ &
+		\latexcommand{subsection} &
+		Unterabschnitt
+		\tabularnewline
+		$3$ &
+		\latexcommand{subsubsection} &
+		Unterunterabschnitt
+		\tabularnewline
+		\bottomrule
+	\end{tabular}
+	\caption{Abschnittsebenen}
+	\label{tab:tocdepth}
+\end{table}
+
+Zum Testen des Inhaltsverzeichnises (und anderer Dinge in der Zukunft) wird auch die Package \latexpackage{blindtext} sehr empfohlen.
+Diese stellt die Commands \latexcommand{blindtext}, das einen große Menge sprachensentiven Blindtext einfügt, und \latexcommand{blinddocument}, das ein langes Testdokument voll mit Abschnitten und Kapitel einfügt, bereit.
+
+\section{Anpassung}
+Häufig möchte man das Aussehen der Überschriften noch ein wenig anpassen.
+Die KOMA-Klassen stellen dazu einige relativ simple Commands zur Verfügung, die man in der Präambel verwenden kann, um verschiedenste Aspekte der Abschnittscommands zu verändern.
+Beim Verwenden der Standardklassen muss auf die -- nach der Meinung des Autors deutlich unintuitivere -- Package \latexpackage{titlese} zurückgegriffen werden, die hier nicht näher thematisiert wird.
+
+Im Folgenden werden wir das Aussehen von \latexcommand{section} modifizieren, aber die selben Commands funktionieren -- mit den offentsichtlichen Abwandlungen -- auch für \latexcommand{part}, \latexcommand{chapter} und (mit kleinen Ausnahmen) \latexcommand{subsection} sowie \latexcommand{subsubsection}.
+
+\subsection{Schrift}
+Die einfachste mögliche Abwandlung ist die der Schrift des Abschnittstitels.
+In KOMA geschieht dies mittels des Commands \latexcommand{addtokomafont}:
+\begin{latexlisting}
+	\addtokomafont{section}{\normalsize\rmfamily\mdseries\itshape}
+\end{latexlisting}
+Hier werden einige Formatierungsoptionen über sogenannte \emph{font commands} gesetzt.
+Diese unterscheiden sich leicht von den bisher bekannten Commands wie etwa \latexcommand{textit}: Letzteres erhält ein Argument, das kursiv gesetzt wird, während \latexcommand{itshape} ähnlich wie \latexcommand{selectfont} einen Effekt bis zum Ende des aktuellen Blocks aktiviert.
+Neben diesen in \autoref{tab:basic-font-commands} aufgeführten Font-Commands sind auch die in \autoref{tab:font-sizes} aufgeführten Commands zur Schriftgröße sowie das manuelle Setzen der Schriftgröße hier möglich und Verändern das Aussehen von Abschnittstiteln entsprechend.
+Es ist dabei guter Stil, jeweils genau eine Size, Family, Series und Shape anzugeben, also beispielsweise \latexcommand{mdseries} explizit auszuschreiben, obwohl es sich um den Default handelt und weggelassen werden könnte.
+Natürlich ist in der Theorie jeder mögliche \LaTeX -Code zugelassen, aber wer sich auf diese Commands beschränkt, vermeidet unangenehme Überraschungen und unerwartetes Verhalten.
+Wer kompliziertere Änderungen an seinen Abschnittstiteln vornehmen will, kann stattdessen die in den nächsten Unterabschnitten vorgestellen Commands verwenden.
+
+\begin{table}
+	\begin{tabular}{l p{10cm}}
+		\toprule
+		\textbf{Command} & \textbf{Wirkung} \tabularnewline
+		\midrule
+		\latexcommand{rmfamily} &
+		Gewöhnliche Schriftart (mit Serifen)
+		\tabularnewline
+		\latexcommand{sffamily} &
+		Serifenlose Schrift
+		\tabularnewline
+		\latexcommand{ttfamily} &
+		Schreibmaschinen-Schrift (Monospace)
+		\tabularnewline
+		\latexcommand{mdseries} &
+		Normalfette Schrift
+		\tabularnewline
+		\latexcommand{bfseries} &
+		Fette Schrift
+		\tabularnewline
+		\latexcommand{upshape} &
+		Normalausgerichtete Schrift
+		\tabularnewline
+		\latexcommand{itshape} &
+		Kursive Schrift
+		\tabularnewline
+		\latexcommand{slshape} &
+		Geschrägte Schrift
+		\tabularnewline
+		\latexcommand{scshape} &
+		Kapitälchen
+		\tabularnewline
+		\bottomrule
+	\end{tabular}
+	\caption{Grundlegende Font-Commands}
+	\label{tab:basic-font-commands}
+\end{table}
+
+\subsection{Abstände}
+Weiterhin lassen sich die Abstände vor und nach der Abschnittsüberschrift dynamisch anpassen.
+Hierzu wird das Command \latexcommand{RedeclareSectionCommand} verwendet.
+\begin{latexlisting}
+	\RedeclareSectionCommand[
+		beforeskip=1\baselineskip,
+		afterskip=5cm,
+		afterindent=false,
+	]{section}
+\end{latexlisting}
+Man beachte hier, dass beim Anpassen von z.B. \latexcommand{chapter} nur das hintere \latexargument{section} durch \latexargument{chapter} ersetzt wird, der Commmandname \latexcommand{RedeclareSectionCommand} aber gleichbleibt.
+Die Key/Value-Paare des optionalen Arguments haben hierbei die folgenden Auswirkungen:
+\begin{itemize}
+	\item \latexargument{beforeskip}: Abstand vor dem Abschnittstitel.
+	Wird häufig als Vielfaches von \latexcommand{baselineskip}, dem Standard-Abstand zwischen zwei Zeilen, angegeben.
+	Alternativ sind Einheiten wie cm, pt, em, ex, \dots erlaubt.
+	\item \latexargument{afterskip}: Wie \latexargument{beforeskip}.
+	\item \latexargument{afterindent}: Kann nur auf \latexargument{true} oder \latexargument{false} gesetzt werden.
+	 Verhindert, dass der Absatz nach dem Abschnittstitel horizontal eingerückt wird.
+	Je nachdem, welche KOMA-Version verwendet wird, kann es sein, dass zusätzlich oder stattdessen der \latexargument{beforeskip} negativ gegeben werden muss, damit dies funktioniert (der vorherige Abstand ist dann trotzdem positiv und existent).
+\end{itemize}
+%TODO: Mehr über Skips https://tex.stackexchange.com/questions/41476/lengths-and-when-to-use-them und Einheiten (Session 4)
+
+\subsection{Abschnittszähler}
+Zusätzlich können wir auch den Abschnittszähler, der vor dem Titel erscheint, formatieren:
+\begin{latexlisting}
+\renewcommand*{\sectionformat}{\Large\scshape\thesection\qquad}	
+\end{latexlisting}
+Hier werden wie bei der Formatierung des Titels selbst Anpassungen wie Größe oder Form vorgenommen.
+Anders als dort muss die Nummerierung selbst mit dem Command \latexcommand{thesection} (respektive \latexcommand{\thechapter}, \dots) manuell eingefügt werden und wird andernfalls weggelassen.
+Dies erlaubt es einem aber auch, die Nummerierung mit zusätzlichem Text zu versehen, etwa
+\begin{latexlisting}
+\renewcommand*{\sectionformat}{\Large\scshape\thesection . Abschnitt\qquad}	
+\end{latexlisting}
+Außerdem ist es in den meisten Fällen sinnvoll, nach der Nummerierung etwas Platz einzufügen, beispielsweise mit dem Command \latexcommand{quad} oder für etwas mehr Kontrolle \latexcommand{hspace\{2cm\}} oder ähnlich.
+Andernfalls wird nämlich der Titel selbst ohne Abstand direkt hinter die Nummerierung gesetzt.
+
+\subsection{Genauere Anpassungen}
+Für genauere Anpassungen kann das Command \latexcommand{sectionlinesformat} (sowie seine Geschwister) redefiniert werden:
+\begin{latexlisting}
+	\renewcommand{\sectionlinesformat}[4]{%
+	  \rule[-.15\baselineskip]{\linewidth}{.5pt}\par\nobreak%
+	  #3%
+	  #4% 
+	}
+\end{latexlisting}
+Der innere Teil dieser Redefinition wird dann für jeden Section-Titel ausgeführt, wobei \latexargument{\#3} durch die (bereits formatierte) Nummerierung und \latexargument{\#4} durch den bereits formatierten Abschnittstitel ersetzt werden.
+Hier instruieren wir \LaTeX{} also, eine horizontale Linie quer über die Seite zu zeichnen und dann Nummer und Titel zu drucken, aber es sind natürlich deutlich kompliziertere Konstruktionen möglich.
+Es ist zu beachten, dass, anders als bei den vorherigen Anpassungen, dieses Command stets für alle drei Abschnittsebenen \latexcommand{section}, \latexcommand{subsection} und \latexcommand{subsubsection} verwendet wird und daher Änderungen all diese drei Ebenen betreffen.
+
+\section{Matters}
+Die \latexargument{scrbook}- und \latexargument{book}-Klassen verfügen noch über drei weitere Strukturcommands: \latexcommand{frontmatter}, \latexcommand{mainmatter} und \latexcommand{backmatter}.
+Diese teilen ein Buch in drei inhaltliche Teile:
+Die \emph{Front Matter} umfasst alles zwischen Titel und dem ersten Inhaltskapitel, also Vorwort, Einführung, Inhaltsverzeichnis, etc.
+Kapitel in der Front Matter werden nicht nummeriert, und die Seitenzahlen sind römisch.
+Die \emph{Main Matter} umfasst den Haupttext.
+Kapitel hier sind nummeriert, die Seitenzahlen sind arabisch und werden mit Beginn der Main Matter zurückgesetzt.
+Die \emph{Back Matter} enthält den Anhang, Index, Bibliographie, Abbildungsverzeichnisse, Glossare und weitere Zusatzinformationen, die nicht zum Haupttext gehören.
+Kapitel hier sind nicht mehr nummeriert, aber die Seitenzahlen werden nicht zurückgesetzt.
+\begin{latexlisting}
+	\maketitle
+	\frontmatter
+	\chapter{Preface}
+	\blindtext[4]
+
+	\clearpage
+	\tableofcontents
+	\clearpage
+
+	\chapter{Introduction}
+	\blindtext[2]
+
+	\mainmatter
+
+	\chapter{Installation}
+	\blindtext[10]
+
+	\chapter{First Document}
+	\blindtext[10]
+
+	\backmatter
+	\chapter{Appendix A}
+	\blindtext[5]
+\end{latexlisting}
+
+\section{Kopf- und Fußzeilen}
+
+\section{Aufzählungen}

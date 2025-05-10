@@ -41,16 +41,17 @@
 % Sections
 \addtokomafont{section}{\large\bfseries}
 \renewcommand*{\sectionformat}{\upshape\bfseries\thesection\enskip\hspace*{2px}}
-\renewcommand{\sectionlinesformat}[3]{%
+\renewcommand{\sectionlinesformat}[4]{%
   \rule[-.15\baselineskip]{\linewidth}{.5pt}\par\nobreak%
-  #3% 
+  #3%
+  #4% 
 }
 \RedeclareSectionCommand[afterskip=1\baselineskip plus 2pt minus 2pt]{section}
 
 % Subsections
 \addtokomafont{subsection}{\normalsize\mdseries\scshape}
 \renewcommand*{\subsectionformat}{\upshape\mdseries\scshape\thesubsection\enskip}
-\RedeclareSectionCommand[beforeskip=2\baselineskip,afterskip=1.0\baselineskip plus 2pt minus 2pt]{subsection}
+\RedeclareSectionCommand[beforeskip=-2\baselineskip,afterskip=1.0\baselineskip plus 2pt minus 2pt]{subsection}
 
 % Chapter
 \RedeclareSectionCommand[beforeskip=0\baselineskip,afterskip=1\baselineskip,afterindent=false]{chapter}
