@@ -205,7 +205,11 @@ Die Key/Value-Paare des optionalen Arguments haben hierbei die folgenden Auswirk
 	 Verhindert, dass der Absatz nach dem Abschnittstitel horizontal eingerückt wird.
 	Je nachdem, welche KOMA-Version verwendet wird, kann es sein, dass zusätzlich oder stattdessen der \latexargument{beforeskip} negativ gegeben werden muss, damit dies funktioniert (der vorherige Abstand ist dann trotzdem positiv und existent).
 \end{itemize}
-%TODO: Mehr über Skips https://tex.stackexchange.com/questions/41476/lengths-and-when-to-use-them und Einheiten (Session 4)
+
+\paragraph{Exkurs: Skips}: 
+Beim Design von (Abschnitts-)titels ist es oft wünschenswert, an gewissen Stellen etwas leeren horizontalen oder vertikalen Platz zu lassen.
+Dies geschieht in \LaTeX{} mithilfe von sogenannten \emph{Skips} (\enquote{Sprüngen}).
+%TODO
 
 \subsection{Abschnittszähler}
 Zusätzlich können wir auch den Abschnittszähler, der vor dem Titel erscheint, formatieren:
@@ -231,7 +235,7 @@ Für genauere Anpassungen kann das Command \latexcommand{sectionlinesformat} (so
 	}
 \end{latexlisting}
 Der innere Teil dieser Redefinition wird dann für jeden Section-Titel ausgeführt, wobei \latexargument{\#3} durch die (bereits formatierte) Nummerierung und \latexargument{\#4} durch den bereits formatierten Abschnittstitel ersetzt werden.
-Hier instruieren wir \LaTeX{} also, eine horizontale Linie quer über die Seite zu zeichnen und dann Nummer und Titel zu drucken, aber es sind natürlich deutlich kompliziertere Konstruktionen möglich.
+Hier instruieren wir \LaTeX{} also, eine horizontale Linie (\latexcommand{rule}) quer über die Seite zu zeichnen und dann Nummer und Titel zu drucken, aber es sind natürlich deutlich kompliziertere Konstruktionen möglich.
 Es ist zu beachten, dass, anders als bei den vorherigen Anpassungen, dieses Command stets für alle drei Abschnittsebenen \latexcommand{section}, \latexcommand{subsection} und \latexcommand{subsubsection} verwendet wird und daher Änderungen all diese drei Ebenen betreffen.
 
 \section{Matters}
@@ -270,5 +274,164 @@ Kapitel hier sind nicht mehr nummeriert, aber die Seitenzahlen werden nicht zur�
 \end{latexlisting}
 
 \section{Kopf- und Fußzeilen}
+Eine weitere oft genutzte Anpassung sind die Kopf- und Fußzeilen des Dokuments.
+Hierfür kann -- in KOMA-Klassen -- die Package \latexpackage{scrlayer-scrpage} verwendet werden.
+In den Standardklassen bietet sich stattdessen die Package \latexpackage{fancyhdr} an, die wir an dieser Stelle nicht weiter thematisieren.
+\begin{latexlisting}
+	% Präambel
+	\usepackage{scrlayer-scrpage}
+\end{latexlisting}
+Die Kopf- und Fußzeile besteht aus drei Regionen: Links, Zentrum und Rechts, die jeweils einzeln gesetzt werden können.
+In zweiseitigen Dokumenten (\latexargument{scrbook}) können wir diese auch abwechselnd definieren, also Außen und Innen statt Links und Rechts.
+Ein solches Command wäre
+\begin{latexlisting}
+	% Präambel
+	\ofoot{Seite \thepage}
+\end{latexlisting}
+welches unten außen (also links auf linken Seiten und rechts auf rechten Seiten) die Seitenzahl einfügt.
+\latexcommand{ofoot} und seine Geschwister sind in Tabelle \autoref{tab:footer-commands} aufgeführt.
+
+\begin{table}
+	\begin{tabular}{l p{3cm} p{7cm}}
+		\toprule
+		\textbf{Command} & \textbf{Bedeutung} & \textbf{Effekt} \tabularnewline
+		\midrule
+		\latexcommand{lfoot}, \latexcommand{ihead} &
+		Left &
+		Links bei einseitigen Dokumenten
+		\tabularnewline
+		\latexcommand{cfoot}, \latexcommand{chead} &
+		Center &
+		Zentriert in der Mitte der Kopf- oder Fußzeile
+		\tabularnewline
+		\latexcommand{rfoot}, \latexcommand{rhead} &
+		Rechts &
+		Rechts bei doppelseitigen Dokumenten
+		\tabularnewline
+		\latexcommand{ifoot}, \latexcommand{ihead} &
+		Inner &
+		Innen bei doppelseitigen Dokumenten
+		\tabularnewline
+		\latexcommand{ofoot}, \latexcommand{ohead} &
+		Outer &
+		Außen bei doppelseitigen Dokumenten
+		\tabularnewline
+		\latexcommand{lefoot}, \latexcommand{lehead} &
+		Left Even &
+		Links auf den geraden Seiten von doppelseitigen Dokumenten
+		\tabularnewline
+		\latexcommand{refoot}, \latexcommand{rehead} &
+		Right Even &
+		Rechts auf den geraden Seiten von doppelseitigen Dokumenten
+		\tabularnewline
+		\latexcommand{lofoot}, \latexcommand{lohead} &
+		Left Odd &
+		Links auf den ungeraden Seiten von doppelseitigen Dokumenten
+		\tabularnewline
+		\latexcommand{rofoot}, \latexcommand{rohead} &
+		Right Odd &
+		Rechts auf den ungeraden Seiten von doppelseitigen Dokumenten
+		\tabularnewline
+		\bottomrule
+	\end{tabular}
+	\caption{Commands für Kopf- und Fußzeilen}
+	\label{tab:footer-commands}
+\end{table}
+
+Ein solches Command kann natürlich jeden möglichen \LaTeX{}-Code enthalten und auch farbig oder sonstig hervorgehoben werden.
+Inhaltlich nützlich sind oft die Commands \latexcommand{leftmark} und \latexcommand{rightmark}, die Informationen über den Titel des Dokuments/Kapitels/Abschnitts enthalten.
+
+Häufig wird die Kopf- oder Fußzeile, wenn vorhanden, durch eine horizontale Linie vom Hauptblock des Textes abgetrennt.
+Die \latexpackage{scrlayer-scrpage}-Package macht dies durch eine einfach Option möglich:
+\begin{latexlisting}
+\usepackage[footsepline, headsepline]{scrlayer-scrpage}	
+\end{latexlisting}
+Soll die Kopf- und Fußzeile auf einer Seite (z.B. der Titelseite, oder Seiten mit Kapitelüberschriften) ausgelassen werden, so kann dies mit dem Command
+\begin{latexlisting}
+	\thispagestyle{empty}
+\end{latexlisting}
+erreicht werden, dass den \emph{Page Style} setzt, der Dinge wie eben Kopf- und Fußzeilen aber auch die Größe des Textbereiches und der Seite anpasst. Mit
+\begin{latexlisting}
+	\pagestyle{empty}
+\end{latexlisting}
+wird der Page Style bis zur nächsten Änderung auf \latexargument{empty} gesetzt, dies kann durch
+\begin{latexlisting}
+	\pagestyle{scrheadings}
+\end{latexlisting}
+wieder aufgehoben werden.
+Ebenfalls manchmal nützlich ist der Page Style \latexargument{plain}, der nur eine einfache Seitenzahl enthält.
+Es ist auch möglich, eigene Page Styles zu definieren, dies werden wir an dieser Stelle aber nicht im Detail besprechen.
+
+\section{Titelseite}
+Wer seine Titelseite nicht automatisch von \latexcommand{maketitle} generieren lassen möchte, kann diese auch selbst erstellen.
+Hierfür sind vorerst keine Packages nötig, da die KOMA-Klassen sowie die Standardklassen die Umgebung \latexenvironment{titlepage} für diesen Zweck bereitstellen:
+\begin{latexlisting}
+	\begin{titlepage}
+		\centering
+		~\vfill
+		{
+			\Huge
+			\scshape
+			MOBY DICK
+		}\\
+		\bigskip
+		{
+			\Large
+			Or: The Whale
+		}\\
+		\vspace{2cm}
+		{
+			\itshape
+			Herman Melville
+		}
+		\vfill
+		1851
+	\end{titlepage}
+\end{latexlisting}
+Diese Umgebung hat einige Effekte wie beispielsweise das Zurücksetzen der Seitenzahl und sollte niemals mit \latexcommand{titlepage} kombiniert werden.
+Die Verwendung der Package \latexpackage{titling} erlaubt außerdem die Verwendugn der Command \latexcommand{thetitle} und \latexcommand{theauthor}, damit die für \latexcommand{maketitle} festgelegten Metadaten hier  und an anderen Stellen einheitlich verwendet werden können.
+\begin{latexlisting}
+	\begin{titlepage}
+		\centering
+		~\vfill
+		{
+			\Huge
+			\thetitle
+		}\\
+		\bigskip
+		{
+			\Large
+			Or: The Whale
+		}\\
+		\vspace{2cm}
+		{
+			\itshape
+			\theautor
+		}
+		\vfill
+		\thedate
+	\end{titlepage}
+\end{latexlisting}
+
+\subsection{Abstract}
+In wissenschaftlichen Texten stellt man dem Text gerne ein \emph{Abstract}, eine kurze inhaltliche Zusammenfassung, voran.
+In den KOMA-Klassen geschieht dies mittels des environments \latexenvironment{abstract}.
+Dieses kann vor oder nach dem Inhaltsverzeichnis, aber auch auf der Titelseite verwendet werden und markiert den Inhalt damit semantisch als das Abstract und nimmt einige kleine Formatierungsanpassungen vor.
+\begin{latexlisting}
+	\begin{titlepage}
+		\centering
+		~\vfill
+		{
+			\Huge
+			\scshape
+			Eine Einführung in \LaTeX{}
+		}
+		\vfill
+		\begin{abstract}
+			In diesem Dokument diskutieren wir Grundlagen der Textsatzprogrammsammlung \LaTeX{}.
+		\end{abstract}
+		\vfill
+	\end{titlepage}
+\end{latexlisting}
 
 \section{Aufzählungen}
