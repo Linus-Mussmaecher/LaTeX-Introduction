@@ -178,6 +178,15 @@ Wer kompliziertere Änderungen an seinen Abschnittstiteln vornehmen will, kann s
 		\latexcommand{scshape} &
 		Kapitälchen
 		\tabularnewline
+		\latexcommand{\centering} &
+		Zentriert
+		\tabularnewline
+		\latexcommand{\raggedleft} &
+		Rechtsbündig
+		\tabularnewline
+		\latexcommand{\raggedright} &
+		Linksbündig
+		\tabularnewline
 		\bottomrule
 	\end{tabular}
 	\caption{Grundlegende Font-Commands}
@@ -272,6 +281,53 @@ Kapitel hier sind nicht mehr nummeriert, aber die Seitenzahlen werden nicht zur�
 	\chapter{Appendix A}
 	\blindtext[5]
 \end{latexlisting}
+
+\subsection{Seitenzahlen \& Counter}
+In einigen Fällen möchte man Seitenzahlen auch manuell anpassen, um z.B. künstlichen Forderungen bei abzugebenden Arbeiten gerecht zu werden.
+Seitenzahlen in \LaTeX{} werden in einem \emph{Counter} (deutsch: \emph{Zähler}) gespeichert, wie auch einige andere relevante Daten, die wir später noch kennenlernen.
+Counter können durch zwei wichtige Commands modifiziert werden:
+\begin{latexlisting}
+	\setcounter{page}{3}
+\end{latexlisting}
+Dieser Befehl setzt einen Counter, hier also die aktuelle Seitenzahl.
+Danach wird normal weitergezählt.
+Soll stattdessen beispielsweise eine Seite übersprungen werden, können wir mit dem Command
+\begin{latexlisting}
+	\addtocounter{page}{2}
+\end{latexlisting}
+den Counter einmalig um $2$ erhöhen und dann normal weiterzählen.
+Für den Sonderfall des Erhöhens um $1$ existiert auch der Befehl
+\begin{latexlisting}
+	\stepcounter{page}
+\end{latexlisting}
+Dies funktioniert auch mit Sections und Chaptern:
+\begin{latexlisting}
+	\section{Ein Abschnitt}
+	\addtocounter{section}{1}
+	\section{Oha, da fehlt was!}
+\end{latexlisting}
+Einen Counter auslesen können wir mit dem Command \latexcommand{the<countername>}, beispielweise \latexcommand{thepage} oder \latexcommand{thesection}, die wir schon kennengelernt haben.
+Dies ist allerdings etwas veralteter \TeX -Syntax.
+In \LaTeX{} sollte man stattdessen den Befehl \latexcommand{value} verwenden, wenn man den Wert des Counters für arithmetische Zwecke braucht, beispielsweise
+\begin{latexlisting}
+	\addtocounter{section}{\value{page}}
+\end{latexlisting}
+falls man, aus welchen Gründen auch immer, so viele Kapitel überspringen will wie die aktuelle Seitenzahl.
+Möchte man den Wert des Counters stattdessen anzeigen, so ist eine der folgenden Optionen empfohlen, die direkt die gewünschte Repräsentation angibt:
+\begin{latexlisting}
+	\arabic{page}
+	\roman{page}
+	\Roman{page}
+	\fnsymbol{page}
+	\alph{page}
+	\Alph{page}
+\end{latexlisting}
+Schließlich lassen sich auch eigene Counter erzeugen:
+\begin{latexlisting}
+	\newcounter{mycounter}
+\end{latexlisting}
+Dies ist allerdings eine fortgeschrittene Anwendung von Countern, die im täglichen Gebrauch eher selten zum Einsatz kommt.
+
 
 \section{Kopf- und Fußzeilen}
 Eine weitere oft genutzte Anpassung sind die Kopf- und Fußzeilen des Dokuments.
@@ -433,5 +489,7 @@ Dieses kann vor oder nach dem Inhaltsverzeichnis, aber auch auf der Titelseite v
 		\vfill
 	\end{titlepage}
 \end{latexlisting}
+
+
 
 \section{Aufzählungen}

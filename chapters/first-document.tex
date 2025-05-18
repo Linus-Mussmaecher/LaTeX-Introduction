@@ -470,13 +470,13 @@ Die Package \latexpackage{blindtext} beispielsweise stellt das Command \latexcom
 Packages werden mittels des \latexcommand{usepackage}-Commands in der Präambel eingebunden, traditionell direkt nach dem \latexcommand{documentclass}-Command.
 Die von ihnen definierten Commands können dann in der Präambel oder im Content verwendet werden.
 In seltenen Fällen kann die Reihenfolge, in der Packages eingebunden werden relevant sein.
-Packages können mittels des optionalen Arguments von \latexcommand{usepackage} noch genauer konfiguriert werden, im folgenden Beispiel etwa führt das Übergeben des Arguments \latexargument{landscape} an die Package \latexpackage{geometry} dazu, dass unser Dokument im Querformat gesetzt wird.
+Packages können mittels des optionalen Arguments von \latexcommand{usepackage} noch genauer konfiguriert werden, im folgenden Beispiel etwa führt das Übergeben des Arguments \latexargument{T1} an die Package \latexpackage{fontenc} dazu, dass die Schrift des Ausgabe-PDFs in T1 enkodiert wird.
 Das Package \latexpackage{xcolor} wiederum definiert Commands, mit denen wir Text einfärben können:
 \begin{latexlisting}
 	\documentclass[12pt, ngerman]{scrartcl}
 
 	\usepackage{blindtext}
-	\usepackage[landscape]{geometry}
+	\usepackage[T1]{fontenc}
 	\usepackage{xcolor}
 	\definecolor{my_blue}{RGB}{69,100,186}
 
