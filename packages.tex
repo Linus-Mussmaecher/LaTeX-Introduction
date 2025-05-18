@@ -116,8 +116,8 @@
 % ===      Code      ===
 % ===                ===
 
-\usepackage{listings}		% code
-\usepackage{lstautogobble}  %gobbles leading whitespace
+\usepackage{listings}		% Allow code blocks in text
+\usepackage{lstautogobble}  % Gobbles leading whitespace
 \lstnewenvironment{latexlisting}{
 \lstset{
     language=[LaTeX]TeX,
@@ -127,6 +127,7 @@
     numberstyle=\tiny\color{codegray},
     stringstyle=\color{codepurple},
     basicstyle=\ttfamily\footnotesize,
+	columns=fullflexible,
     breakatwhitespace=false,         
     breaklines=true,                 
     keepspaces=true,                 
