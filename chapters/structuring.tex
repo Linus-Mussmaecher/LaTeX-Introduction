@@ -282,7 +282,7 @@ Kapitel hier sind nicht mehr nummeriert, aber die Seitenzahlen werden nicht zur�
 	\blindtext[5]
 \end{latexlisting}
 
-\subsection{Seitenzahlen \& Counter}
+\subsection{Seitenzahlen \& Counter}\label{sec:pages-and-counters}
 In einigen Fällen möchte man Seitenzahlen auch manuell anpassen, um z.B. künstlichen Forderungen bei abzugebenden Arbeiten gerecht zu werden.
 Seitenzahlen in \LaTeX{} werden in einem \emph{Counter} (deutsch: \emph{Zähler}) gespeichert, wie auch einige andere relevante Daten, die wir später noch kennenlernen.
 Counter können durch zwei wichtige Commands modifiziert werden:
@@ -313,15 +313,39 @@ In \LaTeX{} sollte man stattdessen den Befehl \latexcommand{value} verwenden, we
 	\addtocounter{section}{\value{page}}
 \end{latexlisting}
 falls man, aus welchen Gründen auch immer, so viele Kapitel überspringen will wie die aktuelle Seitenzahl.
-Möchte man den Wert des Counters stattdessen anzeigen, so ist eine der folgenden Optionen empfohlen, die direkt die gewünschte Repräsentation angibt:
-\begin{latexlisting}
-	\arabic{page}
-	\roman{page}
-	\Roman{page}
-	\fnsymbol{page}
-	\alph{page}
-	\Alph{page}
-\end{latexlisting}
+Möchte man den Wert des Counters stattdessen anzeigen, so ist eine der in \ref{tab:counter-representations} aufgeführten Optionen empfohlen, die direkt die gewünschte Repräsentation angibt:
+
+\begin{table}
+	\begin{tabular}{l p{5cm} p{5cm}}
+		\toprule
+		\textbf{Command} & \textbf{Ziel} & \textbf{\latexcommand{<command>\{page\}}} \tabularnewline
+		\midrule
+		\latexcommand{arabic} &
+		Arabische Zahlen &
+		\arabic{page}
+		\tabularnewline
+		\latexcommand{roman} &
+		Römische Zahlen, klein &
+		\roman{page}
+		\tabularnewline
+		\latexcommand{Roman} &
+		Römische Zahlen, groß &
+		\Roman{page}
+		\tabularnewline
+		\latexcommand{alph} &
+		Kleinbuchstaben &
+		\alph{page}
+		\tabularnewline
+		\latexcommand{Alph} &
+		Großbuchstaben &
+		\Alph{page}
+		\tabularnewline
+		\bottomrule
+	\end{tabular}
+	\caption{Darstellung von Zählern}
+	\label{tab:counter-representations}
+\end{table}
+
 Schließlich lassen sich auch eigene Counter erzeugen:
 \begin{latexlisting}
 	\newcounter{mycounter}
@@ -490,6 +514,94 @@ Dieses kann vor oder nach dem Inhaltsverzeichnis, aber auch auf der Titelseite v
 	\end{titlepage}
 \end{latexlisting}
 
-
-
 \section{Aufzählungen}
+
+Als letzte Form der kleinteiligen Strukturierung existieren in \LaTeX{} noch \emph{Aufzählungen}.
+Eine Aufzählung ist eine Umgebung (entweder \latexenvironment{itemize} oder \latexenvironment{enumerate}), in denen der Befehl \latexcommand{item} verwendet werden kann.
+\begin{latexlisting}
+	\begin{enumerate}
+		\item Schokolade
+		\item Honig
+		\item Nüsse
+		\item Succade
+	\end{enumerate}
+\end{latexlisting}
+Dabei erzeugt \latexenvironment{itemize} unnummerierte Aufzählungen und \latexenvironment{enumerate} nummerierte.
+Aufzählungen können beliebig verschachtelt werden, dies ändert dann auch das verwendete Aufzählungszeichen.
+\begin{latexlisting}
+	\begin{enumerate}
+		\item Erster Weihnachtstag
+		\begin{enumerate}
+			\item Ein Rebhuhn im Birnenbaum
+		\end{enumerate}
+		\item Zweiter Weihnachtstag
+		\begin{enumerate}
+			\item Ein Rebhuhn im Birnenbaum
+			\item Zwei Tauben
+		\end{enumerate}
+		\item \dots
+	\end{enumerate}
+\end{latexlisting}
+Wir können das Aufzählungszeichen einzelner Punkte manuell ändern:
+\begin{latexlisting}
+	Weihnachtsliederranking:
+	\begin{enumerate}
+		\item Hört der Engel helle Lieder
+		\item Deck the Halls
+		\item[2.] Fröhliche Weihnacht überall
+		\item Leise rieselt der Schnee
+	\end{enumerate}
+\end{latexlisting}
+Man beachte, dass dabei der ersetzte Eintrag übersprungen wird und es also in Beispiel bei $4$ weitergeht.
+Möchte man tatsächlich eine Zahl überspringen, kann man ähnlich wie in \autoref{sec:pages-and-counters} den Zählcounter der Aufzählung manipulieren.
+Dieser Counter hat, je nach Ebene, den Namen \latexargument{enumi}, \latexargument{enumii}, \latexargument{enumiii} oder \latexargument{enumiv}.
+\begin{latexlisting}
+	\begin{enumerate}
+		\item Erster Weihnachtstag
+		\begin{enumerate}
+			\item Ein Rebhuhn im Birnenbaum
+		\end{enumerate}
+		\item \dots
+		\addtocounter{enumi}{9}
+		\item Zwölfter Weihnachtstag
+		\begin{enumerate}
+			\item Ein Rebhuhn im Birnenbaum
+			\item Zwei Tauben
+			\item \dots
+			\addtocounter{enumii}{8}
+			\item Zwölf trommelnde Trommler
+		\end{enumerate}
+	\end{enumerate}
+\end{latexlisting}
+
+\subsection{Anpassung}
+Standardmäßig zählt \LaTeX{} in der ersten Ebene mit arabischen Zahlen und dann mit Kleinbuchstaben.
+Möchte man dies für eine einzelne Aufzählung oder das ganze Dokument ändern
+Die Package \latexpackage{enumitem} erlaubt eine kleinteilige Anpassung der Formatierung von Aufzählungen.
+\begin{latexlisting}
+	% Präambel
+	\usepackage{enumitem}
+	\setlist[enumerate,1]{label=(\roman*)}
+	\setlist[enumerate,2]{label=(\alph*)}
+\end{latexlisting}
+Das Command \latexcommand{setlist} wird hier genutzt, um global das Format von Aufzählungen zu ändern.
+Im optionalen Argument wird dabei die Zielaufzählung (\latexargument{enumerate} oder \latexargument{itemize}) angegeben sowie die gewünschte Ebene.
+Im Argument wird dann das gewünschte Format angegeben.
+Für uns wichtig ist hier hauptsächlich der Key \latexargument{label}, der den Zähler verändert.
+Hier können Klammern, Punkte, etc. frei verwendet werden, durch die in \autoref{tab:counter-representations} aufgeführten Commands mit einen schließenden \latexargument{*} werden dann die entsprechend formatierten Zähler eingefügt.
+Im Beispiel wird also die erste Ebene durch eingeklammerte, kleine römische Zahlen gezählt und die zweite durch eingeklammerte Kleinbuchstaben.
+\latexpackage{enumitem} verfügt neben \latexargument{label} noch über viele weitere Anpassungsoptionen, die sich in der Dokumentation (\url{https://ctan.net/macros/latex/contrib/enumitem/enumitem.pdf}) nachlesen lassen.
+
+Soll die Formatierung nur für eine einzelne Aufzählung geändert werden, kann dies mittels einen optionalen Arguments der Umgebung erreicht werden:
+\begin{latexlisting}
+	Worauf das Kindlein liegt:
+	\begin{enumerate}[label=|\Alph*|]
+		\item Heu
+		\item Stroh
+	\end{enumerate}
+	Wer es froh betrachtet:
+	\begin{enumerate}[label=\textbf{\Roman*}]
+		\item Maria
+		\item Josef
+	\end{enumerate}
+\end{latexlisting}
