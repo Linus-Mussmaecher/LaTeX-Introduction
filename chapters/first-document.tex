@@ -123,30 +123,31 @@ Einige mögliche optinale Argumente werden in \autoref{tab:documentclass-options
 Das nicht-optionale Argument von \latexcommand{documentclass} ist die bereits erwähnte Dokumentklasse.
 Hier können Nutzer auch eigene Klassen definieren, üblich ist es jedoch, eine der mit \LaTeX{} mitgelieferten Optionen zu nutzen.
 
-\subsection{Article}
+\paragraph{Article}
 Die Klasse \latexargument{article} ist der de-facto Standard für kurze ($<100$ Seiten) Dokumente wie Abschlussarbeiten, Arbeitsblätter oder kurze Vorlesungsskripte.
 Article ist \emph{einseitig}, d.h. es gibt anders als bei Büchern keinen Unterschied zwischen rechten und linken Seiten und definiert Commands für Abschnitte, Unterabschnitte und Unterunterabschnitte.
 Zu beachten ist, dass die Standardseitengröße von Article das im englischen Sprachraum gebräuchliche \emph{letterpaper} ist, welches vom in Kontinentaleuropa gebräuchlichen\footnote{und eindeutig überlegenen} A4 leicht abweicht.
 Auch einige andere typografische Einstellungen (Abstände, Seitenränder) sind auf amerikanische Standards angepasst. 
 
-\subsection{Book}
+\paragraph{Book}
 Die Klasse \latexargument{book} ist die Klasse, die für längere Dokumente mit vielen Seiten und Teilen wie Bücher oder längere Skript verwendet wird.
 Sie ist zweiseitig, d.h. unterscheidet zwischen linken und rechten Seiten, und definiert neben den in Article verfügbaren Strukturcommands auch Kapitel und Teile (\latexcommand{chapter} und \latexcommand{part}).
 Auch Book folgt eher amerikanischen Typografiegebräuchen als europäischen.
 
-\subsection{Minimal}
-Die Klasse \latexargument{minimal} definiert fast gar nichts und ist ausschließlich für Testzwecke gedacht.
+\paragraph{Minimal}
+Die Klasse \latexargument{minimal} definiert (fast\footnote{Das \latexargument{minimal}-Classfile ist 5 Zeilen lang.}) gar nichts und ist ausschließlich für Testzwecke gedacht.
+Dies war früher, als das Laden eines Classfiles noch eine nicht ganz vernachlässigbare Zeit dauerte, noch relevanter.
+Heutzutage ist das Laden von \latexargument{minimal} nur noch in extremen Randfällen nötig. 
 
-\subsection{Beamer}
+\paragraph{Beamer}
 Die Klasse \latexargument{beamer} wird von der \latexpackage{beamer}-Package bereitgestellt und für Präsentationen verwendet.
+Ihre Definition ist extrem umfangreich und enthält Strukturcommands, Commands für Animationen und andere präsentationsspezifische Effekte sowie umfangreiche Commands zur Modifikation des Folienlayouts.
 
-\subsection{Scrartcl}
+\paragraph{Scrartcl}
 Die Klasse \latexargument{scrartcl} wird von der KOMA-Package-Sammlung definiert und ist eine europäische Variante von \latexargument{article}, die außerdem viele andere praktische Commands definiert und (im Gegensatz zum im \LaTeX{}-Kern enthaltenen und daher recht statischen \latexargument{article}) stets von aktiven Entwicklern verbessert und up-to-date gehalten wird.
 Dies ist die Klasse, die man (als Europäer) per default für alle kürzeren Dokumente verwenden sollte, auch wenn das Internet oft naiv einfach \latexargument{article} empfiehlt.
 Insbesondere sollten wir die Dokumentklasse unseres Beispiels nun ändern:
 
-\subsection{Scrbook}
-Die Klasse \latexargument{scrbook} ist zu \latexargument{book} was \latexargument{scrartcl} zu \latexargument{article} ist und sollte der Standard für alle längeren, zweiseitigen Dokumente sein.
 \begin{latexlisting}
 	\documentclass[12pt, ngerman]{scrartcl}
 
@@ -154,6 +155,9 @@ Die Klasse \latexargument{scrbook} ist zu \latexargument{book} was \latexargumen
 		Hallo, LaTeX!
 	\end{document}
 \end{latexlisting}
+
+\paragraph{Scrbook}
+Die Klasse \latexargument{scrbook} ist zu \latexargument{book} was \latexargument{scrartcl} zu \latexargument{article} ist und sollte der Standard für alle längeren, zweiseitigen Dokumente sein.
 
 
 \section{Umgebungen}
