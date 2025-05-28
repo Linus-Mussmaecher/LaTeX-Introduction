@@ -178,13 +178,13 @@ Wer kompliziertere Änderungen an seinen Abschnittstiteln vornehmen will, kann s
 		\latexcommand{scshape} &
 		Kapitälchen
 		\tabularnewline
-		\latexcommand{\centering} &
+		\latexcommand{centering} &
 		Zentriert
 		\tabularnewline
-		\latexcommand{\raggedleft} &
+		\latexcommand{raggedleft} &
 		Rechtsbündig
 		\tabularnewline
-		\latexcommand{\raggedright} &
+		\latexcommand{raggedright} &
 		Linksbündig
 		\tabularnewline
 		\bottomrule
@@ -281,6 +281,7 @@ Kapitel hier sind nicht mehr nummeriert, aber die Seitenzahlen werden nicht zur�
 	\chapter{Appendix A}
 	\blindtext[5]
 \end{latexlisting}
+Man beachte, dass für das obige Beispiel die Metadaten \latexcommand{title} und \latexcommand{author} gesetzt sein sollten.
 
 \subsection{Seitenzahlen \& Counter}\label{sec:pages-and-counters}
 In einigen Fällen möchte man Seitenzahlen auch manuell anpassen, um z.B. künstlichen Forderungen bei abzugebenden Arbeiten gerecht zu werden.
@@ -313,7 +314,7 @@ In \LaTeX{} sollte man stattdessen den Befehl \latexcommand{value} verwenden, we
 	\addtocounter{section}{\value{page}}
 \end{latexlisting}
 falls man, aus welchen Gründen auch immer, so viele Kapitel überspringen will wie die aktuelle Seitenzahl.
-Möchte man den Wert des Counters stattdessen anzeigen, so ist eine der in \ref{tab:counter-representations} aufgeführten Optionen empfohlen, die direkt die gewünschte Repräsentation angibt:
+Möchte man den Wert des Counters stattdessen anzeigen, so ist eine der in \ref{tab:counter-representations} aufgeführten Optionen empfohlen, die direkt die gewünschte Repräsentation angibt.
 
 \begin{table}
 	\begin{tabular}{l p{5cm} p{5cm}}
@@ -366,7 +367,7 @@ In zweiseitigen Dokumenten (\latexargument{scrbook}) können wir diese auch abwe
 Ein solches Command wäre
 \begin{latexlisting}
 	% Präambel
-	\ofoot{Seite \thepage}
+	\ofoot{Seite \arabic{page}}
 \end{latexlisting}
 welches unten außen (also links auf linken Seiten und rechts auf rechten Seiten) die Seitenzahl einfügt.
 \latexcommand{ofoot} und seine Geschwister sind in Tabelle \autoref{tab:footer-commands} aufgeführt.
