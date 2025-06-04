@@ -1,0 +1,410 @@
+\chapter{Zusätzliche Inhalte}
+In diesem Kapitel beschäftigen wir uns damit, wie wir zusätzliche Inhalte (keinen Fließtext) in unsere Dokumente einbauen können.
+Insbesondere lernen wir dabei sogenannte \emph{floats} kennen, Objekte, deren Position nicht unbedingt mit ihrer Code-Position übereinstimmen und die frei über die Seite \enquote{fließen} können.
+
+\section{Bilder}
+\LaTeX -Dokumente können Bilder in einer Vielzahl an Formaten einbinden, insbesondere \filetype{png}, \filetype{jpg} und \filetype{jpeg}.
+Hierzu verwenden wir das beliebte Package \latexpackage{graphicx}.
+\begin{latexlisting}
+	% Präambel
+	\usepackage{graphicx}
+\end{latexlisting}
+Dann kann im Text der Befehl \latexcommand{includegraphics} benutzt werden, der an der entsprechenden Stelle ein Bild \enquote{inline}, d.h. wie ein (besonders großes) Wort einfügt:
+\begin{latexlisting}
+	Hier ist ein Bild:
+	\includegraphics{my-image.png}
+\end{latexlisting}
+Dies funktioniert natürlich nur, wenn das Bild \filepath{my-image.png} auch existiert und im selben Order liegt wie das zentrale File \filepath{main.tex}.
+Die Dateiendung \filetype{png} kann auch weggelassen werden:
+\begin{latexlisting}
+	Hier ist ein Bild:
+	\includegraphics{my-image}
+\end{latexlisting}
+Dies hat Vor- und Nachteile:
+\begin{itemize}
+	\item \textbf{Vorteil}: Soll das Bild ausgetauscht werden, und ändert sich dabei der Filetype, so muss der Code nicht verändert werden.
+	Außerdem muss man beim Schreiben des Codes nur den Filenamen kennen, nicht die genaue Erweiterung.
+	\item \textbf{Nachteil}: Liegen im Ordner mehrere Dateien mit gleichem Namen, aber unterschiedlicher Erweiterung, so ist nicht immer ganz klar, welche davon von \LaTeX{} bevorzugt wird.
+	Außerdem benötigt das Einfügen des Bildes so etwas mehr Rechenzeit, auch wenn dies in modernen Zeiten kaum noch relevant ist.
+\end{itemize}
+Weiterhin wird aufgefallen sein, dass das Bild immer in Originalgröße eingefügt wird.
+Um das zu beheben, können wir die optionalen Argument von \latexcommand{includegraphics} verwenden:
+\begin{latexlisting}
+	Bilder:
+
+	\includegraphics[scale=0.1]{my-image}
+
+	\includegraphics[height=2cm]{my-image}
+
+	\includegraphics[width=0.8\textwidth]{my-image}
+\end{latexlisting}
+Das Argument \latexargument{scale} skaliert das Bild um einen festen Faktor und ist eher selten nützlich.
+Mit \latexargument{height} und \latexargument{width} kann dagegen die Höhe oder Breite des Bildes auf einen festen gewünschten Wert gesetzt werden.
+Hierzu können auch vordefinierte kontextuelle Breiten wie \latexcommand{textwidth} oder Vielfache derer verwendet werden.
+Wird nur eines dieser Argumente verwendet, wird die andere Dimension automatisch skaliert, um das Format des Bildes nicht zu verändern.
+Werden beide verwendet, wird das Bild eventuell verzerrt.
+
+Es ist in \LaTeX{} üblich, verwendete Bilder nicht direkt mit dem \filepath{main.tex}-File in einem Ordner zu speichern, sondern in einem getrennten Unterordner, der häufig \filepath{graphics} heißt.
+Werden besonders viele Bilder verwendet, kann es sich auch lohnen, diesen Ordner weiter zu untergliedern.
+Auf das Bild kann dann durch Angabe des vollständigen, relativen Pfades zugegriffen werden.
+\begin{latexlisting}
+	\includegraphics{graphics/my-image.png}
+	\includegraphics{graphics/chapter1/my-image.png}
+\end{latexlisting}
+Das \latexpackage{graphicx}-Package erlaubt die Angabe eines Grafikpfades (also z.B. der Ordner \filepath{graphics}).
+Wird dieser spezifiziert, so werden Pfade als relativ zum Grafikpfad gelesen statt relativ zum Hauptordner.
+Das obige Beispiel sähe dann aus wie folgt:
+\begin{latexlisting}
+	% Präambel
+	\graphicspath{{graphics}}
+	% Text
+	\includegraphics{my-image.png}
+	\includegraphics{chapter1/my-image.png}
+\end{latexlisting}
+Man beachte, dass der Pfad in doppelte Klammern gesetzt werden muss.
+
+\section{Positionierung von Bildern: Floats, Labels, Refs}
+Wie bereits erwähnt wird das gewünschte Bild \enquote{inline} eingefügt, also ohne Zeilenumbrüche oder Rand.
+Dies ist gewollt, denn es erlaubt uns Bilder zur Textdekoration zu verwenden, etwa wie folgt:
+\begin{latexlisting}
+	In der \emph{Sedanschlacht} am 01.09.1870 besiegten Truppen des Norddeutschen Bundes unter \includegraphics{prussian-flag} Helmut Moltke die zahlenmäßig unterlegenen französischen Streitkräfte der Generäle \includegraphics{french-flag} Patrice de Mac-Mahon und \includegraphics{french-flag} Auguste-Alexandre Ducrot.
+\end{latexlisting}
+Häufig ist das aber nicht die gewünschte Positionierung von Bildern.
+Ein erste Verbesserung ist es, den \latexcommand{includegraphics}-Befehl mit Leerzeilen abzutrennen,
+\begin{latexlisting}
+	Nach dem Aufmarsch am 31. August standen sich die beiden Armeen wie folgt gegenüber:
+
+	\includegraphics{aufmarschskizze}
+
+	Aus dieser Position heraus begann am 01.09. um 4:00 Uhr morgens die Schlacht.
+\end{latexlisting}
+Hier ist das Bild allerdings noch immer linksbündig.
+Um es zu zentrieren, bietet sich naiv die \latexenvironment{center}-Umgebung an:
+\begin{latexlisting}
+	Nach dem Aufmarsch am 31. August standen sich die beiden Armeen wie folgt gegenüber:
+
+	\begin{center}
+		\includegraphics{aufmarschskizze}		
+	\end{center}
+
+	Aus dieser Position heraus begann am 01.09. um 4:00 Uhr morgens die Schlacht.
+\end{latexlisting}
+
+\subsection{Figures \& Captions}
+
+Das obige Vorgehen ist allerdings generell nicht empfehlenswert, das \LaTeX{} ein viel stärkeres, praktischeres Tool zur Positionierung von Bildern bereitstellt: Floats.
+Beim Betrachten von professionell gesetzten Büchern -- oder auch Wikipedia-Artikeln -- fällt schnell auf, dass sich Bildern selten direkt an der Stelle im Fließtext befinden, an der sie referenziert werden, sondern stattdessen an einer passenden Stelle neben (über, unter) dem Text.
+Sie \enquote{fließen} also über die Seite, weswegen man solche Objekte, die nicht \emph{im}, sondern \emph{neben} dem Text erscheinen, im Englischen als \emph{floats} bezeichnet.
+In \LaTeX{} können wir dies durch die \latexenvironment{figure}-Umgebung umsetzen:
+\begin{latexlisting}
+	Nach dem Aufmarsch am 31. August standen sich die beiden Armeen wie folgt gegenüber:
+
+	\begin{figure}
+		\includegraphics{aufmarschskizze}		
+	\end{figure}
+
+	Aus dieser Position heraus begann am 01.09. um 4:00 Uhr morgens die Schlacht.
+\end{latexlisting}
+Wir bemerken, dass das Bild nun eben nicht genau zwischen den beiden Absätzen erscheint, sondern oben auf der Seite.
+Wir sollten also entsprechend umformulieren:
+\begin{latexlisting}
+	Nach dem Aufmarsch am 31. August standen sich die beiden Armeen wie im beiligenden Bild aufgeführt gegenüber und begannen aus dieser Position heraus am 01.09. um 4:00 Uhr morgens die Schlacht.
+
+	\begin{figure}
+		\includegraphics{aufmarschskizze}		
+	\end{figure}
+\end{latexlisting}
+Außerdem ist das Bild -- erneut -- linksbündig statt zentiert.
+Dieser Mangel der \latexenvironment{figure}-Umgebung lässt sich mittels der Package \latexpackage{floatrow} beheben:
+\begin{latexlisting}
+	% Präambel
+	\usepackage{floatrow}
+\end{latexlisting}
+Für gewöhnlich ist es üblich, solche beiligenden Bilder (engl. \emph{figures}, deutsch \emph{Abbildung}) mit einer Bildunterschrift (engl. \emph{caption}) zu versehen.
+\begin{latexlisting}
+	Nach dem Aufmarsch am 31. August standen sich die beiden Armeen wie im beiligenden Bild aufgeführt gegenüber und begannen aus dieser Position heraus am 01.09. um 4:00 Uhr morgens die Schlacht.
+
+	\begin{figure}
+		\includegraphics{aufmarschskizze}		
+		\caption{Aufmarschskizze vom 31.08.1870}
+	\end{figure}
+\end{latexlisting}
+Dies führt auch dazu, dass unsere Abbildung automatisch nummeriert wird.
+Soll dies in der passenden Sprache geschehen, so ist -- wie so oft -- die \latexpackage{babel}-Package unersetzlich, wobei der verwendete Begriff notfalls auch manuell gesetzt werden kann.
+Weiterhin erscheint die Abbildung damit im Abbildungsverzeichnis, das wie folgt angezeigt werden kann:
+\begin{latexlisting}
+	\listoffigures
+\end{latexlisting}
+Ist die übergebene Bildunterschrift zu lang, um sinnvoll im Verzeichnis angezeigt werden zu können, kann als optionales Argument eine Kurzversion übergeben werden:
+\begin{latexlisting}
+	Nach dem Aufmarsch am 31. August standen sich die beiden Armeen wie im beiligenden Bild aufgeführt gegenüber und begannen aus dieser Position heraus am 01.09. um 4:00 Uhr morgens die Schlacht.
+
+	\begin{figure}
+		\includegraphics{aufmarschskizze}		
+		\caption[Aufmarschskizze]{Aufmarschskizze vom 31.08.1870}
+	\end{figure}
+\end{latexlisting}
+
+\subsection{Positionierung}
+Die genaue Positionierung von Floats ist kompliziert -- der gesamte Algorithmus lässt sich unter \url{https://www.latex-project.org/publications/2014-FMi-TUB-tb111mitt-float-placement.pdf} nachlesen.
+Mit einem optionalen Argument von \latexenvironment{figure} können wir eine Positionierungspräferenz angeben.
+\begin{latexlisting}
+	Nach dem Aufmarsch am 31. August standen sich die beiden Armeen wie im beiligenden Bild aufgeführt gegenüber und begannen aus dieser Position heraus am 01.09. um 4:00 Uhr morgens die Schlacht.
+
+	\begin{figure}[b]
+		\includegraphics{aufmarschskizze}		
+		\caption{Aufmarschskizze vom 31.08.1870}
+	\end{figure}
+\end{latexlisting}
+Die verschiedenen Optionen sind in \autoref{tab:float-options} aufgeführt, die mit der \latexargument{b}-Position gesetzt wurde.
+\begin{table}[b]
+	\begin{tabular}{l p{8cm}}
+		\toprule
+		\textbf{Option} & \textbf{Position}\tabularnewline
+		\midrule
+		\latexargument{t} &
+		Oberer Seitenrand
+		\tabularnewline
+		\latexargument{b} &
+		Unterer Seitenrand
+		\tabularnewline
+		\latexargument{h} &
+		\emph{Here}, also genau an der Position zwischen Absätzen, an der sich der Code befindet.
+		\tabularnewline
+		\latexargument{p} &
+		Auf einer eigenen Seite (evtl. mit anderen Floats, um die Seite zu füllen)
+		\tabularnewline
+		\latexargument{!} &
+		Erzwingt die Positionierung.
+		\tabularnewline
+		\bottomrule
+	\end{tabular}
+	\caption{Positionierungsoptionen von Floats}
+	\label{tab:float-options}
+\end{table}
+Insbesondere die Option \latexargument{!h} ist sehr beliebt, denn sie erreicht genau die Positionierung, die der naive Typograph sich oft intuitiv wünscht.
+\begin{latexlisting}
+	Nach dem Aufmarsch am 31. August standen sich die beiden Armeen wie folgt gegenüber:
+
+	\begin{figure}[!h]
+		\includegraphics{aufmarschskizze}
+		\caption{Aufmarschskizze vom 31.08.1870}
+	\end{figure}
+
+	Aus dieser Position heraus begann am 01.09. um 4:00 Uhr morgens die Schlacht.
+\end{latexlisting}
+Es sei allerding an dieser Stelle erwähnt, dass dies seltener optimal ist, als man denkt.
+
+\subsection{Subfloats}
+Manchmal ist es wünschenswert, mehrere Bilder in einer Abbildung zusammenzufassen.
+Dies kann mit der Package \latexpackage{subfig} und dem Befehl \latexenvironment{subfloat} umgesetzt werden:
+\begin{latexlisting}
+	\begin{figure}
+		\subfloat[Helmut Moltke]{
+			\includegraphics[height=5cm]{moltke}
+		}
+		\hfil
+		\subfloat[Friedrich Willhelm]{
+			\includegraphics[height=5cm]{friedrich-willhelm}
+		}
+		\caption{Deutsche Oberbefehlshaber}
+	\end{figure}
+\end{latexlisting}
+Der \latexcommand{hfil}-Befehl dient hierbei einer gleichmäßigen horizontalen Verteilung der Subabbildungen.
+
+\subsection{Labels \& Refs}
+Wenn das gewünschte Bild nun aber wild über die Seite fließt, ist ein Hinweis wie \enquote{das beiligende Bild} oft nur begrenzt nützlich.
+Praktischer wäre ein Beweis wie \enquote{Bild 4.2}.
+Wir können diesen natürlich einfach manuell in den Text schreiben, aber was wenn wir die Reihenfolge der Bilder verändern, oder weiter vorne eine neue Abbildung einfügen?
+Hierfür bietet sich die Verwendung von \emph{Labels} und \emph{Refs} (\emph{Referenzen})  an.
+\begin{latexlisting}
+	Nach dem Aufmarsch am 31. August standen sich die beiden Armeen wie in Abbildung \ref{fig:aufmarschskizze} aufgeführt gegenüber und begannen aus dieser Position heraus am 01.09. um 4:00 Uhr morgens die Schlacht.
+
+	\begin{figure}
+		\includegraphics{aufmarschskizze}		
+		\caption{Aufmarschskizze vom 31.08.1870}
+		\label{fig:aufmarschskizze}
+	\end{figure}
+\end{latexlisting}
+Der Befehl \latexcommand{label} versieht dabei die \latexenvironment{figure}-Umgebung mit einem nutzergegebenen, eindeutigen Label.
+Dieses kann -- an jeder Stelle im Dokument, auch davor -- durch Verwendung des \latexcommand{ref}-Befehls referenziert werden und \LaTeX{} fügt dann automatich die korrekte Zahl ein.
+Wird die Package \latexpackage{hyperref} verwendet, wird diese Zahl sogar mit der Position des Bildes verlinkt.
+Der Befehl \latexcommand{ref} hat -- solange das Package \latexpackage{hyperref} eingebunden ist -- einige Varianten, wichtig sind \latexcommand{pageref} (zeigt nicht die Nummer des Ziels an, sondern die Seite und ist nützlich für Beweise über lange Strecken hinweg) sowie \latexcommand{autoref} (zeigt zusätzlich noch den Typ des Ziels an).
+\begin{latexlisting}
+	Am zweiten Tag der Schlacht hatte sich die ursprüngliche Aufstellung (siehe \autoref{fig:aufmarschskizze}, Seite \pageref{fig:aufmarschskizze}) deutlich verändert.
+\end{latexlisting}
+Nicht alle Objekte funktionieren out-of-the-box reibungslos mit \latexcommand{autoref}, und teilweise ist hier etwas manuelle Anpassung notwendig, die über das Ziel dieses Skripts hinaus geht.
+
+Nicht nur Abbildungen und andere Floats können gelabelt (und folglich referenziert) werden, sondern auch eine Vielzahl anderer \LaTeX{}-Objekte: Subfloat, Kapitel, (Unter-)Abschnitte, Gleichungen (siehe später), mathematische Umgebungen wie Sätze oder Definitionen (siehe später), Tabellen und viele mehr. 
+
+Das Label kann beliebige gewählt werden, üblich und empfehlenswert ist aber die folgende Formatierung wie oben:
+Das Label beginnt mit einer kurzen Beschreibung seines Typs (\latexargument{fig}, \latexargument{sec}, \latexargument{def}, \dots) gefolgt von einem Doppelpunkt und dem tatsächlichen Namen.
+Dieser sollte dabei niemals inhaltslos (\latexargument{kapitel3bild}) oder gar eine Nummer sein (\latexargument{kapitel3bild5}) sein, da dies dem Zweck eines Labels und einer automatischen Nummerierung widerspräche.
+Leerzeichen in Labeln sind zulässig, aber ungewöhnlich.
+Stattdessen werden für gewöhnlich Striche verwendet, wie in \latexargument{fig:general-von-der-tann}.
+Sollen Label \enquote{kategorisiert} werden, so werden oft Doppelpunkte oder Schrägstriche als Trennzeichen verwendet, beispelsweise \latexargument{fig:chap3:general-de-wimpffen} oder \latexargument{fig:chap3/general-de-wimpffen}.
+
+
+\section{Tabellen}
+Neben Bildern sind Tabellen eine weitere Klasse an Nicht-Fließtext-Objekten, die wir häufig in unsere Dokumente einbinden wollen (man beachte die zahlreichen Tabellen in diesem Dokument).
+In \LaTeX{} geschieht dies mittels der Umgebung \latexenvironment{tabular}:
+\begin{latexlisting}
+	\begin{tabular}{r l l}
+		& Deutscher Bund & Frankreich \\
+		Truppen & 200.000 & 130.000 \\
+		Kanonen & 774 & 564
+	\end{tabular}
+\end{latexlisting}
+Zur Verwendung:
+\begin{itemize}
+	\item Als Argument wird das Spaltenlayout der Tabelle übergeben.
+	Jeder Buchstabe steht hierbei für eine Spalte, die möglichen Optionen sind in \autoref{tab:column-options} aufgelistet.
+	\item Eine neue Spalte wird mit \latexargument{\&} begonnen.
+	\item Eine neue Zeile wird mit \latexcommand{\textbackslash} begonnen -- dies ist der einzige Fall, in dem dieses Command verwendet werden sollte.
+	Ist die korrekte Anzahl an Spalten noch nicht erreicht, wird ein Fehler geworfen.
+\end{itemize}
+
+\begin{table}
+	\begin{tabular}{l p{8cm}}
+		\toprule
+		\textbf{Spaltenoption} & \textbf{Wirkung}\tabularnewline
+		\midrule
+		\latexargument{l} &
+		Linksbündig
+		\tabularnewline
+		\latexargument{r} &
+		Rechtsbündig
+		\tabularnewline
+		\latexargument{c} &
+		Zentriert
+		\tabularnewline
+		\latexargument{p\{<Breite>\}} &
+		Absatz mit gewisser Breite, hier werden auch automatisch Zeilenumbrüche eingefügt.
+		\tabularnewline
+		\bottomrule
+	\end{tabular}
+	\caption{Layoutoptionen für Spalten}
+	\label{tab:column-options}
+\end{table}
+Ähnlich wie Bilder ist es üblich, Tabellen in eine Float-Umgebung zu setzen -- die entsprechende Umgebung heißt hier \latexenvironment{table}:
+\begin{latexlisting}
+	\begin{table}
+		\begin{tabular}{r l l}
+			& Deutscher Bund & Frankreich \\
+			Truppen & 200.000 & 130.000 \\
+			Kanonen & 774 & 564
+		\end{tabular}
+		\caption{Truppenstärken der Sedanschlacht}
+		\label{tab:truppenstaerken-sedanschlacht}
+	\end{table}
+\end{latexlisting}
+Eine Liste aller so semantisch markierten Tabellen lässt sich mit
+\begin{latexlisting}
+	\listoftables
+\end{latexlisting}
+drucken.
+
+\subsection{Randlinien}
+Unserer erzeugten Tabellen sehen bisher noch ein wenig nackt aus.
+In \LaTeX{} können sowohl senkrechte als auch waagrechte Trennlinien eingefügt werden.
+Obwohl beide Linientypen in \LaTeX{} out-of-the-box möglich sind, empfiehlt sich die Verwendung der Package \latexpackage{booktabs}, die auch einige Spacingprobleme der Standardimplementierung behebt.
+\begin{latexlisting}
+	\begin{tabular}{r l l}
+		\toprule
+		& Deutscher Bund & Frankreich \\ \midrule
+		Truppen & 200.000 & 130.000 \\ 
+		Kanonen & 774 & 564 \\ \bottomrule
+	\end{tabular}
+\end{latexlisting}
+Man beachte die Semantik -- \latexcommand{toprule} und \latexcommand{bottomrule} schließen die Tabelle von oben und unten ab, während \latexcommand{midrule} zur Trennung von Zeilen verwendet wird.
+Weiterhin existiert noch das Command \latexcommand{cmidrule}, mit dem Teile von Trennlinien gezogen werden können, etwa
+\begin{latexlisting}
+	\begin{tabular}{r l l}
+		\toprule
+		& Deutscher Bund & Frankreich \\ \midrule
+		Truppen & 200.000 & 130.000 \\ \cmidrule{2-3}
+		Kanonen & 774 & 564 \\ \bottomrule
+	\end{tabular}
+\end{latexlisting}
+Es ist in \LaTeX{} üblich, die verwendeten Linien an das Ende der jeweiligen Zeile zu setzen.
+
+\subsection{Verbotene Linien}
+Neben diesen vier Linientypen gibt es noch weitere Möglichkeiten, Trennlinien in Tabellen zu erzeugen.
+Zum einen können wir durch Wiederholung der Befehle doppelte Linien nutzen:
+\begin{latexlisting}
+	\begin{tabular}{r l l}
+		\toprule
+		& Deutscher Bund & Frankreich \\ \midrule \midrule
+		Truppen & 200.000 & 130.000 \\ \cmidrule{2-3}
+		Kanonen & 774 & 564 \\ \bottomrule
+	\end{tabular}
+\end{latexlisting}
+Zum anderen haben wir auch die Möglichkeit, in der Layoutspezifikation vertikale Linien zu erzeugen, doppelt oder einfach:
+\begin{latexlisting}
+	\begin{tabular}{|r||l|l}
+		\toprule
+		& Deutscher Bund & Frankreich \\ \midrule \midrule
+		Truppen & 200.000 & 130.000 \\ \cmidrule{2-3}
+		Kanonen & 774 & 564 \\ \bottomrule
+	\end{tabular}
+\end{latexlisting}
+Diese vertikalen Linien sehen mit den Horizontalen der \latexpackage{booktabs}-Package etwas gebrochen aus (aus Gründen, die uns gleich noch klar werden), daher sollte hier das Command \latexcommand{hline} verwendet werden, mit dem in Plain-\LaTeX{} Trennlinien erzeugt werden:
+\begin{latexlisting}
+	\begin{tabular}{|r||l|l}
+		\hline
+		& Deutscher Bund & Frankreich \\ \hline \hline
+		Truppen & 200.000 & 130.000 \\ \hline
+		Kanonen & 774 & 564 \\ \hline
+	\end{tabular}
+\end{latexlisting}
+Dies sollte aber im allgemeinen nicht nötig sein, denn für typografisch gut gesetzte Tabellen gelten die folgenden drei Regeln:
+\begin{enumerate}
+	\item Verwende niemals vertikale Trennlinien.
+	\item Verwende niemals doppelte Trennlinien.
+	\item Zeilen, die gleiche Daten enthalten, sollten generell nicht getrennt werden.
+\end{enumerate}
+Unsere initielle Tabelle
+\begin{latexlisting}
+	\begin{tabular}{r l l}
+		\toprule
+		& Deutscher Bund & Frankreich \\ \midrule
+		Truppen & 200.000 & 130.000 \\ 
+		Kanonen & 774 & 564 \\ \bottomrule
+	\end{tabular}
+\end{latexlisting}
+war also bereits das typografische Optimum.
+
+\subsection{Mehrfachzellen}
+Wollen wir mehrere Zellen verschmelzen, können wir die \latexpackage{multirow}-Package verwenden:
+\begin{latexlisting}
+	% Präambel
+	\usepackage{multirow}
+\end{latexlisting}
+Diese erlaubt die Verwendung der Commands \latexcommand{multirow} und \latexcommand{multicolumn}:
+\begin{latexlisting}
+	\begin{table}
+		\begin{tabular}{l r c c c}
+			\toprule
+			& & \multicolumn{2}{c}{Deutsche Koalition} & Frankreich \\  \cmidrule{3-4}
+			& & Bayern & Andere & \\ \midrule
+			\multirow{2}{2cm}{Tote} & Soldaten & 973 & 2.049 & 3.000 \\ 
+			& Offiziere & 106 & 84 & Unbekannt \\ 
+			\multirow{2}{2cm}{Verwundete} & Soldaten & 3.218 & 2.691 & 14.000 \\ 
+			& Offiziere & 107 & 175 & Unbekannt \\ 
+			\bottomrule
+		\end{tabular}
+		\caption{Tote und Verwundete}
+		\label{tab:verlust-sedanschlacht}
+	\end{table}
+\end{latexlisting}
+Zu beachten ist, dass dem Command \latexcommand{multicolumn} neben der Spaltenzahl übergeben werden muss, welche Ausrichtung der enthaltene Text haben soll.
+Der Inhalt von \latexcommand{multirow} hingegen wird immer als \latexargument{p} interpretiert, mit einer Breite die ebenfalls übergeben wird.
+Soll dieser Text daher zentiert oder rechtsbündig werden, muss ein Command wie \latexcommand{raggedright} verwendet werden.
+
+\subsection{Fortgeschrittene Tabellen}
+Einige formatierungstechnische Fragen bleiben vielleicht noch offen -- wollen wir beispielsweise die erste Spalte oder Zeile zur Hervorhebung fettdrucken, können wir natürlich jeder Zelle ein \latexcommand{textbf} mitgeben, dies erfüllt unser grundlegendes Prinzip, Inhalt und Formatierung trennen zu wollen, nur begrenzt.
+Für solche Zwecke existieren zahlreiche Hilfspackages wie beispielsweise \latexpackage{easytable} oder \latexpackage{tabulararray}, die diese und viele weitere mächtige Optionen und Anpassungsmöglichkeiten bereitstellen, an dieser Stelle aber nicht näher diskutiert werden.
+
+\section{Links}
+
+\section{Code}
