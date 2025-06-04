@@ -82,6 +82,12 @@ Ein Command hat folgende Bestandteile:
 	\item Der \emph{Name} des Commands -- er kann alle Buchstaben enthalten, aber keine Zahlen oder Sonderzeichen, außer er besteht nur aus einem einzelnen Sonderzeichen wie z.B. \latexcommand{\%}.
 	\item \emph{Optionale Argumente} in eckigen Klammern.
 	Diese müssen nicht übergeben werden und werden sonst durch Standardwerte ersetzt.
+	Viele \LaTeX{}-Commands verwenden optionale Argumente im sogennanten \emph{Key-Value-Format}, etwa wie folgt:
+	\begin{latexlisting}
+		\includegraphics[width=5cm,height=3cm]{my-image}
+	\end{latexlisting}
+	Technisch gesehen ist hier \latexargument{width=5cm,height=3cm} ein einziges Argument, das dann vom Command geparst und zerlegt wird.
+	Es ist aber hier üblich, \latexargument{width} und \latexargument{height} umgangssprachlich als zwei getrennte Argument zu bezeichnen und zu behandeln.
 	\item \emph{Argumente} in geschweiften Klammern.
 	Alle Argumente (auch optionale) beeinflussen das verhalten des Makros genauer.
 \end{itemize}
