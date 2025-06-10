@@ -406,5 +406,125 @@ Einige formatierungstechnische Fragen bleiben vielleicht noch offen -- wollen wi
 Für solche Zwecke existieren zahlreiche Hilfspackages wie beispielsweise \latexpackage{easytable} oder \latexpackage{tabulararray}, die diese und viele weitere mächtige Optionen und Anpassungsmöglichkeiten bereitstellen, an dieser Stelle aber nicht näher diskutiert werden.
 
 \section{Links}
+Soll das erstellte Dokument nicht nur gedruckt, sondern auch digital angesehen werden, ist es oft sinnvoll, inkludierte URL-Links anklickbar zu machen.
+Die Package \latexpackage{hyperref}, die wir inzwischen gut kennen, stellt hierzu einige Funktionalität bereit.
+Das grundlegendste Command ist \latexcommand{url}:
+\begin{latexlisting}
+	Gedanken über Blocksatz findet man unter \url{https://xkcd.com/1676}.
+\end{latexlisting}
+Diese Methode erzeugt einen klickbaren Link, der damit sowohl für das gedruckte als auch das digitale Dokument funktioniert.
+Ist man bereit, gedruckte Dokumente zu ignorieren, kann man auch den angzeigten Text abändern:
+\begin{latexlisting}
+	\LaTeX{}-Files sind \href{https://xkcd.com/1301}{sehr vertrauenswürdig}.
+\end{latexlisting}
+Das Aussehen dieser Links kann in den optionalen Argumenten von \latexcommand{usepackage} angepasst werden:
+\begin{latexlisting}
+	% Präambel
+	\usepackage[
+		colorlinks=true,
+		linkcolor=black,
+		urlcolor=red,
+		citecolor=purple,
+	]{hyperref}
+\end{latexlisting}
+Die optionalen Argument haben die folgende Funktion:
+\begin{itemize}
+	\item \latexargument{colorlinks} beeinflusst, ob Links überhaupt farbig angezeigt werden.
+	Teilweise ist hier \latexargument{false} zu bevorzugen, allerdings ist es dann für den Leser nicht immer leicht erkennbar, welche Textelement klickbar sind.
+	\item \latexargument{linkcolor} beeinfluss die Farbe des Linktextes -- dies schließt Referenzen, die Titel des Inhaltsverzeichnisse, etc.\ genauso ein wie die Farbe von manuell mit \latexcommand{href} erzeugten Links.
+	\item \latexargument{urlcolor} beeinflusst die Farbe von mit \latexcommand{url} erzeugten Links.
+	\item \latexargument{citecolor} beeinflusst die Farbe von Zitationslinks.
+\end{itemize}
+Insbesondere können für die letzten beiden Optionen eigene Farben verwendet werden, wenn diese zuvor mittels der \latexpackage{xcolor}-Package definiert wurden.
+\begin{latexlisting}
+	% Präambel
+	\usepackage{xcolor}
+	\definecolor{linkblue}{RGB}{58, 103, 181}
+\end{latexlisting}
 
 \section{Code}
+Auch Codebeispiele bestehend aus \LaTeX{}-Code, wie beispielsweise diesem Dokument, oder beliebigen anderen Sprachen können leicht eingefügt werden.
+Man nennt solche Beispiele im Englischen \emph{Listings}, und die hierzu nötige Package heißt entsprechend \latexpackage{lstlisting}.
+\begin{latexlisting}
+	% Präambel
+	\usepackage{listings}
+\end{latexlisting}
+Anschließend kann im Text mittels des \latexenvironment{lstlisting}-Envirnoments Code gesetzt werden:
+\begin{latexlisting}
+	\begin{lstlisting}[language=C]
+		float Q_rsqrt( float number )
+		{
+			long i;
+			float x2, y;
+			const float threehalfs = 1.5F;
+
+			x2 = number * 0.5F;
+			y  = number;
+			i  = * ( long * ) &y;                       // evil floating point bit level hacking
+			i  = 0x5f3759df - ( i >> 1 );               // what the fuck?
+			y  = * ( float * ) &i;
+			y  = y * ( threehalfs - ( x2 * y * y ) );   // 1st iteration
+		//	y  = y * ( threehalfs - ( x2 * y * y ) );   // 2nd iteration, this can be removed
+
+			return y;
+		}
+	\end{lstlisting}
+\end{latexlisting}
+Es mag nun auffallen, dass der gesetzte Code bisher noch extrem unansehlich ist.
+Mittels des Befehls \latexcommand{lstset} können wir das Aussehen aller Listings anpassen.
+Ein grundlegendes Setup sähe dabei etwa so aus:
+\begin{latexlisting}
+	\lstset{
+	    basicstyle=\ttfamily\footnotesize,
+		columns=fullflexible,
+	    breakatwhitespace=false,         
+	    breaklines=true,                 
+	    keepspaces=true,                 
+	    numbers=none,       
+	    numbersep=5pt,                  
+	    showspaces=false,                
+	    showstringspaces=false,
+	    showtabs=false,                  
+	    tabsize=4,
+	}
+\end{latexlisting}
+Ein Problem, dass bei Listings noch auftritt, ist, dass der Text innerhalb der Umgebung \emph{verbatim} interpretiert wird, also ohne Auflösung von \LaTeX{}-Macros oder sonstigen \LaTeX{}-typischen Verhaltensweisen.
+Insbesondere werden die konsistenten Einrückungen vollständig abgedruckt und der Code daher etwas nach rechts verschoben.
+Dies können wir durch die Package \latexpackage{lstautogobble} und die begleitende \latexcommand{lstset}-Option \latexargument{autogobble} korrigieren:
+\begin{latexlisting}
+	% Präämbel
+	\usepackage{listings}
+	\usepackage{lstautogobble}
+	\lstset{
+	    basicstyle=\ttfamily\footnotesize,
+		...,
+		tabsize=4,
+		autogobble,
+	}
+\end{latexlisting}
+Wird im gesamten Dokument dieselbe Sprache für alle Listings verwendet, so kann die \latexargument{language}-Option, die wir im optionalen Argument der Umgebung verwenden, auch in \latexcommand{lstset} gezogen werden.
+Umgekehrt können alle Optionen von \latexcommand{lstset} auch in diesem optionalen Argument verwendet werden, um das Aussehen eines einzelnen Listings zu ändern.
+Als letzte kosmetische Anpassung wollen wir unseren Code noch farblich hervorheben.
+Hierzu verwenden wir erneut die Package \latexpackage{xcolor}:
+\begin{latexlisting}
+	% Präämbel
+	\usepackage{listings}
+	\usepackage{lstautogobble}
+	\usepackage{xcolor}
+	\definecolor{codegreen}{rgb}{0,0.6,0}
+	\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+	\definecolor{codepurple}{rgb}{0.58,0,0.82}
+	\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+	\lstset{
+	    backgroundcolor=\color{backcolour},   
+	    commentstyle=\color{codegreen},
+	    keywordstyle=\color{codepurple},
+	    numberstyle=\tiny\color{codegray},
+	    stringstyle=\color{codepurple},
+	    basicstyle=\ttfamily\footnotesize,
+		...,
+		tabsize=4,
+		autogobble,
+	}
+\end{latexlisting}
+und erhalten so endlich das \latexcommand{lstset}-Command, mit dem dieser Text gesetzt wurde.
