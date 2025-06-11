@@ -286,7 +286,7 @@ Zur Verwendung:
 	\caption{Layoutoptionen für Spalten}
 	\label{tab:column-options}
 \end{table}
-Ähnlich wie Bilder ist es üblich, Tabellen in eine Float-Umgebung zu setzen -- die entsprechende Umgebung heißt hier \latexenvironment{table}:
+Ähnlich wie Bilder ist es üblich, Tabellen in eine Float-Umgebung zu setzen -- die entsprechende Umgebung heißt hier \latexenvironment{table}: 
 \begin{latexlisting}
 	\begin{table}
 		\begin{tabular}{r l l}
@@ -298,6 +298,7 @@ Zur Verwendung:
 		\label{tab:truppenstaerken-sedanschlacht}
 	\end{table}
 \end{latexlisting}
+Verwenden wir die Package \latexpackage{floatrow}, so wird diese Tabelle auch wieder zentriert.
 Eine Liste aller so semantisch markierten Tabellen lässt sich mit
 \begin{latexlisting}
 	\listoftables
@@ -327,6 +328,15 @@ Weiterhin existiert noch das Command \latexcommand{cmidrule}, mit dem Teile von 
 	\end{tabular}
 \end{latexlisting}
 Es ist in \LaTeX{} üblich, die verwendeten Linien an das Ende der jeweiligen Zeile zu setzen.
+Verwendet man die Package \latexpackage{booktabs}, ist es auch schön, das semantisch wertvollere Command \latexcommand{tabularnewline} statt \latexcommand{\textbackslash} zu nutzen.
+\begin{latexlisting}
+	\begin{tabular}{r l l}
+		\toprule
+		& Deutscher Bund & Frankreich \tabularnewline \midrule
+		Truppen & 200.000 & 130.000 \tabularnewline \cmidrule{2-3}
+		Kanonen & 774 & 564 \tabularnewline \bottomrule
+	\end{tabular}
+\end{latexlisting}
 
 \subsection{Verbotene Linien}
 Neben diesen vier Linientypen gibt es noch weitere Möglichkeiten, Trennlinien in Tabellen zu erzeugen.
@@ -334,27 +344,27 @@ Zum einen können wir durch Wiederholung der Befehle doppelte Linien nutzen:
 \begin{latexlisting}
 	\begin{tabular}{r l l}
 		\toprule
-		& Deutscher Bund & Frankreich \\ \midrule \midrule
-		Truppen & 200.000 & 130.000 \\ \cmidrule{2-3}
-		Kanonen & 774 & 564 \\ \bottomrule
+		& Deutscher Bund & Frankreich \tabularnewline \midrule \midrule
+		Truppen & 200.000 & 130.000 \tabularnewline \cmidrule{2-3}
+		Kanonen & 774 & 564 \tabularnewline \bottomrule
 	\end{tabular}
 \end{latexlisting}
 Zum anderen haben wir auch die Möglichkeit, in der Layoutspezifikation vertikale Linien zu erzeugen, doppelt oder einfach:
 \begin{latexlisting}
 	\begin{tabular}{|r||l|l}
 		\toprule
-		& Deutscher Bund & Frankreich \\ \midrule \midrule
-		Truppen & 200.000 & 130.000 \\ \cmidrule{2-3}
-		Kanonen & 774 & 564 \\ \bottomrule
+		& Deutscher Bund & Frankreich \tabularnewline \midrule \midrule
+		Truppen & 200.000 & 130.000 \tabularnewline \cmidrule{2-3}
+		Kanonen & 774 & 564 \tabularnewline \bottomrule
 	\end{tabular}
 \end{latexlisting}
 Diese vertikalen Linien sehen mit den Horizontalen der \latexpackage{booktabs}-Package etwas gebrochen aus (aus Gründen, die uns gleich noch klar werden), daher sollte hier das Command \latexcommand{hline} verwendet werden, mit dem in Plain-\LaTeX{} Trennlinien erzeugt werden:
 \begin{latexlisting}
 	\begin{tabular}{|r||l|l}
 		\hline
-		& Deutscher Bund & Frankreich \\ \hline \hline
-		Truppen & 200.000 & 130.000 \\ \hline
-		Kanonen & 774 & 564 \\ \hline
+		& Deutscher Bund & Frankreich \tabularnewline \hline \hline
+		Truppen & 200.000 & 130.000 \tabularnewline \hline
+		Kanonen & 774 & 564 \tabularnewline \hline
 	\end{tabular}
 \end{latexlisting}
 Dies sollte aber im allgemeinen nicht nötig sein, denn für typografisch gut gesetzte Tabellen gelten die folgenden drei Regeln:
@@ -367,9 +377,9 @@ Unsere initielle Tabelle
 \begin{latexlisting}
 	\begin{tabular}{r l l}
 		\toprule
-		& Deutscher Bund & Frankreich \\ \midrule
-		Truppen & 200.000 & 130.000 \\ 
-		Kanonen & 774 & 564 \\ \bottomrule
+		& Deutscher Bund & Frankreich \tabularnewline \midrule
+		Truppen & 200.000 & 130.000 \tabularnewline 
+		Kanonen & 774 & 564 \tabularnewline \bottomrule
 	\end{tabular}
 \end{latexlisting}
 war also bereits das typografische Optimum.
@@ -385,12 +395,12 @@ Diese erlaubt die Verwendung der Commands \latexcommand{multirow} und \latexcomm
 	\begin{table}
 		\begin{tabular}{l r c c c}
 			\toprule
-			& & \multicolumn{2}{c}{Deutsche Koalition} & Frankreich \\  \cmidrule{3-4}
-			& & Bayern & Andere & \\ \midrule
-			\multirow{2}{2cm}{Tote} & Soldaten & 973 & 2.049 & 3.000 \\ 
-			& Offiziere & 106 & 84 & Unbekannt \\ 
-			\multirow{2}{2cm}{Verwundete} & Soldaten & 3.218 & 2.691 & 14.000 \\ 
-			& Offiziere & 107 & 175 & Unbekannt \\ 
+			& & \multicolumn{2}{c}{Deutsche Koalition} & Frankreich \tabularnewline  \cmidrule{3-4}
+			& & Bayern & Andere & \tabularnewline \midrule
+			\multirow{2}{2cm}{Tote} & Soldaten & 973 & 2.049 & 3.000 \tabularnewline 
+			& Offiziere & 106 & 84 & Unbekannt \tabularnewline 
+			\multirow{2}{2cm}{Verwundete} & Soldaten & 3.218 & 2.691 & 14.000 \tabularnewline 
+			& Offiziere & 107 & 175 & Unbekannt \tabularnewline 
 			\bottomrule
 		\end{tabular}
 		\caption{Tote und Verwundete}
@@ -440,6 +450,14 @@ Insbesondere können für die letzten beiden Optionen eigene Farben verwendet we
 	% Präambel
 	\usepackage{xcolor}
 	\definecolor{linkblue}{RGB}{58, 103, 181}
+\end{latexlisting}
+Färbt man seine Links derartig ein, werden auch die Links im Inhaltsverzeichnis farbig.
+Dies kann man korrigieren, indem man den Befehl \latexcommand{hypersetup} nutzt, um die Konfiguration von \latexpackage{hyperref} lokal zu ändern und beide Befehle mit einer Gruppe umschließt:
+\begin{latexlisting}
+	{
+		\hypersetup{linkcolor=black}
+		\tableofcontents
+	}
 \end{latexlisting}
 
 \section{Code}
