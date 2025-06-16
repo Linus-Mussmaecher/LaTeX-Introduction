@@ -45,22 +45,18 @@
 	Eventuelle Fehler, Wünsche oder Anmerkungen können an den Autor, Linus Mußmächer (\texttt{linus.mussmaecher@gmail.de}), gemeldet werden.
 	Der Quellcode dieses Skript steht unter \url{https://github.com/Linus-Mussmaecher/LaTeX-Introduction} zur Verfügung (wo sich, Git sei dank, leider auch einsehen lässt zu welch zweifelhaften Uhrzeiten dieses Skript seine Entstehung fand).
 
-	\input{chapters/introduction.tex}
-
-	\clearpage
+	\include{chapters/introduction.tex}
 
 	\setcounter{tocdepth}{1}
 	\tableofcontents
 
-	% Vorwort etc.
-
 	\mainmatter
 
-	\input{chapters/installation}
-	\input{chapters/first-document}
-	\input{chapters/structuring}
-	\input{chapters/extra-content}
-
+	\include{chapters/installation}
+	\include{chapters/first-document}
+	\include{chapters/structuring}
+	\include{chapters/extra-content}
+	\include{chapters/math}
 
 	\backmatter
 
