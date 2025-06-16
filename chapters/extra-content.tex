@@ -2,7 +2,7 @@
 In diesem Kapitel beschäftigen wir uns damit, wie wir zusätzliche Inhalte (keinen Fließtext) in unsere Dokumente einbauen können.
 Insbesondere lernen wir dabei sogenannte \emph{floats} kennen, Objekte, deren Position nicht unbedingt mit ihrer Code-Position übereinstimmen und die frei über die Seite \enquote{fließen} können.
 
-\section{Bilder}
+\section{Bilder}\label{sec:bilder}
 \LaTeX -Dokumente können Bilder in einer Vielzahl an Formaten einbinden, insbesondere \filetype{png}, \filetype{jpg} und \filetype{jpeg}.
 Hierzu verwenden wir das beliebte Package \latexpackage{graphicx}.
 \begin{latexlisting}
@@ -546,3 +546,195 @@ Hierzu verwenden wir erneut die Package \latexpackage{xcolor}:
 	}
 \end{latexlisting}
 und erhalten so endlich das \latexcommand{lstset}-Command, mit dem dieser Text gesetzt wurde.
+
+\section{Andere \LaTeX{}-Files}
+\LaTeX{}-Files können, wie eventuell schon bemerkt wurde, ziemlich lang werden.
+Zur besseren Übersicht ist es daher oft hilfreich, ein \LaTeX{}-\emph{Projekt} in mehrere \LaTeX{}-\emph{Files} aufzuteilen und diese durch spezielle Commands (\latexcommand{input} und \latexcommand{include}) untereinander zu verbinden.
+Dies hat zahlreiche Vorteile: Kleinere Files lassen sich leichter navigieren und spezielle Passagen lassen sich leichter finden.
+Außerdem ist es leichter, zwischen zwei Files hin- und her zu wechseln als zwischen zwei Positionen im selben File.
+Wir können weiterhin die in \LaTeX{} so gern gesehene Trennung von Aussehen, Struktur und Inhalt weiter durchsetzen, in dem wir Layout-Befehle und \latexcommand{usepackage}-Aufrufe in separate Files vom Hauptinhalt schreiben.
+Solche Layout- oder Packagedateien lassen sich dann auch einfach von Projekt zu Projekt kopieren (oder mit anderen Nutzern teilen) und für verschiedenste Inhalte verwenden. 
+Schließlich sei noch erwähnt, dass das Package-System von \LaTeX{} intern auf genau diesen \latexcommand{input}-Befehlen beruht.
+
+\subsection{Input}
+Der einfachste Befehl, der eine anderes \LaTeX{}- (oder \TeX{}-)File einbindet, ist \latexcommand{input}.
+Er akzeptiert einen (relativen) Dateipfad und inkludiert dessen Inhalt an der entsprechenden Stelle im Oberdokument.
+Haben wir also drei Dateien \filepath{main.tex} mit Inhalt
+\begin{latexlisting}
+	\documentclass[ngerman]{scrartcl}
+
+	\input{packages.tex}
+
+	\begin{document}
+		Hallo!
+
+		\input{content.tex}
+		Hinfort!
+	\end{document}
+\end{latexlisting}
+sowie \filepath{packages.tex} mit Inhalt
+\begin{latexlisting}
+	\usepackage{blindtext}
+\end{latexlisting}
+und \filepath{content.tex} mit Inhalt
+\begin{latexlisting}
+	Ein bisschen mehr Text: \blindtext
+\end{latexlisting}
+so ist dies exakt äquivalent zu einem einzigen \LaTeX{}-File \filepath{main.tex} mit Inhalt
+\begin{latexlisting}
+	\documentclass[ngerman]{scrartcl}
+
+	\usepackage{blindtext}
+
+	\begin{document}
+		Hallo!
+
+		Ein bisschen mehr Text: \blindtext
+		Hinfort!
+	\end{document}
+\end{latexlisting}
+Das Command \latexcommand{input} kann dabei -- wie wir sehen -- sowohl in der Präambel als auch im Inhalt verwendet werden.
+Wir können auch Dateien in Unterordnern, Oberordnern oder unter absoluten Pfaden inputten, z.B. durch
+\begin{latexlisting}
+	\input{chapters/intro.tex}               % Sucht File 'intro' im Unterordner 'chapters'.
+	\input{../packages.tex}                  % Sucht File 'packages' im Oberordner.
+	\input{/home/linus/Documents/layout.tex} % Sucht File 'layout' im Dokumente-Ordner.
+\end{latexlisting}
+Solche Befehle können auch beliebig verschachtelt werden.
+Liegt folgende Dateistruktur vor:
+\begin{center}
+	\begin{forest}
+	for tree={font=\sffamily, grow'=0,
+	folder indent=.9em, folder icons,
+	edge=densely dotted}
+	[project
+		[chapters
+			[subchapters
+				[images.tex,is file]
+				[links.tex,is file]
+			]
+			[introcution.tex,is file]
+			[extra-content.tex,is file]
+		]
+		[main.tex,is file]
+		[packages.tex,is file]
+	]
+	\end{forest}
+\end{center}
+und das \filepath{main.tex} enthält (unter anderem) die Zeilen
+\begin{latexlisting}
+	\input{chapters/introduction.tex}
+	\input{chapters/extra-content.tex}
+\end{latexlisting}
+dann können in \filepath{extra-content.tex} die Files in \filepath{chapters/subchapters} mit
+\begin{latexlisting}
+	\input{chapters/subchapters/images.tex}
+	\input{chapters/subchapters/links.tex}
+\end{latexlisting}
+ebenfalls inkludiert werden.
+Wichtig: Filepfade werden dabei immer relativ zum Hauptfile \filepath{main.tex} angegeben, nicht relativ zum File, in dem sich das \latexcommand{input}-Command befindet.
+Wie schon bei \latexcommand{includegraphics} kann auch bei \latexcommand{input} die Dateiendung (in diesem Fall \filetype{tex}) weggelassen werden.
+
+\subsection{Include}
+Das Command \latexcommand{include} funktioniert ählich wie \latexcommand{input} und kann ein externes \filetype{tex}-File in unseren Code einbinden.
+Die relevanten Unterschiede sind wie folgt:
+\begin{itemize}
+	\item \latexcommand{include} kann nur im Inhalt, nicht in der Präambel verwendet werden.
+	\item \latexcommand{include} fügt vor und nach dem Inhalt eine \latexcommand{clearpage} ein.
+	\item \latexcommand{include} kann nicht mit sich selbst verschachtelt werden -- Verschachtelungen mit beliebig vielen \latexcommand{input}-Befehlen sind aber möglich.
+	\item \latexcommand{include} verwendet ein eigenes \filetype{aux}-File für jede inkludierte Datei, was den Kompilierungsprozess beschleunigen kann.
+\end{itemize}
+Außerdem erlaubt \latexcommand{incude} die Verwendung des Commands \latexcommand{includeonly}.
+Ein Beispiel:
+\begin{latexlisting}
+	\documentclass[ngerman]{scrartcl}
+
+	\includeonly{introduction,extra-content}
+
+	\begin{document}
+		\include{chapters/introduction}
+		\include{chapters/structure}
+		\include{chapters/extra-content}
+	\end{document}
+\end{latexlisting}
+In diesem Dokument wird der zweite \latexcommand{include}-Befehl ignoriert und nur \filepath{introduction.tex} und \filepath{extra-content.tex} inkludiert.
+Dies ist besonderns nützlich wenn in langen Dokumenten nur selektiv einige Kapitel kompiliert werden sollen, um die Kompilationszeiten zu verringern.
+Dank der getrennten \filetype{aux}-Files sind Kapitelnummern und Seitenzahlen trotzdem weiterhin korrekt.
+
+\subsection{Ein Beispiel}
+Die Dateistruktur dieses Projekts sieht aus wie folgt:
+\begin{center}
+	\begin{forest}
+	for tree={font=\sffamily, grow'=0,
+	folder indent=.9em, folder icons,
+	edge=densely dotted}
+	[project
+		[chapters
+			[extra-content.tex,is file]
+			[first-document.tex,is file]
+			[installation.tex,is file]
+			[introcution.tex,is file]
+			[structuring.tex,is file]
+		]
+		[main.tex,is file]
+		[bibliography.bib,is file]
+		[layout.tex,is file]
+		[macros.tex,is file]
+		[packages.tex,is file]
+		[title.tex,is file]
+	]
+	\end{forest}
+\end{center}
+und das \filepath{main.tex}-File hat folgenden Inhalt:
+\begin{latexlisting}
+	\documentclass[
+		11pt,
+		% draft, % for easier editing
+		ngerman,
+	]{scrbook}
+
+	% === Packages ===
+	\input{packages}
+
+	% === Layout ===
+	\input{layout}
+
+	% === Macros ===
+	\input{macros}
+
+	% === Bibliography ===
+	\addbibresource{bibliography.bib}
+
+	% === Document ===
+
+	\begin{document}
+
+		\frontmatter
+
+		\input{title}
+
+		\chapter{Vorwort}
+
+		% ... Vorwort
+
+		\include{chapters/introduction.tex}
+
+		\setcounter{tocdepth}{1}
+		\tableofcontents
+
+		\mainmatter
+
+		\include{chapters/installation}
+		\include{chapters/first-document}
+		\include{chapters/structuring}
+		\include{chapters/extra-content}
+		\include{chapters/math}
+
+		\backmatter
+
+		\printbibliography
+	
+	\end{document}
+\end{latexlisting}
+Dieses Beispiel darf gerne als Inspiration für eigene Projekte dienen.
+Insbesondere die File \filepath{layout.tex} und \filepath{packages.tex} sowie evtl. \filepath{title.tex} lassen sich leicht zwischen ähnlichen Projekten mitnehmen.
