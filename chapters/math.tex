@@ -1,1 +1,197 @@
 \chapter{Mathematik}
+Neben der wunderbaren überlegenen Typographie, dem großartigen Blocksatzalgorithmus und der Erweitarbeit ist einer der häufigsten Gründe, warum Wisschenschaftler \LaTeX{} verwenden, das formschöne Setzen mathematischer Formeln.
+
+Noch in den 70ern wurden mathematische Paper gestaltet, indem man zuerst den Text per Hand schrieb.
+Anschließend wurden mit einer Schreibmaschine die alphanumerischen Symbole getippt und die Sonderzeichen per Hand eingefügt -- wer im selben Text $a$, $\hat{a}$ und $\tilde{a}$ verwenden wollte, musste sich gut merken, wo er handschriftlich welche Verzierung einzufügen hatte.
+Solche Dokumente konnten dann zur Verfielfältigung gefaxt oder fotokopiert werden.
+Teilweise wurden sogar ganze Bücher mit dieser Technik geschrieben.
+
+Über Zeit entstanden weitere Techniken, z.B. \emph{Varitype}, eine Art Schreibmaschine mit austauschbaren Rollen, auf der gleichzeitig lateinische und griechische Buchstaben geschrieben werden konnten, der \emph{IBM-Golfball}, eine Art Schreibmaschine, die einen rotierenden Golfball mit Sonderzeichen besaß, sowie \emph{tipits}, kleine, vom Nutzer anpassbare Schreibmaschinenlettern. 
+Eines der dominierenden Systeme war für lange Zeit \emph{Photocomposition}, eine Schriftsatzmaschine für den Druck von Büchern oder professionellen Dokumenten, bei der statt Bleisatzlettern spezielle Belichtungsfolien verwendet wurden, von denen einige vom Nutzer mittels kleiner \emph{Symbolarme} angepasst werden konnten.
+Diese Maschinen waren teilautomatisiert und übernamen Aufgaben wie Blocksatz oder Linespacing bereits selbst, einige konnten sogar vollautomatisch auf Disketten (\emph{Floppies}) gespeicherten Text setzen und en masse drucken.
+Mathematik musste aber nach wie vor durch speziell ausgebildete Experten per Hand gesetzt werden.
+
+Inspieriert von all diesen Systemen entwickelten sich schließlich \TeX{} und \LaTeX{}, die es Nutzern erstmals ermöglichen Mathematik am Computer zu spezifizieren und -- genauso wie normalen Text -- automatisch auszurichten und spacen zu lassen.
+Das Ergebnis war, wie eingangs erwähnt, ein druckbares \filetype{dvi}-File.
+
+\section{Grundlagen}
+Um in \LaTeX{} Mathematik zu setzen, müssen wir in den sogeannten \emph{math mode} wechseln.
+Dies geschieht mittels umgebenden Dollarzeichen:
+\begin{latexlisting}
+	Let $a$ be a number.
+\end{latexlisting}
+Man beachte den Unterschied zwischen den beiden a/$a$!
+Nicht alle Zeichen sehen im Mathematikmodus anders aus, wie das folgende Beispiel zeigt (man vergleiche die 2 in 2000 mit der $2$ weiter hinten im Text):
+\begin{latexlisting}
+	The old greeks, more than 2000 years ago, already discussed wether the square root of $2$ was rational.
+\end{latexlisting}
+Trotzdem ist es aus semantischen Gründen immer sinnvoll, Variablen und mathematisch verwendete Zahlen im Mathemodus zu setzen, während z.B. Jahreszahlen als Textziffern gesetzt werden\footnote{Insbesondere mag auffallen, das je nach Schriftart eben doch ein Unterschied zwischen diesen Zahlen gemacht wird -- beispielsweise in diesem Dokument.}.
+Ohne Modifikationen werden mathematische Formel außerdem kursiv gesetzt und verschlucken selbst einzelne Leerzeichen.
+\begin{latexlisting}
+	Dies ist ein Text. $Dies     ist auch Text und sollte nicht im Mathemodus stehen.$
+\end{latexlisting}
+Wer trotzdem etwas Raum haben möchte, kann die Commands \latexcommand{.}, \latexcommand{,}, \latexcommand{ }, \latexcommand{qquad} oder \latexcommand{qquad} oder das Sonderzeichen $\sim$ verwenden.
+Außerdem funktionieren Trennung und Spacing im Mathematikmodus anders. So wird etwa \latexargument{sin} in
+\begin{latexlisting}
+	Eine trigonometrische Identität ist $sin(\pi) = 0$.
+\end{latexlisting}
+als \enquote{$s$ mal $i$ mal $n$} interpretiert, nicht als einzelnes Zeichen.
+Es sollte stattdessen \latexcommand{mathrm\{sin\}} oder noch einfacher \latexcommand{sin} verwendet werden.
+Besonderes Spacing wird auch für Operatoren verwendet:
+\begin{latexlisting}
+	Die einzige Lösung der Gleichung $2a - 23 = -5$ ist $a = 9$.
+\end{latexlisting}
+Man beachte, dass das Zeichen \key{-} nicht als Gedanken- oder Spiegelstrich, sondern als Minus interpretiert wird, und das Spacing um das unäre Minus bei $-5$ anders ist als das um $2a - 23$.
+Dies ändert sich auch nicht, wenn die Leerzeichen in der Gleichung verändert werden -- es ist zwar gute \LaTeX{}-Praxis, Mathematik mit sinnvollen Leerzeichen zu schreiben, die den Code gut lesbar machen, aber es ist nicht zwingend notwendig.
+
+Neben dieser sogenannten \emph{inline math} existiert auch \emph{display math}, d.h. Formeln, die abgehoben vom Text in einer eigenen Zeile gesetzt werden.
+Die Begrenzer (engl. \emph{delimiters}) hierfür sind Doppeldollarzeichen:
+\begin{latexlisting}
+	Die Dreiecksungleichung $$a + b > c$$ ist in der nicht-euklidischen Geometrie manchmal falsch.
+\end{latexlisting}
+Für gewöhnlich wird Display-Mathematik wie eine Umgebung in einer eigenen Zeile und ein wenig eingerückt geschrieben:
+\begin{latexlisting}
+	Die Dreiecksungleichung
+	$$
+		a + b > c
+	$$
+	ist in der nicht-euklidischen Geometrie manchmal falsch.
+\end{latexlisting}
+Die Delimitation durch Dollarzeichen ist der Standard in \TeX{}.
+\LaTeX{} führte stattdessen die Begrenzer \latexcommand{(}, \latexcommand{)} sowie \latexcommand{[}, \latexcommand{]} ein, also
+\begin{latexlisting}
+	Die einzige Lösung der Gleichung \(2a - 23 = -5\) ist \(a = 9\).
+	Die Dreiecksungleichung
+	\[
+		a + b > c
+	\]
+	ist in der nicht-euklidischen Geometrie manchmal falsch.
+\end{latexlisting}
+und die Package \latexpackage{amsmath} (für \emph{American Mathematical Society}) stellt noch einige weitere Möglichkeiten, Displaymathematik zu begrenzen, zur Verfügung.
+\begin{latexlisting}
+	Die Dreiecksungleichung
+	\begin{equation}
+		a + b > c
+	\end{equation}
+	ist in der nicht-euklidischen Geometrie manchmal falsch.
+
+	Die Dreiecksungleichung
+	\begin{equation*}
+		a + b > c
+	\end{equation*}
+	ist in der nicht-euklidischen Geometrie manchmal falsch.
+\end{latexlisting}
+Die Umgebung \latexenvironment{equation} ist dabei wie \latexcommand{[}, \latexcommand{]} einfach \enquote{nur} Displaymathematik ohne zusätzliche Funktionalitäten (tatsächlich definiert die \latexpackage{amsmath}-Package sogar \latexcommand{[}, \latexcommand{]} durch \latexenvironment{equation} um, da die Implementierung in \latexpackage{amsmath} leicht besseres Spacing hat).
+Umgebungen ohne Sternchen erhalten in \latexpackage{amsmath} stets eine Nummerierung, solche mit Sternchen werden durchnummeriert.
+Eine \latexenvironment{equation}-Umgebung erlaubt generell nur eine Zeile und schießt, falls die Formel zu lange ist, über den Rand hinaus.
+Wer einen Zeilenumbruch in seiner Formel möchte, kann die \latexenvironment{gather}-Umgebung verwenden.
+\begin{latexlisting}
+	Wir lösen die Gleichung:
+	\begin{gather*}
+		2a + 7 = 25 \\
+		2a = 18\\
+		a = 9
+	\end{gather*}
+\end{latexlisting}
+Auch diese existiert in einer gesternten und ungesternten Version, und -- ähnlich wie Tabellen -- sind hier Zeilenumbrüche mit \latexcommand{\textbackslash} sogar erwünscht.
+Möchte man die verschiedenen Zeilen noch aneinander ausrichten, so bietet sich die \latexenvironment{align}-Umgebung an.
+\begin{latexlisting}
+	Wir berechnen:
+	\begin{gather*}
+		2a + 7(a + 5) - 13a + 12
+		&= 2a + 7a + 35 - 13a + 12 \\
+		&= (2 + 7 - 13)a + 35 + 12 \\
+		&= -4a + 47
+	\end{gather*}
+\end{latexlisting}
+Wie in Tabellen werden \key{\&}-Zeichen zur Spaltentrennung verwendet.
+Hierbei sind die Spalten abwechselnd rechts- und linksbündig ausgerichtet, was für \enquote{Kommentarspalten} verwendet werden kann.
+\begin{latexlisting}
+	Wir berechnen:
+	\begin{gather*}
+		7a + 5
+		&= 3a - 7
+		&| -5 \\
+		7a 
+		&= 3a - 12
+		&| -3a \\
+		4a
+		&= -12
+		&| :4 \\
+		a
+		&= -3
+	\end{gather*}
+\end{latexlisting}
+Es ist hierbei -- gerade bei längeren Zeilen -- guter Stil, jede Spalte in eine eigene Zeile zu setzen.
+
+Wie wählen wir nun zwischen all diesen Umbegungen aus?
+Für \emph{inline math} wäre theoretisch \latexcommand{(}, \latexcommand{)} die optimale Wahl, praktisch hat sich aber aufgrund des geringeren Tippaufwands und der typografischen Äquivalenz die Verwendung von \key{\$} durchgesetzt.
+Für \emph{display math} gilt dies nicht!
+Das alte \key{\$\$} hat merklich schlechteres Spacing und sollte \emph{niemals} verwendet werden!
+Stattdessen sind immer die passenden \latexpackage{amsmath}-Commands zu nutzen, \latexenvironment{align} und \latexenvironment{gather} wo nötig und \latexenvironment{equation} überall sonst (natürlich je nach Wunsch in der unnummerierten Version).
+
+\section{Sehr viel Syntax}
+In diesem Unterkapitel besprechen wir eine lange Liste an Befehlen und Schreibweisen, die wir zum Setzen von Mathematik benötigen.
+
+\subsection{Hoch- und Tiefstellung}
+Hoch- und Tiefstellung erreichen wir durch die Symbole \key{\^} und \key{\_}.
+\begin{latexlisting}
+	Meine Lieblings-Quadratzahl ist $q_2 = 2^2 = 4$.
+\end{latexlisting}
+Wir können diese auch an einem einzigen Symbol kombinieren.
+\begin{latexlisting}
+	Das Zeichen für Beryllium ist $Be^7_4$, oder besser $\mathrm{Be}^7_4$.
+\end{latexlisting}
+Es gibt hier keine kanonische Reihenfolge von Hoch- und Tiefstellung, aber es lohnt sich, zumindest selbst konsistent zu sein.
+Mehrere Hochstellungen am selben Symbol hingegen erweisen sich als problematisch (und auch uneindeutig):
+\begin{latexlisting}
+	Berechne $2^2^3$. Ist es $4^3 = 64$ oder $2^8 = 256$?
+\end{latexlisting}
+Hier können teilweise Klamern helfen:
+\begin{latexlisting}
+	Ich meine natürlich $(2^2)^3 = 64$.
+\end{latexlisting}
+Das funktioniert aber nur, solange nur ein Zeichen hochgestellt werden soll, das folgende sieht etwas seltsam aus.
+\begin{latexlisting}
+	Oh, meinte doch $2^(2^3)$.
+\end{latexlisting}
+Mehrere Zeichen auf einmal können stattdessen mittels einer \emph{Gruppe}, die durch \key{\{} und \key{\}} begrenzt wird, hochgestellt werden:
+\begin{latexlisting}
+	Oh, meinte doch $2^{2^3} = 256$, oder noch klarer $2^{(2^3)} = 256$.
+\end{latexlisting}
+Die gleichen Techniken funktionieren natürlich auch für Tiefstellung, und können auch genutzt werden, um Hoch- und Tiefstellung verschieden zu kombinieren:
+\begin{latexlisting}
+	Betrachte das $4$-te Folgendglied, $a_{2^2}$.
+\end{latexlisting}
+
+\subsection{Schriftarten}
+Um mathematische Symbole voneinander abzugrenzen, ist es oft üblich, sie in speziellen Schriftarten zu schreiben, allen voran die reellen Zahlen.
+Die Package \latexpackage{amssymb} stellt hierzu einige nette Commands bereit.
+\begin{latexlisting}
+    Die reellen Zahlen sind $\mathbb{R}$.
+    Die Menge aller reellwertigen $k$-mal differenzierbaren Funktionen auf einer Mannigfaltigkeit $M$ schreiben wir als $\mathcal{C}^k(M)$.
+    Die Lie-Algebra der Lie-Gruppe $\mathscr{G}$ bezeichnen wir mit $\mathfrak{g}$.
+\end{latexlisting}
+Dies sind die Commands für \emph{Blackboard} (doppelgestrichene Schrift), \emph{caligraphy} (geschwungene Schrift), \emph{script} (anders geschwungene Schrift) sowie \emph{fraktur} (Frakturschrift).
+Leider sind insbesondere in der \latexcommand{mathbb}-Schrift nicht alle Symbole enthalten -- beispielsweise fehlt die $\mathds{1}$.
+Hierzu können wir stattdessen die Package \latexpackage{dsfont} und deren Command verwenden.
+\begin{latexlisting}
+	Das Symbol $\mathbb{1}$ gibt es nicht, $\mathds{1}$ aber schon.
+\end{latexlisting}
+Leider sind diese Commands semantisch nicht sehr wertvoll.
+Sie kommunizieren nur, dass etwas doppelt gestrichen werden soll, nicht aber \emph{warum}.
+Es wäre daher ratsam, eigene Commands definieren, die die obigen aliasen, aber semantisch wertvoll sind, etwa wie folgt\footnote{Der genaue Syntax der Commanddefinition wird später erklärt und muss hier nicht verstanden werden -- das Beispiel dient nur der Illustration.}:
+\begin{latexlisting}
+	\newcommand{\reals}{\mathds{R}}
+	\newcommand{\field}[1]{\mathds{#1}}
+	Die reellen Zahlen sind $\reals$ oder $\field{R}$.
+\end{latexlisting}
+Die Package \latexpackage{nchairx}, die hauseigen in Würzburg am Lehrstuhl 10 (Chair X) entwickelt wurde, nimmt einem einige dieser Arbeit ab und definiert semantisch sinnvolle mathematische Befehle (hauptsächlich für Differentialgeometrie, Analysis und lineare Algebra).
+Dies erlaubt die Verwendung vieler semantischer Befehle.
+\begin{latexlisting}
+    Die reellen Zahlen sind $\field{R}$.
+    Die Menge aller reellwertigen $k$-mal differenzierbaren Funktionen auf einer Mannigfaltigkeit $M$ schreiben wir als $\module{C}^k(M)$.
+    Die Lie-Algebra der Lie-Gruppe $\group{G}$ bezeichnen wir mit $\liealg{g}$.
+\end{latexlisting}
+
+\subsection{Viele viele bunte Commands}
