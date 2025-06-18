@@ -635,6 +635,9 @@ ebenfalls inkludiert werden.
 Wichtig: Filepfade werden dabei immer relativ zum Hauptfile \filepath{main.tex} angegeben, nicht relativ zum File, in dem sich das \latexcommand{input}-Command befindet.
 Wie schon bei \latexcommand{includegraphics} kann auch bei \latexcommand{input} die Dateiendung (in diesem Fall \filetype{tex}) weggelassen werden.
 
+Abschließend sei noch erwähnt, dass es theoretisch sogar möglich ist, das initelle Command \latexcommand{documentclass} auszulagern und durch \latexcommand{input} dann wieder einzufügen.
+Dies ist aber sehr schlechter Stil und sollte niemals gemacht werden, \latexcommand{documentclass} sollte immer zur Beginn der Hauptdatei des Projekts stehen.
+
 \subsection{Include}
 Das Command \latexcommand{include} funktioniert ählich wie \latexcommand{input} und kann ein externes \filetype{tex}-File in unseren Code einbinden.
 Die relevanten Unterschiede sind wie folgt:
