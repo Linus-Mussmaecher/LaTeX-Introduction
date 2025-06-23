@@ -36,7 +36,7 @@ Außerdem funktionieren Trennung und Spacing im Mathematikmodus anders. So wird 
 	Eine trigonometrische Identität ist $sin(\pi) = 0$.
 \end{latexlisting}
 als \enquote{$s$ mal $i$ mal $n$} interpretiert, nicht als einzelnes Zeichen.
-Es sollte stattdessen \latexcommand{mathrm\{sin\}} oder noch einfacher \latexcommand{sin} verwendet werden.
+Es sollte stattdessen \latexcommand{operatorname\{sin\}} oder noch einfacher \latexcommand{sin} verwendet werden.
 Besonderes Spacing wird auch für Operatoren verwendet:
 \begin{latexlisting}
 	Die einzige Lösung der Gleichung $2a - 23 = -5$ ist $a = 9$.
@@ -134,7 +134,7 @@ Stattdessen sind immer die passenden \latexpackage{amsmath}-Commands zu nutzen, 
 In diesem Unterkapitel besprechen wir eine lange Liste an Befehlen und Schreibweisen, die wir zum Setzen von Mathematik benötigen.
 
 \subsection{Hoch- und Tiefstellung}
-Hoch- und Tiefstellung erreichen wir durch die Symbole\ \key{~\^} und \key{\_}.
+Hoch- und Tiefstellung erreichen wir durch die Symbole \enquote{~\key{\^}} und \enquote{\key{\_}}.
 \begin{latexlisting}
 	Meine Lieblings-Quadratzahl ist $q_2 = 2^2 = 4$.
 \end{latexlisting}
@@ -195,3 +195,158 @@ Dies erlaubt die Verwendung vieler semantischer Befehle.
 \end{latexlisting}
 
 \subsection{Viele viele bunte Commands}
+Das Setzen von Mathematik beruht auf der Verwendung vieler kurioser Zeichen.
+Für all diese (oder, hoffentlich, die meisten) existiert ein entsprechendes \LaTeX{}-Command.
+Wir werden in diesem Teilabschnitt eine Vielzahl der häufig verwendeten Commands durchgehen.
+Sucht man jemals nach dem Command für ein Symbol und kennt es gerade nicht auswendig, kann die wundervolle Webseite \url{https://detexify.kirelabs.org/} verwendet werden, die eine Freihandzeichnung des Symbols nutzt, um entsprechende Commands herauszusuchen.
+Alle Beispiele in diesem Abschnitt sollten in einer \latexenvironment{equation}-Umgebung gesetzt werden und benötigen die Packages \latexpackage{amsmath} und \latexpackage{amssymb}.
+
+\paragraph{Mengen} Mengen und ihre Definition benötigen nur wenige mathematische Commands.
+\begin{latexlisting}
+	2\mathds{N} = \{ n \in \mathds{N} \mid \exists_{m \in N}: 2m = n \} \subsetneq \mathds{N} 
+\end{latexlisting}
+Ähnlich zum Existenzquantor \latexcommand{exists} existiert auch der Allquantor \latexcommand{all}, und analog zur echten Teilmenge \latexcommand{subsetneq} gibt es auch \latexcommand{subseteq}, \latexcommand{subset} sowie \latexcommand{supsetneq}, \latexcommand{supseteq} und \latexcommand{supset}.
+Als Gegenstück zu \latexcommand{in} existiert außerdem \latexcommand{ni}.
+Man beachte auch, dass der zentrale Strich \latexcommand{mid} der Menge anderes (passenderes) Spacing hat als einfach Verwendung von \key{|}.
+
+\paragraph{Funktionen} Für das Setzen von Funktionen sind vor allem die Pfeile relevant, doch auch die Benutzung des \enquote{richtigen} Doppelpunktes statt \key{:} ist vielen \LaTeX{}-Nutzern leider nicht bekannt.
+\begin{latexlisting}
+	f\colon \mathds{R} \to \mathds{R}, x \mapsto x^2 
+\end{latexlisting}
+
+\paragraph{Pfeile} Neben diesen Pfeile existieren noch zahlreiche weitere, insbesondere \latexcommand{rightarrow}, \latexcommand{leftarrow}, \latexcommand{Rightarrow} und \latexcommand{Leftarrow}.
+Diese sind natürlich semantisch nicht so sinnvoll wie die oben erwähnten.
+
+\paragraph{Brüche} Brüche existieren in drei Varianten.
+Man teste die folgenden Commands in Inline- und Displaymath und vergleiche insbesondere die Größe der entstehenden Brüche.
+\begin{latexlisting}
+	\frac{1}{12} = \dfrac{1}{3} - \tfrac{1}{4}
+\end{latexlisting}
+Brüche können natürlich beliebig verschachtelt werden.
+
+\paragraph{Vergleiche} Das \enquote{Größer}- und \enquote{Kleiner}-Zeichen können einfach mittels ihrer Unicode-Zeichen \key{<} und \key{>} gesetzt werden, ebenso \key{=}.
+Für die anderen Vergleiche existieren Commands.
+\begin{latexlisting}
+	\frac{1}{4} < \frac{1}{3} \leq a \neq b \geq 4 > 3
+\end{latexlisting}
+
+\paragraph{Summen} Eine Summe ist nicht nur ein Sigma-Zeichen, sondern kann mit Dekorationen versehen werden.
+Ebenso existiert ein ähnlich funktionales Produkt- und Integralzeichen.
+\begin{latexlisting}
+	e = \sum_{k=0}^\infty \frac{1}{k!}
+\end{latexlisting}
+\begin{latexlisting}
+	g_{ij} = \prod_{k=i+1}^p c_{k, j}
+\end{latexlisting}
+\begin{latexlisting}
+	1 = \int_1^e \frac{1}{x} \D x
+\end{latexlisting}
+Das Command \latexcommand{D} für das Infinitesimale am Integralende benötigt insbesondere die Package \latexpackage{nchairx}, andernfalls muss es selbst definiert oder \latexcommand{mathrm\{d\}} verwendet wereden.
+
+\paragraph{Limites} Auch Limites werden in Inline- und Displaymath unterschiedlich gesetzt.
+\begin{latexlisting}
+	e = \lim_{n \to \infty} (1 + \frac{1}{n})^n
+\end{latexlisting}
+
+\paragraph{Normen \& Skalarprodukt} Man mag versucht sein, Normen mit vielen \key{|} zu setzen, zu empfehlen ist stattdessen die Verwendung des passenden Commands.
+\begin{latexlisting}
+	\|x\| = \langle x, x \rangle
+\end{latexlisting}
+Einstrichige Beträge werden für gewöhnlich tatsächlich mit \key{|} gesetzt.
+
+\paragraph{Trigonometrische Funktionen} Einige wichtige Funktionen existieren bereits als Commands.
+\begin{latexlisting}
+	\exp i x = \sin x + i \cos x
+\end{latexlisting}
+Alle anderen ähnlichen Operatoren sollten mit dem Befehl \latexcommand{operatorname} gesetzt werden, etwa
+\begin{latexlisting}
+	\operatorname{ker} A = \{x \in X \mid Ax = 0\}
+\end{latexlisting}
+
+\paragraph{Text} Manchmal ist es nötig, in einer mathematischen Formel oder Definition noch Fließtext einzubringen.
+\begin{latexlisting}
+	\tilde{g}_1 = \tilde{g} = g_1 \quad \text{ and }\quad \tilde{h}_{r,r} = \tilde{h} = h_{r,r}
+\end{latexlisting}
+
+\paragraph{Dekorationen} Oft möchte man denselben Buchstaben mehrmals verwenden.
+Um solche Formelzeichen trotzdem zu unterscheiden, kann man sie \emph{dekorieren}.
+\begin{latexlisting}
+	a \neq \hat{a} \neq \tilde{a} \neq \overline{a}
+\end{latexlisting}
+Bei breiten Zeichen, oder solchen mit Index etc. sollten die expandierenden Formen dieser Dekorationen verwendet werden.
+\begin{latexlisting}
+	a_1 \neq \widehat{a_1} \neq \widetilde{a_1} \neq \overline{a_1}
+\end{latexlisting}
+
+\paragraph{Skalierende Klammern} Häufig kommt es vor, dass die vertikale Höhe eines Klammerinhalts größer als das Klammerzeichen ist.
+Wir können Klammern dazu manuell vergrößern.
+\begin{latexlisting}
+	e = \lim_{n \to \infty} \bigl(1 + \frac{1}{n} \bigr)^n
+\end{latexlisting}
+Analog existieren die Command \latexcommand{Bigl}, \latexcommand{Bigr}, \latexcommand{biggl}, \latexcommand{biggr}, \latexcommand{Biggl} und \latexcommand{Biggr}.
+Diese Commands funktionieren mit allen gängigen Klammern (\key{[}, \key{]}, \latexcommand{\{}, \latexcommand{\}}, \latexcommand{langle}, \latexcommand{rangle}, \latexcommand{\|}, \latexcommand{\|}, \key{|}, \dots)
+Möchte man nicht manuell überlegen, welche Größe die Klammer nun haben sollte, kann man das auch von \LaTeX{} übernhemen lassen.
+\begin{latexlisting}
+	e = \lim_{n \to \infty} \left(1 + \frac{1}{n} \right)^n
+\end{latexlisting}
+Für Mengen, bei denen man dann meist auch den senkrechten Trennstrich vergrößern möchte, und ähnliche Fälle lässt sich diese \latexcommand{left}-\latexcommand{right}-Konstruktion noch um \latexcommand{middle} erweitern.
+\begin{latexlisting}
+	\mathds{N} = \left\{ \prod_{i=1}^n p_i \middle \mid p_i \in \mathds{P} \right\}
+\end{latexlisting}
+
+\paragraph{Griechische Buchstaben} Genügt einem das lateinische Alphabet nicht, kann man auf das griechische Zurückgreifen.
+Was passiert, wenn man diese Befehle außerhalb des Mathematik-Modus verwendet?
+\begin{latexlisting}
+	\alpha^2 = \beta^2 + \gamma^2 \qquad \omega \neq \Omega
+\end{latexlisting}
+Einige dieser Buchstaben besitzen Varianten (insbesondere \latexcommand{epsilon} und \latexcommand{phi}), die mit dem Befehl \latexcommand{var<buchstabe>}, z.B> \latexcommand{varepsilon} erzeugt werden können.
+
+\paragraph{Matrizen} Es existieren einige verschiedene Commands für Matrizen.
+Das grundlegendste ist die Umgebung \latexenvironment{matrix}.
+Der Syntax innerhalb einer Matrix entspricht dem von Tabellen.
+\begin{latexlisting}
+	\begin{matrix}
+		a & b \\
+		c & d	
+	\end{matrix}
+\end{latexlisting}
+Klammern um die Matrix können entweder mittels \latexcommand{left} und \latexcommand{right} erzeugt werden, oder mittels der dedizierten Umgebung \latexenvironment{pmatrix}.
+\begin{latexlisting}
+	\left(\begin{matrix}
+		a & b \\
+		c & d	
+	\end{matrix}\right)
+	= 
+	\begin{pmatrix}
+		a & b \\
+		c & d	
+	\end{pmatrix}
+\end{latexlisting}
+Für andere Klammern existieren ähnliche Commands.
+
+
+\subsection{Noch ein Wort zur Semantik}
+Gut verständliches, typografisch richtiges Typesetting ist nicht immer einfach.
+Optimalerweise sollten Operatoren wie $\ker A$, $\exp A$, $\D x$ und auch bestimmte Zeichen wie $\E$ und $\I$ aufrecht und mit anderen Spacing gesetzt werden.
+Da es vielen \LaTeX{}-Nutzern zu aufwendig ist, stets 
+\begin{latexlisting}
+	\mathrm{e}^{\mathrm{i} x} = \operatorname{exp} \mathrm{i} x = \operatorname{sin} x + i \operatorname{cos} x
+\end{latexlisting}
+statt
+\begin{latexlisting}
+	e^{ix} = exp (i x) = sin(x) + cos(x)
+\end{latexlisting}
+zu schreiben, geht dies oft unter.
+Hier können semantisch wertvolle Commands helfen. Die Befehle \latexcommand{exp}, \latexcommand{sin} und \latexcommand{cos} existieren bereits in \latexcommand{amsmath}, und die Package \latexpackage{nchairx} stellt noch viele weitere zur Verfügung.
+\begin{latexlisting}
+	\E^{\I x} = \exp \I x = \sin x + \cos x
+\end{latexlisting}
+\begin{latexlisting}
+	\ker A = \{x \in X \mid Ax = 0\}
+\end{latexlisting}
+Eine vollständige Liste dieser semantischen Makros kann unter \url{https://satztexnik.com/tex-archive/macros/latex/contrib/nchairx/doc/nchairx.pdf} (ab Kapitel 3.4) abgerufen werden.
+Ein Blick lohnt sich!
+
+\section{Referenzieren von Gleichungen}
+
+\section{Mathematische Umgebungen}
