@@ -97,18 +97,18 @@ Auch diese existiert in einer gesternten und ungesternten Version, und -- ähnli
 Möchte man die verschiedenen Zeilen noch aneinander ausrichten, so bietet sich die \latexenvironment{align}-Umgebung an.
 \begin{latexlisting}
 	Wir berechnen:
-	\begin{gather*}
+	\begin{align*}
 		2a + 7(a + 5) - 13a + 12
 		&= 2a + 7a + 35 - 13a + 12 \\
 		&= (2 + 7 - 13)a + 35 + 12 \\
 		&= -4a + 47
-	\end{gather*}
+	\end{align*}
 \end{latexlisting}
 Wie in Tabellen werden \key{\&}-Zeichen zur Spaltentrennung verwendet.
 Hierbei sind die Spalten abwechselnd rechts- und linksbündig ausgerichtet, was für \enquote{Kommentarspalten} verwendet werden kann.
 \begin{latexlisting}
 	Wir berechnen:
-	\begin{gather*}
+	\begin{align*}
 		7a + 5
 		&= 3a - 7
 		&| -5 \\
@@ -120,7 +120,7 @@ Hierbei sind die Spalten abwechselnd rechts- und linksbündig ausgerichtet, was 
 		&| :4 \\
 		a
 		&= -3
-	\end{gather*}
+	\end{align*}
 \end{latexlisting}
 Es ist hierbei -- gerade bei längeren Zeilen -- guter Stil, jede Spalte in eine eigene Zeile zu setzen.
 
@@ -205,7 +205,7 @@ Alle Beispiele in diesem Abschnitt sollten in einer \latexenvironment{equation}-
 \begin{latexlisting}
 	2\mathds{N} = \{ n \in \mathds{N} \mid \exists_{m \in N}: 2m = n \} \subsetneq \mathds{N} 
 \end{latexlisting}
-Ähnlich zum Existenzquantor \latexcommand{exists} existiert auch der Allquantor \latexcommand{all}, und analog zur echten Teilmenge \latexcommand{subsetneq} gibt es auch \latexcommand{subseteq}, \latexcommand{subset} sowie \latexcommand{supsetneq}, \latexcommand{supseteq} und \latexcommand{supset}.
+Ähnlich zum Existenzquantor \latexcommand{exists} existiert auch der Allquantor \latexcommand{forall}, und analog zur echten Teilmenge \latexcommand{subsetneq} gibt es auch \latexcommand{subseteq}, \latexcommand{subset} sowie \latexcommand{supsetneq}, \latexcommand{supseteq} und \latexcommand{supset}.
 Als Gegenstück zu \latexcommand{in} existiert außerdem \latexcommand{ni}.
 Man beachte auch, dass der zentrale Strich \latexcommand{mid} der Menge anderes (passenderes) Spacing hat als einfach Verwendung von \key{|}.
 
@@ -284,17 +284,17 @@ Wir können Klammern dazu manuell vergrößern.
 	e = \lim_{n \to \infty} \bigl(1 + \frac{1}{n} \bigr)^n
 \end{latexlisting}
 Analog existieren die Command \latexcommand{Bigl}, \latexcommand{Bigr}, \latexcommand{biggl}, \latexcommand{biggr}, \latexcommand{Biggl} und \latexcommand{Biggr}.
-Diese Commands funktionieren mit allen gängigen Klammern (\key{[}, \key{]}, \latexcommand{\{}, \latexcommand{\}}, \latexcommand{langle}, \latexcommand{rangle}, \latexcommand{\|}, \latexcommand{\|}, \key{|}, \dots)
-Möchte man nicht manuell überlegen, welche Größe die Klammer nun haben sollte, kann man das auch von \LaTeX{} übernhemen lassen.
+Diese Commands funktionieren mit allen gängigen Klammern (\key{[}, \key{]}, \latexcommand{\{}, \latexcommand{\}}, \latexcommand{langle}, \latexcommand{rangle}, \latexcommand{|}, \latexcommand{|}, \key{|}, \dots)
+Möchte man nicht manuell überlegen, welche Größe die Klammer nun haben sollte, kann man das auch von \LaTeX{} übernehemen lassen.
 \begin{latexlisting}
 	e = \lim_{n \to \infty} \left(1 + \frac{1}{n} \right)^n
 \end{latexlisting}
 Für Mengen, bei denen man dann meist auch den senkrechten Trennstrich vergrößern möchte, und ähnliche Fälle lässt sich diese \latexcommand{left}-\latexcommand{right}-Konstruktion noch um \latexcommand{middle} erweitern.
 \begin{latexlisting}
-	\mathds{N} = \left\{ \prod_{i=1}^n p_i \middle \mid p_i \in \mathds{P} \right\}
+	\mathds{N} = \left\{ \prod_{i=1}^n p_i \middle| p_i \in \mathds{P} \right\}
 \end{latexlisting}
 
-\paragraph{Griechische Buchstaben} Genügt einem das lateinische Alphabet nicht, kann man auf das griechische Zurückgreifen.
+\paragraph{Griechische Buchstaben} Genügt einem das lateinische Alphabet nicht, kann man auf das griechische zurückgreifen.
 Was passiert, wenn man diese Befehle außerhalb des Mathematik-Modus verwendet?
 \begin{latexlisting}
 	\alpha^2 = \beta^2 + \gamma^2 \qquad \omega \neq \Omega
