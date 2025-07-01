@@ -349,4 +349,189 @@ Ein Blick lohnt sich!
 
 \section{Referenzieren von Gleichungen}
 
+Genau wie Bilder und ähnliche Objekte können wir auch Gleichungen benennen und referenzieren.
+\begin{latexlisting}
+	\begin{equation*}\label{eq:trigonometrischer-pythagoras}
+		1 = (\sin x)^2 + (\cos x)^2
+	\end{equation*}
+\end{latexlisting}
+Zum Referenzieren ist es hier zu empfehlen, statt \latexcommand{ref} den Befehl \latexcommand{eqref} zu verwenden.
+\begin{latexlisting}
+	In \eqref{eq:trigonometrischer-pythagoras} sehen wir den trigonometrischen Pythagoras.
+\end{latexlisting}
+Einige Gleichungen haben besondere Namen, und wir möchten daher mit diesem Namen oder einem besonderen Zeichen auf sie verweisen.
+Hierzu existiert das Command \latexcommand{tag}.
+\begin{latexlisting}
+	\begin{equation*}\label{eq:euler}\tag{Euler}
+		e^{i \pi} + 1 = 0
+	\end{equation*}
+	In \eqref{eq:euler} sehen wir die eulersche Identität.
+\end{latexlisting}
+Im Gegensatz zu Labels müssen Tags nicht eindeutig sein (gerne wird zum Beispiel das Symbol \star{} verwendet), allerdings ist es aus Lesbarkeitsgründen ungünstig, zu oft denselben Tag zu verwenden.
+
 \section{Mathematische Umgebungen}
+
+Im Gegensatz zu Werken in vielen anderen Disziplinen folgen mathematische Texte of einem \emph{Definition-Satz-Beweis}-Schema.
+Das bedeutet, wichtige Aussagen stehen nicht einfach im Fließtext, sondern sind in (oft nummerierte) Absätze verschiedener Kategorien untergliedert.
+In \LaTeX{} ist die Funktionalität, Umgebungen für solche Kategorien zu erstellen, mit dem Command \latexcommand{newtheorem} bereits vorintegriert und wird durch die Packages \latexpackage{ntheorem} und \latexpackage{amsthm} (die nicht untereinander kompatibel sind) signifikant erweitert.
+Trotzdem ist das Erstellen von solchen Umgebungen noch kompliziert, insbesondere wenn sie mit anderen Packages wie (z.B. Babel zum Anpassen der Sprache) oder Referenzen, insbesondere \latexcommand{autoref}, interagieren sollen.
+Es bietet sich daher an, eine Package zu verwenden, die die wichtigesten Umgebungen bereits vordefiniert.
+Hier kommt erneut die Package \latexpackage{nchairx} zum Tragen.
+Sie definiert die folgenden Umgebungen:
+\begin{enumerate}
+	\item \latexenvironment{definition}: Definition
+	\item \latexenvironment{theorem}: Satz
+	\item \latexenvironment{maintheorem}: Hauptsatz
+	\item \latexenvironment{claim}: Behauptung
+	\item \latexenvironment{corollary}: Korollar
+	\item \latexenvironment{lemma}: Lemma
+	\item \latexenvironment{proposition}: Proposition
+	\item \latexenvironment{conjecture}: Vermutung
+	\item \latexenvironment{example}: Beispiel
+	\item \latexenvironment{convention}: Konvention
+	\item \latexenvironment{notation}: Schreibweise
+	\item \latexenvironment{question}: Frage
+	\item \latexenvironment{remark}: Bemerkung
+	\item \latexenvironment{exercise}: Aufgabe
+	\item \latexenvironment{hint}: Hinweis
+	\item \latexenvironment{proof}: Beweis
+	\item \latexenvironment{subproof}: Teilbeweis
+\end{enumerate}
+Wir können diese Umgebungen folgendermaßen nutzen:
+\begin{latexlisting}
+	\begin{definition}[Gruppe]
+		Eine Menge $M$ mit einer Verknüpfung $\cdot$ heißt \emph{Gruppe}, falls \dots
+	\end{definition}
+\end{latexlisting}
+wobei das übergeben eines Titels optional ist.
+Die Verwendung einer solchen Umgebung hat zahlreiche Konsequenzen:
+\begin{itemize}
+	\item Automatische Nummerierung
+	\item Automatische Formatierung von Titel und Inhalt, abhängig von der Umgebung.
+	\item Erzeugt ein Objekt das gelabelt und referenziert werden kann -- \latexpackage{nchairx} interagiert hier korrekt mit \latexcommand{autoref}.
+	\item Beweis-Umgebungen werden automatisch mit einem Quadrat oder Dreieck abgeschlossen.
+	\item Semantik!
+\end{itemize}
+Wird außerdem die \latexpackage{babel} mit der Option \latexargument{strings} verwendet, so wird der Titel der Umgebung automatisch übersetzt.
+\begin{latexlisting}
+	% Präämbel
+	\usepackage[german,string]{babel}
+	\usepackage{nchairx}
+\end{latexlisting}
+Hier hat \latexpackage{nchairx} ein kleines Problem:
+Nicht alle Sprachen werden unterstützt, und statt dem empfohlenen \latexargument{ngerman} funktioniert aktuell nur \latexargument{german} (alte deutsche Rechtschreibung).
+Letzteres Problem sollte mit der nächsten Version von \latexpackage{nchairx} korrigiert werden, wer eine weitere Sprache, die aktuell noch nicht unterstützt wird, zu \latexpackage{nchairx} beitragen möchte, kann sich gerne per Mail bei mir melden (\texttt{linus.mussmaecher@gmail.com}).
+
+Es existieren außerdem unnummerierte Versionen all der oben genannten Umgebungen, die mit den Namen \latexenvironment{nn<umgebung>} verwendet werden können.
+\begin{latexlisting}
+	\begin{nnremark}
+		Gruppen sind cool!
+	\end{nnremark}
+\end{latexlisting}
+Das Ändern der Formatierung der Umgebungen in \latexpackage{nchairx} ist im Augenblick nicht trivial möglich.
+Eine Formatwahl, an der sich Nutzer oft stören, ist das Verwenden von kursiver Schrift in vielen der Aussage-Umgebungen.
+Hierzu sei gesagt, dass es wichtig ist, den Inhalt einer mathematischen Umgebung klar von kommentierendem Text, der eventuell nachfolgt zu trennen.
+Dies kann durch signifikatnen Abstand, andere Schriftform oder ein Symbol (wie bei Beweisen) erreicht werden -- in \latexpackage{nchairx} wurde sich eben für kursive Schrift entschieden.
+
+\section{Größen, Einheiten, Zahlen}
+
+Weniger in der Mathematik, aber dafür umso mehr in den Naturwissenschaften, ist es üblich mit Einheiten zu rechnen.
+Doch wie setzt man Größen mit Einheiten korrekt?
+In \autoref{tab:unit-spacing} sind einige Möglichkeiten aufgeführt.
+\begin{table}[!h]
+	\begin{tabular}{l l}
+		\toprule
+		\textbf{Code} & \textbf{Ergebnis}\tabularnewline
+		\midrule
+		\texttt{60 kg}&
+		60 kg
+		\tabularnewline
+		\texttt{60kg}&
+		60kg
+		\tabularnewline
+		\texttt{60\textbackslash,kg}&
+		60\,kg
+		\tabularnewline
+		\bottomrule
+	\end{tabular}
+	\caption{Darstellung von Größen}
+	\label{tab:unit-spacing}
+\end{table}
+Korrekt ist hierbei die dritte Variante mit dem schmalen Leerzeichen.
+Im Mathematikmodus müssen wir außerdem darauf achten, \latexargument{kg} mittels des \latexcommand{mathrm}-Commands aufrecht zu setzen und als eine zusammengehörige Einheit zu markieren.
+Ähnliche Konventionen existieren beim Setzen von Zahlen, Exponenten, wissenschaftlicher Notation, \dots.
+
+Die Package \latexpackage{siunitx} stellt in all diesen Situation einheitliche, korrekte Typografie bereit\footnote{Leider kollidiert \latexpackage{siunitx} mit \latexpackage{nchairx} - hier sollte \latexpackage{nchairx} zuerst eingebunden und die Fehlermeldung ignoriert werden. Dieser Fehler wird in der nächsten \latexpackage{nchairx}-Version gefixt werden.}, die auch zusätzlich semantisch wertvoller ist als das manuelle verwenden von schmalen Leerzeichen und Exponenten.
+Das grundlegendste Command ist hier \latexcommand{num}, das eine Zahl setzt.
+Es kann sowohl im Text- als auch im Mathematikmodus verwendet werden.
+\begin{latexlisting}
+	Meine Lieblingszahl ist \num{7}, aber \num{10.3E17} ist auch ganz nett.
+	\begin{equation*}
+		\num{0,3E7} - \num{.05E8} = \num{-2E6}
+	\end{equation*}
+\end{latexlisting}
+Wir sehen, dass \latexcommand{num} sowohl \key{.} als auch \key{,} als Deziimaltrennzeichen akzeptiert und auch Exponenten und wissenschaftliche Notation korrekt setzt.
+Für Winkel existiert das ähnliche Command \latexcommand{ang}, gewöhnliche Zahlen mit einen Gradzeichen versieht und außerdem auch Minuten und Sekunden, die durch \key{;} abegetrennt werden, formatieren kann. 
+\begin{latexlisting}
+	Der schönste Winkel ist \ang{30}.
+	Würzburg liegt bei den Koordinaten \ang{49;48} und \ang{9;56}.
+\end{latexlisting}
+Auch \latexcommand{ang} funktioniert sowohl im Text- als auch im Mathematikmodus.
+Um Einheiten zu setzen, existiert das Command \latexcommand{unit}, das Einheiten sowohl als Text als auch als Command interpretieren kann.
+\begin{latexlisting}
+	Die Maßeinheit für Beschleunigung ist \unit{m/s^2} oder \unit{\meter\per\square\second}.
+	Für große Beschleunigungen können wir auch \unit{kms^{-2}} oder \unit{\kilo\meter\per\square\second} verwenden.
+\end{latexlisting}
+Die erste Methode ist hier kürzer und leichter zu tippen, während die zweite lesbarer ist und mehr der englischen Sprache entspricht.
+Eine vollständige Liste aller Einheiten sowie Commands, um eigene, nicht im SI-Standard enthaltene, Einheiten zu definieren, findet sich in der Dokumentation \url{https://satztexnik.com/tex-archive/macros/latex/contrib/siunitx/siunitx.pdf} von \latexpackage{siunitx}.
+Möchten wir ganze \emph{Größen}, d.h. Zahlen mit Einheiten, setzen, verwendend wir das Command \latexcommand{qty} (\emph{Quantity}).
+\begin{latexlisting}
+	Ein Blauwahl wiegt etwa \qty{150}{t}.
+	Er beschleunigt nur sehr langsam, etwa \qty{.3}{\meter\per\square\second}.
+\end{latexlisting}
+Hier kombinieren wir die Fähigkeiten von \latexcommand{num} und \latexcommand{unit}.
+Neben diesen besitzt die Package noch Commands zum setzen von Produkten, Listen und Intervallen von Zahlen und Größen, die sich in der Dokumentation nachlesen lassen.
+
+\section{Andere Fachgebiete}
+Es wurde nun viel auf Mathematik eingegangen.
+Da \LaTeX{} ursprünglich von einem Mathematiker erfunden wurde, um mathematische (und informatische) Texte zu setzen, ist dies nicht sehr verwunderlich.
+Trotzdem existieren auch für viele andere Disziplinen nützliche \LaTeX{}-Packages, um gebietsspezifische Informationen sinnvoll und hübsch zu setzen.
+Wir präsentieren im folgenden eine kleine Auswahl:
+\begin{table}[!h]
+	\begin{tabular}{l l p{8cm}}
+		\toprule
+		\textbf{Package} & \textbf{Gebiet} & \textbf{Beschreibung} \tabularnewline
+		\midrule
+		\latexpackage{chemfig} &
+		Chemie &
+		Chemische Diagramme \& Reaktionen
+		\tabularnewline
+		\latexpackage{chemformula} &
+		Chemie &
+		Chemische Diagramme \& Reaktionen
+		\tabularnewline
+		\latexpackage{tikzorbital} &
+		Chemie &
+		Molekulare Orbitaldiagramme mit \latexpackage{tikz}
+		\tabularnewline
+		\latexpackage{circuitikz} &
+		Elektrotechnik &
+		Schaltkreisdiagramme mit \latexpackage{tikz}
+		\tabularnewline
+		\latexpackage{bibleref} &
+		Religion &
+		Bibelzitate
+		\tabularnewline
+		\latexpackage{feyn} &
+		Physik &
+		Feynman-Diagramme
+		\tabularnewline
+		\latexpackage{feynmp} &
+		Physik &
+		Feynman-Diagramme
+		\tabularnewline
+		\bottomrule
+	\end{tabular}
+	\caption{Packages für andere Disziplinen}
+	\label{tab:discipline-packages}
+\end{table}
