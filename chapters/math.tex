@@ -337,7 +337,7 @@ statt
 	e^{ix} = exp (i x) = sin(x) + cos(x)
 \end{latexlisting}
 zu schreiben, geht dies oft unter.
-Hier können semantisch wertvolle Commands helfen. Die Befehle \latexcommand{exp}, \latexcommand{sin} und \latexcommand{cos} existieren bereits in \latexcommand{amsmath}, und die Package \latexpackage{nchairx} stellt noch viele weitere zur Verfügung.
+Hier können semantisch wertvolle Commands helfen. Die Befehle \latexcommand{exp}, \latexcommand{sin} und \latexcommand{cos} existieren bereits in \latexpackage{amsmath}, und die Package \latexpackage{nchairx} stellt noch viele weitere zur Verfügung.
 \begin{latexlisting}
 	\E^{\I x} = \exp \I x = \sin x + \cos x
 \end{latexlisting}
@@ -351,9 +351,9 @@ Ein Blick lohnt sich!
 
 Genau wie Bilder und ähnliche Objekte können wir auch Gleichungen benennen und referenzieren.
 \begin{latexlisting}
-	\begin{equation*}\label{eq:trigonometrischer-pythagoras}
+	\begin{equation}\label{eq:trigonometrischer-pythagoras}
 		1 = (\sin x)^2 + (\cos x)^2
-	\end{equation*}
+	\end{equation}
 \end{latexlisting}
 Zum Referenzieren ist es hier zu empfehlen, statt \latexcommand{ref} den Befehl \latexcommand{eqref} zu verwenden.
 \begin{latexlisting}
@@ -362,9 +362,9 @@ Zum Referenzieren ist es hier zu empfehlen, statt \latexcommand{ref} den Befehl 
 Einige Gleichungen haben besondere Namen, und wir möchten daher mit diesem Namen oder einem besonderen Zeichen auf sie verweisen.
 Hierzu existiert das Command \latexcommand{tag}.
 \begin{latexlisting}
-	\begin{equation*}\label{eq:euler}\tag{Euler}
+	\begin{equation}\label{eq:euler}\tag{Euler}
 		e^{i \pi} + 1 = 0
-	\end{equation*}
+	\end{equation}
 	In \eqref{eq:euler} sehen wir die eulersche Identität.
 \end{latexlisting}
 Im Gegensatz zu Labels müssen Tags nicht eindeutig sein (gerne wird zum Beispiel das Symbol \star{} verwendet), allerdings ist es aus Lesbarkeitsgründen ungünstig, zu oft denselben Tag zu verwenden.
@@ -470,7 +470,7 @@ Es kann sowohl im Text- als auch im Mathematikmodus verwendet werden.
 		\num{0,3E7} - \num{.05E8} = \num{-2E6}
 	\end{equation*}
 \end{latexlisting}
-Wir sehen, dass \latexcommand{num} sowohl \key{.} als auch \key{,} als Deziimaltrennzeichen akzeptiert und auch Exponenten und wissenschaftliche Notation korrekt setzt.
+Wir sehen, dass \latexcommand{num} sowohl \key{.} als auch \key{,} als Dezimaltrennzeichen akzeptiert und auch Exponenten und wissenschaftliche Notation korrekt setzt.
 Für Winkel existiert das ähnliche Command \latexcommand{ang}, gewöhnliche Zahlen mit einen Gradzeichen versieht und außerdem auch Minuten und Sekunden, die durch \key{;} abegetrennt werden, formatieren kann. 
 \begin{latexlisting}
 	Der schönste Winkel ist \ang{30}.
@@ -504,11 +504,11 @@ Wir präsentieren im folgenden eine kleine Auswahl:
 		\midrule
 		\latexpackage{chemfig} &
 		Chemie &
-		Chemische Diagramme \& Reaktionen
+		Chemische Strukturformeln
 		\tabularnewline
 		\latexpackage{chemformula} &
 		Chemie &
-		Chemische Diagramme \& Reaktionen
+		Chemische Reaktionsgleichungen
 		\tabularnewline
 		\latexpackage{tikzorbital} &
 		Chemie &
