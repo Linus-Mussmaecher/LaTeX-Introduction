@@ -1,0 +1,154 @@
+\chapter{Commands}
+
+In den vorhergehenden 5 Kapiteln haben wir viele der in \LaTeX{} enthaltenen Features kennengelernt und benutzt.
+Eine der großen Stärken von \LaTeX{} ist es aber, dass wir diese Funktionalitäten selbstständig erweitern und anpassen können.
+In diesem Kapitel lernen wir, eigene Command zu definieren -- von simplen Abkürzungen bis hin zu komplexen Funktionen mit mehreren Argumenten.
+
+\section{Makros in \TeX}
+
+Die einfachste Art, ein neues Makro zu definieren, ist das \TeX -Command \latexcommand{def}.
+\begin{latexlisting}
+	\def\derivative{\del}
+
+	Betrachte $\derivative x$.
+\end{latexlisting}
+Was passiert hier?
+\LaTeX{} evaluiert Commands in einem Prozess namens \emph{expansion}, d.h. immer wenn \LaTeX{} ein \emph{Token} findet, das expandierbar ist (beispielsweise \latexcommand{derivative}), so wir dieses durch seine Definition ersetzt, in diesem Fall \latexcommand{del}.
+Auch \latexcommand{del} ist expandierbar, wird also erneut ersetzt.
+Dieser Prozess wird so lange wiederholt, bis wir bei nur un-expandierbaren Tokens -- hier der Unicode-Character der partiellen Ableitung -- angekommen sind, wie beispielsweise Buchstaben oder einige spezielle Anweisungen wie \latexcommand{def}.
+Wann und wie lange \LaTeX{} expandiert, ist kompliziert.
+Man betrachte das folgende Beispiel und überlege sich, was das zu erwartende Ergebnis ist.
+\begin{latexlisting}
+	\def\aaa{Hello}
+	\def\bbb{\aaa}
+	\def\aaa{Hallo}
+
+	Ich sage \bbb .
+\end{latexlisting}
+Was passiert, wenn man das \latexcommand{def} in der zweiten Zeile durch \latexcommand{edef} ersetzt?
+Wir sehen, dass \LaTeX{} in einigen Kontexten (wie beispielsweise dem hinteren Teil von \latexcommand{def}) nicht sofort expandiert.
+Theoretisch sind die geschweiften Klammern um die Definition nicht nötig, wenn es sich nur um ein einzelnes Token handelt, aber sie sind trotzdem guter Stil.
+Weiterhin sollten solche Definitionen auch nur in der Präambel, vorzugsweise in einem eigenen File mit einen Titel wie \filepath{macros.tex}, leben und nicht im Fließtext, auch wenn dies möglich ist.
+Neben \latexcommand{def} und \latexcommand{edef} existiert auch \latexcommand{let}, das seine Definition nur ein einziges Mal expandiert, bevor das Makro festgelegt wird.
+Somit kann \latexcommand{let} genutzt werden, um einem Makro einen neuen Namen zu geben und wird daher oft gern genutzt, um Definitionen zu vertauschen, etwa wir folgt:
+\begin{latexlisting}
+	\let\oldepsilon\epsilon
+	\let\epsilon\varepsilon
+	\let\varepsilon\oldepsilon
+\end{latexlisting}
+Mithilfe des un-expandierbaren Command \latexcommand{undefined} können wir existierende Makros löschen.
+Dies ist beispielsweise nützlich, um Makro-Konflikte zwischen verschiedenen Packages zu vermeiden.
+\begin{latexlisting}
+	% Präambel
+	\usepackage{nchairx}
+	\let\unit\undefined
+	\usepackage{siunitx}
+\end{latexlisting}
+
+\subsection{Blöcke}
+
+Weiterhin sei noch erwähnt, dass Makros sich auf Blöcke beschränken.
+\begin{latexlisting}
+	\def\aaa{Hello}
+	{
+		\def\aaa{Hallo}
+		Ich sage \aaa .
+	}
+	Ich sage \aaa .
+\end{latexlisting}
+Dieses Verhalten lässt sich mittels des (nicht-expandierbaren) Makros \latexcommand{global} deaktivieren.
+\begin{latexlisting}
+	\def\aaa{Hello}
+	{
+		\global\def\aaa{Hallo}
+		Ich sage \aaa .
+	}
+	Ich sage \aaa .
+\end{latexlisting}
+Beide diese Features sind allerdings meist nur in Situationen nützlich, in denen man spaßige Dinge mit dem \TeX-Makro-System anstellen möchte.
+
+\section{Makros in \LaTeX}
+
+Statt des alten \TeX-Systems ist es empfehlenswert, das modernere und sicherere \LaTeX-Makro-System zu nutzen.
+
+\subsection{Makros ohne Argumente}
+Zuerste betrachten wir wieder einfache Makros wie oben, die keine Argumente akzeptieren.
+Statt \latexcommand{def} nutzen wir hier \latexcommand{newcommand}:
+\begin{latexlisting}
+	\newcommand{\integers}{\mathds{Z}}
+
+	Die ganzen Zahlen schreiben wir als $\integers$.
+\end{latexlisting}
+Use-Cases für diese Art von simplen Makros sind vielfältig:
+\begin{itemize}
+	\item Verkürzung langer Fachbegriffe
+	\item Vermeidung von Rechtschreibfehlern:
+	\begin{latexlisting}
+		\newcommand{\DNA}{Desoxyribonukleinsäure}
+	\end{latexlisting}
+	\item Semantisierung, insbesondere in mathematischen Formeln
+	\begin{latexlisting}
+		\newcommand{\iff}{\Leftrightarrow}
+	\end{latexlisting}
+	\item Vermindeter Schreibaufwand
+	\item Einheitliche Formatierung zentraler Begriffe
+	\begin{latexlisting}
+		\newcommand{\germany}{\includegraphics[height=0.6\baselineskip]{germany-flag.png} \textbf{Germany}}
+	\end{latexlisting}
+	\item Erlaubt zentrale Änderungen
+	\begin{latexlisting}
+		\newcommand{\toolname}{NetVisard}
+	\end{latexlisting}
+\end{itemize}
+
+\subsection{Makros mit Argumenten}
+Zusätzlich können wir aber auch Makros definieren, deren Verhalten sich mithilfe von Argumenten anpassen lässt und die dadurch viel flexibler sind als die vorher bekannten\footnote{Es sei erwähnt, dass ich dies auch mit \latexcommand{def} umsetzen lässt, der Syntax ist nur weniger durchschaubar}.
+\begin{latexlisting}
+	\newcommand{\differential}[1]{\frac{\D}{\D #1}}
+
+	Betrachte $\differential{x} f(x) = \differential{t} f(t)$.
+\end{latexlisting}
+Hier geben wir in eckigen Klammern die Anzahl der zu erwartenden Argumente an und können diese dann im Körper des Makros mit \latexargument{\#1}, \latexargument{\#2}, etc. nutzen (und sie werden zur Auswertungszeit expandiert).
+Dies kann zur Semantiesierung von Formatierungsentscheidungen nützlich sein.
+Das \filepath{macros.tex}-File dieses Dokuments, beispielsweise, besteht zu einem großen Teil aus verschiedenen Varianten, Schrift in Monospace zu setzen.
+\begin{latexlisting}
+	\newcommand{\latexcommand}[1]{\texttt{\textbackslash #1}}
+	\newcommand{\latexpackage}[1]{\texttt{#1}}
+	\newcommand{\latexargument}[1]{\texttt{#1}}
+	\newcommand{\latexenvironment}[1]{\texttt{#1}}
+	\newcommand{\filetype}[1]{.\texttt{#1}}
+	\newcommand{\filepath}[1]{\texttt{#1}}
+	\newcommand{\key}[1]{\texttt{#1}}
+\end{latexlisting}
+Wir können natürlich auch mehrere Argumente verwenden:
+\begin{latexlisting}
+	\newcommand{\add}[2]{#1 + #2 = \fpeval{#1 + #2}}
+
+	Betrachte $\add{3}{5}$
+\end{latexlisting}
+Wobei das Command \latexcommand{fpeval} (bereitgestellt durch eine Package, die in KOMA bereits enthalten ist) in \LaTeX{} während des Kompilierungsprozesses Rechnungen durchführen kann.
+Außerdem ist es möglich, Default-Werte für Argumente anzugeben und diese Argumente dadurch in optionale umzuwandeln:
+\begin{latexlisting}
+	\newcommand{\reals}[1][n]{\mathbb{R}^{#1}}
+
+	Es ist $\reals = \reals[4]$ für $n = 4$.
+\end{latexlisting}
+Commands mit Argumenten haben erneut alle Vorteile derer ohne Argumente, und zusätzlich:
+\begin{itemize}
+	\item Deutlich weniger Schreibaufwand.
+	\item Vermeidung von Code-Duplikation.
+	\item Kontextsensitive Anpassung.
+	\item Übersichtlicherer Code.
+\end{itemize}
+Abschließend sei noch ein Command definiert, dass mir bei der Erstellung von Arbeitsblättern sehr nützlich war und das wir im Laufe des nächsten Abschnitts erweitern werden:
+\begin{latexlisting}
+	\newcommand{\blank}[1]{%
+		\underline{\phantom{#1#1#1}}%
+	}
+\end{latexlisting}
+Die Kommentare am Ende der Zeile sind in \LaTeX{}-Commands, die mehrere Zeilen überspannen oft üblich und verhindern, dass sich ungewollte Leerzeichen oder gar Zeilenumbrüche bei der Verwendung einschleichen.
+Dieses Command erzeugt eine unterstrichene Lücke groß genug, dass handschriftlich das passende Wort gut hineinpasst.
+Später werden wir das Command so modifieren, dass auf einfache Art und Weise auch eine Lösung erstellt werden kann, in der das gewollte Wort bereits eingetragen ist.
+
+\section{Kontrollstrukturen}
+
