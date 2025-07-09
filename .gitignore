@@ -41,6 +41,8 @@
 *.pdfsync
 *.rubbercache
 rubber.cache
+## Erroneous Files from compiling in parallel
+*-SAVE-ERROR
 
 ## Build tool directories for auxiliary files
 # latexrun
