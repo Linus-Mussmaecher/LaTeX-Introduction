@@ -163,15 +163,15 @@ Das entsprechende Verhalten ist in Tabelle
 		& Nein
 		& Nein
 		\tabularnewline
-		\latexcommand{newcommand} etc.
+		\latexcommand{newcommand}
 		& Ja
 		& Nein
 		\tabularnewline
-		\latexcommand{renewcommand} etc.
+		\latexcommand{renewcommand}
 		& Nein
 		& Ja
 		\tabularnewline
-		\latexcommand{providecommand} etc.
+		\latexcommand{providecommand}
 		& Nein
 		& Nein
 		\tabularnewline
@@ -206,14 +206,14 @@ Wir können nicht nur Counter und Zahlen vergleichen, sondern auch andere Beding
 	\item \latexargument{<number> < <number>} überprüft, ob eine Zahl kleiner als eine andere ist.
 	\item \latexargument{<number> = <number>} überprüft, ob eine Zahl gleich einer anderen ist.
 	\item \latexargument{<number> > <number>} überprüft, ob eine Zahl größer als eine andere ist.
-	\item \latexcommand{isodd{<number>}} überprüft, ob eine Zahl ungerade ist.
-	\item \latexcommand{equal{<string1>}{<string2>}} überprüft, ob zwei Texte gleich sind.
-	\item \latexcommand{isundefined{<commandname>}} überprüft, ob ein Command nicht definiert ist.
+	\item \latexcommand{isodd\{<number>\}} überprüft, ob eine Zahl ungerade ist.
+	\item \latexcommand{equal\{<string1>\}\{<string2>\}} überprüft, ob zwei Texte gleich sind.
+	\item \latexcommand{isundefined\{<commandname>\}} überprüft, ob ein Command nicht definiert ist.
 \end{itemize}
 Ein Beispiel:
 \begin{latexlisting}
 	\newcommand{\points}[2]{%
-		#1 von #2 \ifthen{#2 = 1}{Punkt}{Punkten}
+		#1 von #2 \ifthenelse{#2 = 1}{Punkt}{Punkten}
 	}
 
 	\points{3}{3}
@@ -308,9 +308,9 @@ Für begrenzte Iterationen gibt es letztlich auch die Option eines \emph{enhance
 
 	\foreach \x in {1,21,24,145,973}{%
 		\ifthenelse{\fpeval{trunc(\x / 7) * 7 - \x} = 0}{%
-			$#1$ ist durch $7$ teilbar.%
+			$\x$ ist durch $7$ teilbar.%
 		}{%
-			$#1$ ist nicht durch $7$ teilbar.%
+			$\x$ ist nicht durch $7$ teilbar.%
 		}%
 	}
 \end{latexlisting}
