@@ -79,6 +79,7 @@ Statt \latexcommand{def} nutzen wir hier \latexcommand{newcommand}:
 
 	Die ganzen Zahlen schreiben wir als $\integers$.
 \end{latexlisting}
+Das Expansions-Verhalten ist hier dasselbe wie bei $\latexcommand{def}$, d.h. es wird erst später rekursive expandiert.
 Use-Cases für diese Art von simplen Makros sind vielfältig:
 \begin{itemize}
 	\item Verkürzung langer Fachbegriffe
@@ -140,15 +141,198 @@ Commands mit Argumenten haben erneut alle Vorteile derer ohne Argumente, und zus
 	\item Kontextsensitive Anpassung.
 	\item Übersichtlicherer Code.
 \end{itemize}
-Abschließend sei noch ein Command definiert, dass mir bei der Erstellung von Arbeitsblättern sehr nützlich war und das wir im Laufe des nächsten Abschnitts erweitern werden:
+Komplexere Commands werden oft durch Zeilenumbrüche und Einrückungen strukturiert und lesbarer gemacht:
 \begin{latexlisting}
 	\newcommand{\blank}[1]{%
 		\underline{\phantom{#1#1#1}}%
 	}
 \end{latexlisting}
-Die Kommentare am Ende der Zeile sind in \LaTeX{}-Commands, die mehrere Zeilen überspannen oft üblich und verhindern, dass sich ungewollte Leerzeichen oder gar Zeilenumbrüche bei der Verwendung einschleichen.
-Dieses Command erzeugt eine unterstrichene Lücke groß genug, dass handschriftlich das passende Wort gut hineinpasst.
-Später werden wir das Command so modifieren, dass auf einfache Art und Weise auch eine Lösung erstellt werden kann, in der das gewollte Wort bereits eingetragen ist.
+In diesem Fall sind die Kommentar-Zeichen am Ende der Zeile unerlässlich und verhindern, dass sich ungewollte Leerzeichen oder gar Zeilenumbrüche bei der Verwendung einschleichen -- eine der vielen kleinen Eigenheiten, die das Programmieren in \LaTeX{} deutlich anstrengder machen als in konventionellen Programmiersprachen.
+
+\subsection{Varianten}
+Auch zu \latexcommand{newcommand} existieren mehrere Alternativen.
+Beide haben dasselbe Expasions-Verhalten wie \latexcommand{newcommand} und unterscheiden sich nur in ihrem Verhalten, wenn das zu definierende Command bereits existiert.
+Das entsprechende Verhalten ist in Tabelle 
+
+\begin{table}[!h]
+	\begin{tabular}{l p{4cm} p{4cm}}
+		\toprule
+		\textbf{Command-Erzeuger} & \textbf{Fehler, falls Command existiert} & \textbf{Fehler, falls Command noch nicht existiert}\tabularnewline
+		\midrule
+		\latexcommand{def} etc.
+		& Nein
+		& Nein
+		\tabularnewline
+		\latexcommand{newcommand} etc.
+		& Ja
+		& Nein
+		\tabularnewline
+		\latexcommand{renewcommand} etc.
+		& Nein
+		& Ja
+		\tabularnewline
+		\latexcommand{providecommand} etc.
+		& Nein
+		& Nein
+		\tabularnewline
+		\bottomrule
+	\end{tabular}
+	\caption{Verhalten von Command-Erzeugern}
+	\label{tab:commands-creation}
+\end{table}
 
 \section{Kontrollstrukturen}
 
+Auch mit Argumenten ist das Verhalten von Commands bisher noch recht linear.
+Um Makros noch flexibler und potenter zu machen, können wir sogenannte \emph{Kontrollstrukturen} verwenden, wie sie aus Programmiersprachen bekannt ist.
+\LaTeX{} ist zwar keine Programmiersprache im engeren Sinne, aber trotzdem Turing-vollständig (d.h. jedes \emph{berechenbare} Programm lässt sich, wenn auch mit Aufwand, in \LaTeX{} simulieren).
+Knuth wollte sich ursprünglich nicht die Mühe machen, vollständige Programmierbarkeit in einem einfachen Textprozessor zu implementieren, wurde aber von einem Kollegen überzeugt.
+Dies führte zur Entstehung von primitiven Kontrollkontrukten wie \latexcommand{if} und \latexcommand{for}.
+Wir werden im Folgenden modernere, sicherere Versionen kennenlernen, die von Packages bereitgestellt werden.
+
+\subsection{Bedingungen}
+Die erste und wichtigste Kontrollstruktur ist die \emph{bedingte Anweisung}.
+Sie wird von der Package \latexpackage{ifthen} bereitgstellt:
+\begin{latexlisting}
+	\ifthenelse{\isodd{\thepage}}{
+		Wir sind auf einer ungeraden Seite.
+	}{
+		Wir sind auf einer geraden Seite.
+	}
+\end{latexlisting}
+Falls die Bedingung im ersten Argument wahr ist, wird das zweite Argument expandiert und ausgegeben, andernfalls das zweite.
+Wir können nicht nur Counter und Zahlen vergleichen, sondern auch andere Bedingungen verwenden:
+\begin{itemize}
+	\item \latexargument{<number> < <number>} überprüft, ob eine Zahl kleiner als eine andere ist.
+	\item \latexargument{<number> = <number>} überprüft, ob eine Zahl gleich einer anderen ist.
+	\item \latexargument{<number> > <number>} überprüft, ob eine Zahl größer als eine andere ist.
+	\item \latexcommand{isodd{<number>}} überprüft, ob eine Zahl ungerade ist.
+	\item \latexcommand{equal{<string1>}{<string2>}} überprüft, ob zwei Texte gleich sind.
+	\item \latexcommand{isundefined{<commandname>}} überprüft, ob ein Command nicht definiert ist.
+\end{itemize}
+Ein Beispiel:
+\begin{latexlisting}
+	\newcommand{\points}[2]{%
+		#1 von #2 \ifthen{#2 = 1}{Punkt}{Punkten}
+	}
+
+	\points{3}{3}
+
+	\points{1}{3}
+
+	\points{1}{1}
+
+	\points{0}{1}
+\end{latexlisting}
+Weiterhin können wir sogenannte \emph{Boolsche Variablen} (engl. \emph{booleans}) definieren, die als Stellschrauben genutzt werden können.
+\begin{latexlisting}
+	\newboolean{solution}
+	\newcommand{\addtask}[2]{%
+		#1 + #2 = \ifthenelse{%
+			\boolean{solution}%
+		}{%
+			\fpeval{#1 + #2}%
+		}{%
+			\rule{1cm}{0.5pt}%
+		}%
+	}
+	
+	\setboolean{solution}{false}
+
+	\begin{enumerate}
+		\item \addtask{14}{91}
+		\item \addtask{37}{29}
+		\item \addtask{53}{17}
+		\item \addtask{17}{53}
+		\setboolean{solution}{true}
+		\item \addtask{14}{91}
+		\item \addtask{37}{29}
+		\item \addtask{53}{17}
+		\item \addtask{17}{53}
+	\end{enumerate}
+\end{latexlisting}
+Als weiteres Beispiel können wir unsere Implementierung von \latexcommand{blank} entsprechend anpassen:
+\begin{latexlisting}
+	\newcommand{\blank}[1]{%
+		\underline{\phantom{#1}%
+		\ifthenelse{\boolean{solution}}{%
+		#1%
+		}{%
+		\phantom{#1}%
+		}%
+		\phantom{#1}%
+		}%
+	}
+\end{latexlisting}
+Man möge das Command selbstständig testen und seine Funktion verstehen!
+
+\subsection{Schleifen}
+
+Neben der bedingten Anweisung ist die \emph{Schleife}, die eine oder mehrere Anweisungen wiederholt, ein wichtiges Konstrukt.
+Auch sie wird von \latexpackage{ifthen} bereitgestellt, in Form des Commands \latexcommand{whiledo}.
+(Bonusfrage: Warum schreiben wir kein Prozentzeichen hinter \enquote{Hello}?)
+\begin{latexlisting}
+	\newcounter{loop}	
+	\whiledo{\value{loop} < 10}{%
+		Hello!
+		\stepcounter{loop}%
+	}
+\end{latexlisting}
+Die Bedingung im ersten Argument von \latexcommand{whiledo} wird hier ausgewertet und, falls sie wahr ist, der Block im zweiten Argument ausgeführt.
+Anschließend wird der Prozess so lange wiederholt, bis die Bedingung falsch ist.
+Dabei ist wichtig, die Bedingung im Block so zu formulieren, dass sie auch irgendwann falsch werden \emph{kann}, sonst endet der Kompilierungsprozess niemals\footnote{Man beachte den Unterschied zu gewöhnlichen Programmiersprachen: Hier würde das Programm kompilieren, aber beim Ausführen in einer Endlosschleife hängen. In \LaTeX{} sind Kompilierung und Ausführung verknüpft.}.
+Befürchtet man, dies zu vergessen, ist statt dem \emph{while-loop} ein \emph{for-loop} zu empfehlen, wie er beispielsweise von der \latexpackage{forloop}-Package bereitgestellt wird.
+
+Für begrenzte Iterationen gibt es letztlich auch die Option eines \emph{enhanced-for} oder \emph{for-each}, beispielsweise aus der Package \latexpackage{pgffor}:
+\begin{latexlisting}
+	\foreach \i in {1,...,5}{%
+		\i,
+	}\\
+	Everybody in the car, so come on, let's ride.\\
+	To the liquor store around the corner\\
+	The boys say they want some gin and juice\\
+	But I really don't wanna
+
+	\foreach \wish in {
+		Monica in my life,
+		Erica by my side,
+		Rita's all I need,
+		Tina's what I see,
+		Sandra in the sun,
+		Mary all night long,
+		Jessica here I am,
+		you makes me your man,
+	}{%
+		A little bit of \wish,\\
+	}
+
+	\foreach \x in {1,21,24,145,973}{%
+		\ifthenelse{\fpeval{trunc(\x / 7) * 7 - \x} = 0}{%
+			$#1$ ist durch $7$ teilbar.%
+		}{%
+			$#1$ ist nicht durch $7$ teilbar.%
+		}%
+	}
+\end{latexlisting}
+Auch wenn sich Rechnungen in \LaTeX{} mit der Funktion \latexcommand{fpeval} aus der Package \latexpackage{fp} (die in KOMA standardmäßig enthalten ist) recht einfach durchführen lassen, wollen wir dieses Kapitel mit einer \latexpackage{fpeval}-freien Implementierung des euklidischen Algorithmus zur Berechnung des größten gemeinsamen Teilers abschließen:
+\begin{latexlisting}
+	\newcounter{a}
+	\newcounter{b}
+	\newcommand{\ggT}[2]{%
+		\setcounter{a}{#1}%
+		\setcounter{b}{#2}%
+		\whiledo{\not \value{b} = 0}{%
+			\ifthenelse{\value{a} > \value{b}}{%
+				\addtocounter{a}{-\value{b}}%
+			}{%
+				\addtocounter{b}{-\value{a}}%
+			}%
+		}%
+		Der größte gemeinsame Teiler von $#1$ und $#2$ ist $\arabic{a}$.%
+	}
+
+	\ggT{143}{65}
+	\ggT{9}{32}
+	\ggT{1071}{462}
+\end{latexlisting}
+Es sei noch erwähnt, dass solche Berechnungen und Algorithmen bei jeder Kompilierung erneut durchgeführt werden, es ist also empfehlenswert, keine ganzen Simulationen in \LaTeX{}-Dokumente einzubauen.
