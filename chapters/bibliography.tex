@@ -1,1 +1,114 @@
 \chapter{Bibliographie}
+
+Ein gutes wissenschaftliches Dokument enthält eine Vielzahl an Quellen und Referenzen.
+Natürlich stellt \LaTeX{} auch hierfür einige praktische Tools bereit, und wie üblich sind im Laufe der Geschichte einige standardmäßige Packages hinzugekommen, die wir im Folgenden kennenlernen werden.
+
+\section{Das Bibfile}
+Unser gutes Prinzip der Trennung von Inhalt und Format fortführend, werden Quellen in \LaTeX{} in einem eigenen File, dem sogenannten \emph{bibfile} gespeichert.
+Dieses dient hier als eine Art Datenbank, in der Einträge für alle möglichen Quellen eingetragen werden.
+Ein Dokument kann dann eines oder mehrere solche Bibfiles einbinden und daraus zitieren, wobei die Zitationen automatisch mit den gespeicherten Daten gefüllt werden.
+Quellen, die nicht zitiert werden, tauchen auch nicht im automatischen Literaturverzeichnis auf, so dass ein Bibfile deutlich mehr Quellen enthalten kann als nötig -- dies erlaubt es erneut, ein Bibfile zwischen vielen Dokumenten und Nutzern zu teilen.
+Der Lehrstuhl X beispielsweise verwaltet ein Git-Repository mit einer Vielzahl an Bibfiles, die insgesamt Hunderte forschungsrelevante Quellen enthalten.
+
+Ein Bibfile hat für gewöhnlich die Endung \filetype{bib} und einen Namen wie \filepath{bibliography.bib} oder \filepath{references.bib}.
+Das Format der Einträge setzt wie folgt zusammen:
+\begin{latexlisting}
+	@book{mussmaecher:2025,
+		title = {Schreiben wissenschaftlicher Arbeiten in LaTeX},
+		author = {Mußmächer, Linus},
+		year = {2025},
+		publisher = {Universtität Würzburg},
+	}
+\end{latexlisting}
+Wir beginnen mit dem Typ des Eintrags nach einem \key{\@}-Zeichen.
+Mögliche Typen sind in \autoref{tab:bib-types} aufgeführt.
+In geschweiften Klammern folgend anschließend die Daten des Eintrags, allen voran die ID.
+Die ID ist der einzige Punkt, der unter allen verwendeten Bibliographien eindeutig sein muss und sollte sinnvoll gewähnlt werden.
+Eine übliche Konvention ist beispielsweise
+\begin{latexlisting}
+	<autor1>-<autor2>:<jahr>
+\end{latexlisting}
+wobei Kleinbuchstaben angehängt werden, um Veröffentlichungen mit gleichen Autoren und Jahr zu unterscheiden.
+Die übrigen Einträge sind im Key-Value-Format und enthalten Informationen über die Veröffentlichung.
+Einige mögliche Keys sind in \autoref{tab:bib-keys} aufgeführt.
+
+\begin{table}
+	\begin{tabular}{l p{6cm}}
+		\toprule
+		\textbf{Typ} & \tabularnewline
+		\midrule
+		\latexargument{book}
+		& Bücher
+		\tabularnewline
+		\latexargument{article}
+		& Artikel, Paper, Skript
+		\tabularnewline
+		\latexargument{online}
+		& Webquelle
+		\tabularnewline
+		\latexargument{misc}
+		& Sonstiges
+		\tabularnewline
+		\bottomrule
+	\end{tabular}
+	\caption{Bibliographieeintragstypen}
+	\label{tab:bib-types}
+\end{table}
+\begin{table}
+	\begin{tabular}{l p{8cm}}
+		\toprule
+		\textbf{Key} & \textbf{Bedeutung} \tabularnewline
+		\midrule
+		\latexargument{author}
+		& Autor
+		\tabularnewline
+		\latexargument{title}
+		& Titel
+		\tabularnewline
+		\latexargument{publisher}
+		& Verlag
+		\tabularnewline
+		\latexargument{adress}
+		& Adresse des Verlags
+		\tabularnewline
+		\latexargument{year}
+		& Jahr der Veröffentlichung
+		\tabularnewline
+		\latexargument{url}
+		& Web-Adresse
+		\tabularnewline
+		\latexargument{volume},\latexargument{number} 
+		& Für Objekte in Journalen oder Sammlungen
+		\tabularnewline
+		\latexargument{comment}
+		& Weitere Anmerkungen
+		\tabularnewline
+		\bottomrule
+	\end{tabular}
+	\caption{Verhalten von Command-Erzeugern}
+	\label{tab:bib-keys}
+\end{table}
+Beim Feld \latexargument{author} ist zu beachten, dass Autoren im Format \latexargument{<nachname>, <vorname>} angegeben und mehrere Autoren immer (alle!) mit \latexargument{and} getrennt werden.
+\LaTeX{} übernimmt dann selbständig die Formatierung der Autoren.
+Viele Seiten, die wissenschaftliche Artikel bereitstellen (z.B. arXiV oder SciHub), können auch automatisch Bib-Einträge mit allen ihnen bekannten Informationen erzeugen.
+
+Um ein solches Bibfile nun einbinden zu können, benötigen wir zuerst die Package \latexpackage{biblatex}.
+In TeXStudio ist es außerdem nötig, entweder in den Einstellungen das Bibliography-Backend auf \latexargument{biber} umzustellen oder die Option
+\begin{latexlisting}
+	% Präambel
+	\usepackage[backend=bibtex]{biblatex}
+\end{latexlisting}
+zu verwenden, damit das von TeXStudio verwendete Backend mit dem von \latexpackage{biblatex} erwarteten übereinstimmt.
+In Overleaf ist nichts derartige nötig.
+Ist die Package eingebunden, können wir mit
+\begin{latexlisting}
+	% Präambel
+	\addbibresource{references.bib}
+	% Text
+	\printbibliography
+\end{latexlisting}
+Wie bereits erwähnt können auf diese Art und Weise mehrere Bibfiles eingebunden werden.
+In der gedruckten Bibliography steht -- mangels Zitaten -- im Augenblick noch nicht viel, doch das wird sich mit dem nächsten Kapitel ändern.
+Man beachte auch, dass, wie bei vielen Package zuvor, die \latexpackage{babel}-Package für eine automatische Übersetzung von Schlüsselworten sorgt.
+
+\section{Zitationen}
