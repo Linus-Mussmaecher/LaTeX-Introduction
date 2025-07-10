@@ -1,7 +1,8 @@
-\chapter{Bibliographie}
+\chapter{Literatur}
 
 Ein gutes wissenschaftliches Dokument enthält eine Vielzahl an Quellen und Referenzen.
 Natürlich stellt \LaTeX{} auch hierfür einige praktische Tools bereit, und wie üblich sind im Laufe der Geschichte einige standardmäßige Packages hinzugekommen, die wir im Folgenden kennenlernen werden.
+Zu allem, was wir im Folgenden lernen, ist zusätzlich auch das Cheatsheet \url{https://tug.ctan.org/info/biblatex-cheatsheet/biblatex-cheatsheet.pdf} wärmstens zu empfehlen.
 
 \section{Das Bibfile}
 Unser gutes Prinzip der Trennung von Inhalt und Format fortführend, werden Quellen in \LaTeX{} in einem eigenen File, dem sogenannten \emph{bibfile} gespeichert.
@@ -30,7 +31,7 @@ Eine übliche Konvention ist beispielsweise
 \end{latexlisting}
 wobei Kleinbuchstaben angehängt werden, um Veröffentlichungen mit gleichen Autoren und Jahr zu unterscheiden.
 Die übrigen Einträge sind im Key-Value-Format und enthalten Informationen über die Veröffentlichung.
-Einige mögliche Keys sind in \autoref{tab:bib-keys} aufgeführt.
+Einige mögliche Keys sind in \autoref{tab:bib-keys} aufgeführt, alle weiteren finden sich im Cheatsheet.
 
 \begin{table}
 	\begin{tabular}{l p{6cm}}
@@ -91,6 +92,7 @@ Einige mögliche Keys sind in \autoref{tab:bib-keys} aufgeführt.
 Beim Feld \latexargument{author} ist zu beachten, dass Autoren im Format \latexargument{<nachname>, <vorname>} angegeben und mehrere Autoren immer (alle!) mit \latexargument{and} getrennt werden.
 \LaTeX{} übernimmt dann selbständig die Formatierung der Autoren.
 Viele Seiten, die wissenschaftliche Artikel bereitstellen (z.B. arXiV oder SciHub), können auch automatisch Bib-Einträge mit allen ihnen bekannten Informationen erzeugen.
+Ähnliches gilt für die meisten handelsüblichen Zitationssoftware wie Zotero, Citavi etc.
 
 Um ein solches Bibfile nun einbinden zu können, benötigen wir zuerst die Package \latexpackage{biblatex}.
 In TeXStudio ist es außerdem nötig, entweder in den Einstellungen das Bibliography-Backend auf \latexargument{biber} umzustellen oder die Option
@@ -104,11 +106,116 @@ Ist die Package eingebunden, können wir mit
 \begin{latexlisting}
 	% Präambel
 	\addbibresource{references.bib}
-	% Text
-	\printbibliography
 \end{latexlisting}
 Wie bereits erwähnt können auf diese Art und Weise mehrere Bibfiles eingebunden werden.
-In der gedruckten Bibliography steht -- mangels Zitaten -- im Augenblick noch nicht viel, doch das wird sich mit dem nächsten Kapitel ändern.
-Man beachte auch, dass, wie bei vielen Package zuvor, die \latexpackage{babel}-Package für eine automatische Übersetzung von Schlüsselworten sorgt.
 
 \section{Zitationen}
+Ist die Bibliographie erst einmal verlinkt, ist das Zitieren von Quellen recht einfach.
+\begin{latexlisting}
+	Wie man Quellen zitiert, haben wir aus \cite{mussmaecher:2025} gelernt.
+\end{latexlisting}
+Verwendet man dabei die \latexpackage{hyperref}-Package, wird das Zitat sogar zum Literaturverzeichnis (siehe \autoref{sec:literaturverzeichnis}) verlinkt.
+Mehrere Quellen können auch auf einmal zitiert werden
+\begin{latexlisting}
+	Wie man Quellen zitiert, haben wir aus \cite{mussmaecher:2025,mussmaecher:2025a} gelernt.
+\end{latexlisting}
+Um anzupassen, wie eine solche Zitation aussieht, können wir den \emph{Zitationsstil} anpassen.
+\begin{latexlisting}
+	\usepackage[citestyle=alphabetic]{biblatex}
+\end{latexlisting}
+Mögliche Zitationsstile sind in \autoref{tab:cite-styles} aufgeführt.
+\begin{table}
+	\begin{tabular}{l l}
+		\toprule
+		\latexargument{numeric} &
+		\latexargument{alphabetic} \tabularnewline
+		\latexargument{authoryear} &
+		\latexargument{authortitle} \tabularnewline 
+		\latexargument{verbose} &
+		\latexargument{reading} \tabularnewline
+		\latexargument{draft} &
+		\dots \tabularnewline
+		\bottomrule
+	\end{tabular}
+	\caption{Zitationsstile}
+	\label{tab:cite-styles}
+\end{table}
+Mittels eines optionalen Arguments können wir außerdem Anmerkungen zu unserer Zitation hinzufügen:
+\begin{latexlisting}
+	Wie man Quellen zitiert, haben wir aus \cite[Kapitel 7]{mussmaecher:2025} gelernt.
+\end{latexlisting}
+Besteht diese Anmerkunge nur aus einer Seite, genügt es, die Zahl anzugeben.
+\begin{latexlisting}
+	Wie man Quellen zitiert, haben wir aus \cite[69]{mussmaecher:2025} gelernt.
+\end{latexlisting}
+Die Packages \latexpackage{biblatex} und \latexpackage{babel} kümmern sich dann um ein sprachlich richtiges Label wie \enquote{S.} oder \enquote{pp.}.
+Je nach PDF-Viewer sieht man hier eventuell grüne Ränder um seine Zitationen -- diese tauchen beim Drucken nicht auf, und können im PDF mittels einer Option der \latexpackage{hyperref}-Package unterdrückt werden.
+\begin{latexlisting}
+	\usepackage[hidelinks=true]{hyperref}
+\end{latexlisting}
+Neben dem gewöhnlichen Command \latexcommand{cite} existieren auch einige Alternativen, die in speziellen Situationen verwendet werden können.
+\begin{latexlisting}
+	In \textcite{mussmaecher:2025} finden wir interessante Informationen, auch das andere Buch \parencite{mussmaecher:2025a} ist toll.
+	Eventuell findet man auch anderswo\footcite{mussmaecher:2025} etwas?
+	Oder hier\supercite{mussmaecher:2025a}?
+\end{latexlisting}
+
+\section{Literaturverzeichnis}\label{sec:literaturverzeichnis}
+Haben wir nun alle Quellen zitiert, können wir uns mittels \latexcommand{printbibliography} ein Literaturverzeichnis anzeigen lassen.
+\begin{latexlisting}
+	\printbibliography
+\end{latexlisting}
+Zur Sortierung dieses Literaturverzeichnises existiert wieder eine Package-Option.
+\begin{latexlisting}
+	\usepackage[sorting=nyt]{biblatex}
+\end{latexlisting}
+Mögliche Optionen sind dabei \latexargument{nyt}, \latexargument{nty}, \latexargument{ynt} und \latexargument{ydnt}, wobei die Buchstaben für \enquote{Name}, \enquote{Author} und \enquote{Year} (sowie \enquote{descending}) stehen.
+Andere Sortierung sind standardmäßig nicht möglich.
+Der Stil der Bibliographie kann ähnlich wie der Zitierstil angepasst werden.
+\begin{latexlisting}
+	\usepackage[sorting=nyt,bibstyle=numeric]{biblatex}
+\end{latexlisting}
+wobei man für gewöhnlich Zitier- und Bibliographiestil gemeinsam festlegt.
+\begin{latexlisting}
+	\usepackage[sorting=nyt,style=numeric]{biblatex}
+\end{latexlisting}
+Möglich Stile sind in \autoref{tab:bib-styles} aufgeführt.
+\begin{table}
+	\begin{tabular}{l l l l}
+		\toprule
+		\latexargument{numeric} &
+		\latexargument{numeric-comp} &
+		\latexargument{numeric-verb} &
+		\tabularnewline
+		\latexargument{alphabetic} &
+		\latexargument{alphabetic-verb} &
+		&
+		\tabularnewline
+		\latexargument{authoryear} &
+		\latexargument{authoryear-comp} &
+		\latexargument{authoryear-ibid} &
+		\latexargument{authoryear-icomp} \tabularnewline
+		\latexargument{authortitle} &
+		\latexargument{authortitle-comp} &
+		\latexargument{authortitle-ibid} &
+		\latexargument{authortitle-icomp} \tabularnewline
+		\latexargument{verbose} &
+		\latexargument{reading} &
+		\latexargument{draft} &
+		\dots \tabularnewline		
+		\bottomrule
+	\end{tabular}
+	\caption{Zitationsstile}
+	\label{tab:bib-styles}
+\end{table}
+Es existieren noch weitere Stile, die von \latexpackage{biblatex} automatisch geladen werden können, z.B. \latexargument{apa}.
+Man kann sich hierzu im Internet (\url{ctan.org}) oder dem Cheatsheet informieren.
+Weiterhin können wir sogenannte Rückverweise in der Bibliographie anzeigen.
+\begin{latexlisting}
+	\usepackage[backref=true]{biblatex}
+\end{latexlisting}
+Ein letztes nützliches Feature ist die Möglichkeit, die Bibliographie nach dem Typ der Zitation aufzusplitten.
+\begin{latexlisting}
+	\printbibliography[title={Bücher}, type=books]
+	\printbibliography[title={Andere Quellen}, nottype=books]
+\end{latexlisting}
