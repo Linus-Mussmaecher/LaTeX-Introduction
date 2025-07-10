@@ -219,3 +219,18 @@ Ein letztes nützliches Feature ist die Möglichkeit, die Bibliographie nach dem
 	\printbibliography[title={Bücher}, type=books]
 	\printbibliography[title={Andere Quellen}, nottype=books]
 \end{latexlisting}
+
+\section{Glossare}
+In langen Texten ist oft nützlich ein Glossar an wichtigen Begriffen und Definitionen zu halten.
+Hierzu existiert die Package \latexpackage{makeidx}.
+Mittels des Commands \latexcommand{index} können Indexeinträge erstellt werden.
+\begin{latexlisting}
+	\begin{definition}[Magma]\label{def:magma}\index{Magma}
+		Eine Menge $M$ gemeinsam mit einer zweistelligen Verknüpfung $\cdot: M \times M \to M$ heißt \emph{Magma.}
+	\end{definition}
+\end{latexlisting}
+Anschließend muss in der Präambel, nach Inklusion der Package aber vor Beginn des Dokuments, das Command \latexcommand{makeindex} inkludiert werden.
+Mit der Erstellung eines Index sind wieder einige Kompilierungsprozesse und Hilfsfiles verbunden, um die sich glücklicherweise Overleaf oder Hilfsprogramme wie \filepath{latexmk} automatisch kümmern.
+Alles was noch zu tun ist, ist das fertige Glossar an einer angemessenen Stelle (im Anhang, seltener am Anfang zwischen Vorwort und Einleitung) durch \latexcommand{printindex} abzudrucken.
+
+Möchten wir \emph{Nomenklaturen} erzeugen, eine spezielle Art von Index, in der auch Kurzdefinitionen enthalten sind, können wir stattdessen die Package \latexpackage{nomencl} verwenden, deren Dokumentation unter \url{https://ctan.net/macros/latex/contrib/nomencl/nomencl.pdf} ihre Verwendung erklärt.
