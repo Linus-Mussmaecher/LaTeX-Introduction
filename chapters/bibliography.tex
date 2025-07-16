@@ -91,7 +91,7 @@ Einige mögliche Keys sind in \autoref{tab:bib-keys} aufgeführt, alle weiteren 
 \end{table}
 Beim Feld \latexargument{author} ist zu beachten, dass Autoren im Format \latexargument{<nachname>, <vorname>} angegeben und mehrere Autoren immer (alle!) mit \latexargument{and} getrennt werden.
 \LaTeX{} übernimmt dann selbständig die Formatierung der Autoren.
-Viele Seiten, die wissenschaftliche Artikel bereitstellen (z.B. arXiV oder SciHub), können auch automatisch Bib-Einträge mit allen ihnen bekannten Informationen erzeugen.
+Viele Seiten, die wissenschaftliche Artikel bereitstellen (z.B. arXiV), können auch automatisch Bib-Einträge mit allen ihnen bekannten Informationen erzeugen.
 Ähnliches gilt für die meisten handelsüblichen Zitationssoftware wie Zotero, Citavi etc.
 
 Um ein solches Bibfile nun einbinden zu können, benötigen wir zuerst die Package \latexpackage{biblatex}.
@@ -216,8 +216,8 @@ Weiterhin können wir sogenannte Rückverweise in der Bibliographie anzeigen.
 \end{latexlisting}
 Ein letztes nützliches Feature ist die Möglichkeit, die Bibliographie nach dem Typ der Zitation aufzusplitten.
 \begin{latexlisting}
-	\printbibliography[title={Bücher}, type=books]
-	\printbibliography[title={Andere Quellen}, nottype=books]
+	\printbibliography[title={Bücher}, type=book]
+	\printbibliography[title={Andere Quellen}, nottype=book]
 \end{latexlisting}
 
 \section{Glossare}
@@ -230,7 +230,8 @@ Mittels des Commands \latexcommand{index} können Indexeinträge erstellt werden
 	\end{definition}
 \end{latexlisting}
 Anschließend muss in der Präambel, nach Inklusion der Package aber vor Beginn des Dokuments, das Command \latexcommand{makeindex} inkludiert werden.
-Mit der Erstellung eines Index sind wieder einige Kompilierungsprozesse und Hilfsfiles verbunden, um die sich glücklicherweise Overleaf oder Hilfsprogramme wie \filepath{latexmk} automatisch kümmern.
 Alles was noch zu tun ist, ist das fertige Glossar an einer angemessenen Stelle (im Anhang, seltener am Anfang zwischen Vorwort und Einleitung) durch \latexcommand{printindex} abzudrucken.
+Mit der Erstellung eines Index sind wieder einige Kompilierungsprozesse und Hilfsfiles verbunden, um die sich glücklicherweise Overleaf oder Hilfsprogramme wie \filepath{latexmk} automatisch kümmern -- in TeXStudio ist es nötig, das Projekt zu kompilieren, dann unter \texttt{Tools/Index} den Index zu bauen und erneut zu kompilieren.
+% Siehe: https://tex.stackexchange.com/questions/298271/makeindex-is-not-called-when-compiling-in-texstudio
 
 Möchten wir \emph{Nomenklaturen} erzeugen, eine spezielle Art von Index, in der auch Kurzdefinitionen enthalten sind, können wir stattdessen die Package \latexpackage{nomencl} verwenden, deren Dokumentation unter \url{https://ctan.net/macros/latex/contrib/nomencl/nomencl.pdf} ihre Verwendung erklärt.
