@@ -1,0 +1,194 @@
+\chapter{TikZ}
+
+Die Package \emph{tikz} erlaubt in \LaTeX{} die Verwendung der Sprache \emph{TikZ} (kurz für \emph{TikZ ist kein Zeichenprogramm}), mit der sich Vektorgraphiken beschreiben lassen.
+TikZ wurde speziell für die Verwendung mit \LaTeX{} entwickelt und erlaubt die Erstellung von zahlreichen Vektorgraphiken: Bilder, Diagramme, Plots, Symbole, Grundrisse, etc.
+Eine vollständige Spezifikation und viele nützliche Hinweise lassen sich unter \url{tikz.dev} nachlesen.
+
+Ähnlich wie \LaTeX{} selbst kann TikZ durch viele Libraries erweitert werden.
+Dies geschieht mittels des Commands \latexcommand{usetikzlibrary}.
+Libraries können klein sein und nur neue Commands hinzufügen, bestehenden Commands mehr Optionen geben (z.B. die Library \latexpackage{patters}, die Musterfüllungen erlaubt) oder gar ganz neue Umgebungen und syntaktische Konstrukte einführen (z.B. die Library \latexpackage{cd}, die zum Erstellen kommutativer Diagramme verwendet wird).
+
+Da TikZ-Code oft etwas mühsam zu schreiben ist, existieren Online-Lösungen wie \url{q.uiver.app} oder \url{tikzmaker.com}, die den User in einer graphischen Umgebungen Diagramme zeichnen und dann generierten Code in \LaTeX{} einfügen lassen.
+
+Die allgemeine Umgebung zur Verwendung von TikZ ist \latexenvironment{tikzpicture}.
+Wir nehmen im Folgenden an, dass sich alle Beispiele in diesem Kapitel -- sofern nicht anders erwähnt -- in einer solchen \latexenvironment{tikzpicture}-Umgebung befinden.
+
+\section{Pfeile \& Formen}
+
+\subsection{Linien}
+Die grundlegendste in TikZ enthaltene Form ist eine einfache Linie.
+\begin{latexlisting}
+	\draw (0,0) -- (1,0);
+\end{latexlisting}
+Das Command \latexcommand{draw} zeichnet die darauffolgende Form, hier ein Strich von \latexargument{(0,0)} nach \latexargument{(1,0)}.
+Koordinaten werden hier im mathematischen Sinne verwendet, d.h. die positiven Richtungen sind oben und rechts.
+Da es sich um europäisches Package handelt, sind alle Angaben -- außer anders konfiguriert -- in \latexargument{cm}.
+Die Form wird durch ein Semikolon (\key{;}) abgeschlossen.
+Eine Form kann auch eine Folge an Linien sein.
+\begin{latexlisting}
+	\draw (0,0) -- (1,0) -- (0.5,0.5) -- (0,0);
+\end{latexlisting}
+Soll eine Folge an Linien geschlossen werden, kann auch der \enquote{Punkt} \latexargument{cycle} verwendet werden.
+\begin{latexlisting}
+	\draw (0,0) -- (1,0) -- (0.5,0.5) -- cycle;
+\end{latexlisting}
+Ähnliche wie viele Strukturen in \LaTeX{} können wir Linien mit optionalen Argumenten ausstatten.
+Statt \latexargument{--} muss dann aber \latexargument{to} verwendet werden.
+\begin{latexlisting}
+	\draw (0,0) to[bend left] (1,0) -- (0.5,0.5) to[bend right,distance=0.1cm] cycle;
+\end{latexlisting}
+So können wir auch die Stärke und Art der Linie anpassen:
+\begin{latexlisting}
+	\draw[thick] (0,6) to (1,6);
+	\draw[ulta thin] (0,5) to (1,5);
+	\draw[color=myownblue] (0,4) to (1,4);
+	\draw[color=red] (0,3) to (1,3);
+	\draw[dashed] (0,2) to (1,2);
+	\draw[dotted] (0,1) to (1,1);
+	\draw (0,0) to (1,0);
+\end{latexlisting}
+Wie wir sehen, können erneut auch durch \latexpackage{xcolor} selbst definierte Farben verwendet werden.
+Die Standard-Liniendicke ist \latexargument{thin}.
+Argument können direkt an \latexargument{to} geschrieben werden, oder an \latexcommand{draw}, oder an das gesamte \latexenvironment{tikzpicture}.
+\begin{latexlisting}
+	\begin{tikzpicture}
+		\draw (0,0) to[dashed] (1,0) -- (0.5,0.5) -- cycle;
+		\draw[dashed] (0,2) to (1,2) -- (0.5,2.5) -- cycle;
+	\end{tikzpicture}
+
+	\begin{tikzpicture}[dashed]
+		\draw (0,0) to (1,0) -- (0.5,0.5) -- cycle;
+		\draw (0,2) to (1,2) -- (0.5,2.5) -- cycle;
+	\end{tikzpicture}
+\end{latexlisting}
+Wichtig sind auch die optionalen Argumente \latexargument{in} und \latexargument{out}, mit der für krumme Linien die Ein- und Ausgangswinkel angepasst werden können.
+\begin{latexlisting}
+	\draw[out=30,in=150] (0,0) to (3,0);
+	\draw[out=30,in=150] (0,0) to (6,0);
+	\draw[out=30,in=150] (0,0) to (9,0);
+\end{latexlisting}
+Schließlich existiert noch die Möglichkeit, Linien mit Pfeilspitzen zu versehen.
+\begin{latexlisting}
+	\draw[->] (0,0) to (3,0);
+	\draw[|->] (0,0) to (2,0);
+	\draw[<->] (0,0) to (1,0);
+\end{latexlisting}
+Für eine vollständige Liste aller optionalen Argument konsultiere man \url{tikz.dev}.
+
+\subsection{Formen}
+Auch wenn sich die meisten Formen aus Linien und Kurven zusammensetzen lassen, ist es doch oft praktischer, einige Formen direkt zu zeichnen.
+Mit \latexargument{rectangle} beispielsweise lässt sich ein Rechteck zwischen zwei Ecken zeichnen.
+\begin{latexlisting}
+	\draw (0,0) rectangle (3,2);
+\end{latexlisting}
+Verwandt dist \latexargument{grid}, das ein ganzes Linienraster zeichnet -- dies ist besonders praktisch, um Hilfslinien einzufügen und sich im Bild zu orientieren. Ist das Bild fertig, kann die Zeile dann auskommentiert werden.
+\begin{latexlisting}
+	\draw (0,0) grid[help lines, step=0.5cm] (8,5);
+\end{latexlisting}
+Die \latexargument{help lines}-Option stellt hier die Liniendicke auf das Minimum ein, \latexargument{step} konfiguriert das Intervall zwischen den Rasterlinien -- wird es nicht angegeben, ist der Standard das auf häufigsten nützliche \latexargument{1cm}.
+Mit Linien etwas schwerer nachzubilden sind Kreise und Ellipsen.
+Hier ist das zweite \enquote{Argument} kein Punkt, sondern der Radius bzw. die Halbachsen.
+\begin{latexlisting}
+	\draw (0,0) circle (1cm);
+	\draw (0,0) ellipse (5cm and 3cm);
+\end{latexlisting}
+Für Funktionen existiert schließlich noch die \latexargument{plot}-Funktion.
+\begin{latexlisting}
+	\draw[<->] (0,2.2) to (0,0) to (4,0);
+	\draw[thin,blue] plot[domain=0:3.8] (\x,{2/(1+pow(\x,2))});
+\end{latexlisting}
+Beim Plotten ist zu beachten, dass die Laufvariable \latexcommand{x} einen Backslash benötigt, aber arithmetische Operationen wie \latexargument{pow} nicht (genauso wie bei \latexpackage{fpeval}).
+Der zu evaluierende Ausdruck muss außerdem in geschweiften Klammern stehen.
+Mit \latexargument{domain} wird der Defintionsbereich angepasst.
+
+\subsection{Füllung}
+Für die letztgenannten Plots ist es eher selten nützlich, aber für alle anderen Formen geschieht es oft, dass sie nicht nur aus Linien bestehen sondern auch gefüllt sein sollen.
+Hierzu existiert die Alternative \latexcommand{fill} zu \latexcommand{draw}.
+\begin{latexlisting}
+	\fill (0,0) rectangle (3,2);
+\end{latexlisting}
+Auch hier kann die Farbe angepasst werden:
+\begin{latexlisting}
+	\fill[color=red] (0,0) rectangle (3,2);
+\end{latexlisting}
+Wir können \latexcommand{fill} und \latexcommand{draw} beliebig kombinieren.
+Die vier folgenden Zeilen erzeugen dasselbe Rechteck.
+\begin{latexlisting}
+	\fill[color=red, draw=black] (0,9) rectangle (3,11);
+	\draw[fill=red, color=black] (0,6) rectangle (3,8);
+	\fill[fill=red, draw=black] (0,3) rectangle (3,5);
+	\draw[fill=red, draw=black] (0,0) rectangle (3,2);
+\end{latexlisting}
+Man beachte, dass \latexcommand{draw} die Liniendicke zur Formgröße hinzufügt.
+Die beiden folgenden Zeilen erzeugen also \emph{nicht} dasselbe Rechteck.
+\begin{latexlisting}
+	\fill[draw=black] (0,0) rectangle (0,2);
+	\fill (4,0) rectangle (4,2);
+\end{latexlisting}
+Dies sieht man besser mit stärkerer Linienstärke.
+\begin{latexlisting}
+	\fill[draw=black,ulta thick] (0,0) rectangle (0,2);
+	\fill (4,0) rectangle (4,2);
+\end{latexlisting}
+Wem diese Füllungen etwas zu stark sind, der kann sie halbtransparent machen.
+\begin{latexlisting}
+	\fill[red,opacity=0.5] (360:0.5cm) circle (0.6cm);
+	\fill[blue,opacity=0.5] (120:0.5cm) circle (0.6cm);
+	\fill[green,opacity=0.5] (240:0.5cm) circle (0.6cm);
+\end{latexlisting}
+Dieses Beispiel demonstriert auch Polarkoordinaten, für die wir in diesem Skript leider keinen Raum mehr haben.
+Ebenfalls nicht erklärt sind \emph{transparency groups}, die verwendet werden können, um komplexere Formen einheitlich transparent zu machen.
+Siehe für beides \url{tikz.dev}.
+Als Alternative zur Transparenz sind auch Musterfüllungen mit der \latexpackage{patterns}-Library möglich.
+\begin{latexlisting}
+	\fill[pattern=dots,pattern color=blue] (0,0) rectangle (1,1);
+	\fill[draw=black, pattern=north west lines, pattern color=green] (2,0) -- (2.577,1) -- (3.154,0) -- cycle;
+\end{latexlisting}
+Die verfügbaren Patterns lassen sich im Internet nachlesen.
+
+\section{Nodes}
+Möchte man seine Diagramm beschriften, verwendet man dazu in TikZ sogenannte \emph{nodes}.
+\begin{latexlisting}
+	\draw[|-|] (0,0) -- (2,0):
+	\node at (1,0.2) {\qty{2}{cm}};
+\end{latexlisting}
+Der gewünschte Text wird innerhalb der hinteren geschweiften Klammern platziert.
+Hier sind alle gewöhnlichen \LaTeX{}-Commands und Konstrukte, insbesondere die Verwendung des Mathematik-Modus, erlaubt.
+Mit den optionalen Argumenten \latexargument{above}, \latexargument{below}, \latexargument{left}, \latexargument{right} und Kombinationen können Nodes genauer positioniert werden.
+\begin{latexlisting}
+	\fill (0,0) circle (0.5mm);
+	\fill (2,0) circle (0.5mm);
+	\draw (0,0) -- (2,0);
+	\node[left] at (0,0) {$P_1$};
+	\node[above right] at (2,0) {$P_2$};
+\end{latexlisting}
+Längere Texte können mit \latexcommand{\textbackslash} gebrochen werden.
+In diesem Fall ist die Angabe eines \latexargument{align}-Parameters (\latexargument{left},\latexargument{center},\latexargument{right}) nötig.
+\begin{latexlisting}
+	\fill (0,0) circle (0.5mm);
+	\fill (2,0) circle (0.5mm);
+	\draw (0,0) -- (2,0);
+	\node[left] at (0,0) {$P_1$};
+	\node[below,align=center] at (2,0) {Dieser Punkt ist\\nicht $P_2$.};
+\end{latexlisting}
+Nodes können auch wie alle anderen Formen gefüllt oder umrandet werden.
+\begin{latexlisting}
+	\fill (0,0) circle (0.5mm);
+	\fill (2,0) circle (0.5mm);
+	\draw (0,0) -- (2,0);
+	\node[left, draw=black] at (0,0) {$P_1$};
+\end{latexlisting}
+
+\section{Ausblick}
+Die hier aufgeführten Features sind nur eine kleine Teilmenge von all dem, was in TikZ möglich ist.
+Auch wenn dieses Skript keinen Raum für eine vollständige Ausführung hat, nennen wir im Folgenden einige dieser Features -- bei Interesse kann man sich dann unter \url{tikz.dev} oder allgemein im Internet weiter informieren.
+\begin{itemize}
+	\item \emph{Scopes} erlauben die Gruppierung von Formen, gemeinsame Verschiebung, Anpassung und Teilen von optionalen Argumenten.
+	\item \emph{Clips} erlauben das nur teilweise Zeichnen von Formen, z.B. wenn der Schnitt zwischen zwei Formen eingefärbt werden soll.
+	\item \emph{Coordinates} erlauben das Wiederverwenden von Punkten.
+	\item Neben dem klassischen kartesischen Koordinatensystem erlaubt TikZ auch die Verwendung von Polarkoordinaten, xyz-Koordinaten, node-Koordinaten, baryzentrischen Koordinaten und relativen Koordinaten.
+	\item \emph{Kommutative Diagramme} können mit \latexenvironment{tikz-cd} erstellt werden.
+	\item \emph{Fill Rules} konfigurieren die Füllung von Formen.
+	\item \emph{Transparency Groups} machen auch komplexe, mehrteilige Formen konsistent transparent.
+	\item Mit \latexpackage{pgf} können auch 3-dimensionale Objekte geplottet werden.
+\end{itemize}

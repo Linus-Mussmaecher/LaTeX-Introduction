@@ -324,6 +324,11 @@ Klammern um die Matrix können entweder mittels \latexcommand{left} und \latexco
 \end{latexlisting}
 Für andere Klammern existieren ähnliche Commands.
 
+\paragraph{Kürzen} Mit der Package \latexpackage{cancel} können wir Kürzungsstriche in Brüche einfügen.
+\begin{latexlisting}
+	\frac{15}{9} = \frac{5 \cdot \cancel{3}}{3 \cdot \cancel{3}} = \frac{5}{3}
+\end{latexlisting}
+
 
 \subsection{Noch ein Wort zur Semantik}
 Gut verständliches, typografisch richtiges Typesetting ist nicht immer einfach.
@@ -432,6 +437,25 @@ Das Ändern der Formatierung der Umgebungen in \latexpackage{nchairx} ist im Aug
 Eine Formatwahl, an der sich Nutzer oft stören, ist das Verwenden von kursiver Schrift in vielen der Aussage-Umgebungen.
 Hierzu sei gesagt, dass es wichtig ist, den Inhalt einer mathematischen Umgebung klar von kommentierendem Text, der eventuell nachfolgt zu trennen.
 Dies kann durch signifikatnen Abstand, andere Schriftform oder ein Symbol (wie bei Beweisen) erreicht werden -- in \latexpackage{nchairx} wurde sich eben für kursive Schrift entschieden.
+
+Wird ein Aussage mit einer Aufzählung begonnen, so befindet sich der erste Aufzählungspunkt in der selben Zeile wie Nummber und Titel, was oft etwas unruhig aussieht.
+\begin{latexlisting}
+	\begin{proposition}[Arithmetische Eigenschaften]
+		\begin{itemize}
+			\item $\gamma^{-1} = 1 - \gamma$
+			\item $(\gamma + \delta)^2 = \gamma^2 + \delta^2$
+		\end{itemize}
+	\end{proposition}
+\end{latexlisting}
+Dies kann durch Einfügen eines geschützten Leerzeichens behoben werden.
+\begin{latexlisting}
+	\begin{proposition}[Arithmetische Eigenschaften]~
+		\begin{itemize}
+			\item $\gamma^{-1} = 1 - \gamma$
+			\item $(\gamma + \delta)^2 = \gamma^2 + \delta^2$
+		\end{itemize}
+	\end{proposition}
+\end{latexlisting}
 
 \section{Größen, Einheiten, Zahlen}
 
