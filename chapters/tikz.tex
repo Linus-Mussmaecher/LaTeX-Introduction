@@ -1,4 +1,4 @@
-\chapter{TikZ}
+\section{TikZ}
 
 Die Package \emph{tikz} erlaubt in \LaTeX{} die Verwendung der Sprache \emph{TikZ} (kurz für \emph{TikZ ist kein Zeichenprogramm}), mit der sich Vektorgraphiken beschreiben lassen.
 TikZ wurde speziell für die Verwendung mit \LaTeX{} entwickelt und erlaubt die Erstellung von zahlreichen Vektorgraphiken: Bilder, Diagramme, Plots, Symbole, Grundrisse, etc.
@@ -13,9 +13,8 @@ Da TikZ-Code oft etwas mühsam zu schreiben ist, existieren Online-Lösungen wie
 Die allgemeine Umgebung zur Verwendung von TikZ ist \latexenvironment{tikzpicture}.
 Wir nehmen im Folgenden an, dass sich alle Beispiele in diesem Kapitel -- sofern nicht anders erwähnt -- in einer solchen \latexenvironment{tikzpicture}-Umgebung befinden.
 
-\section{Pfeile \& Formen}
+\subsection{Linien \& Formen}
 
-\subsection{Linien}
 Die grundlegendste in TikZ enthaltene Form ist eine einfache Linie.
 \begin{latexlisting}
 	\draw (0,0) -- (1,0);
@@ -75,7 +74,6 @@ Schließlich existiert noch die Möglichkeit, Linien mit Pfeilspitzen zu versehe
 \end{latexlisting}
 Für eine vollständige Liste aller optionalen Argument konsultiere man \url{tikz.dev}.
 
-\subsection{Formen}
 Auch wenn sich die meisten Formen aus Linien und Kurven zusammensetzen lassen, ist es doch oft praktischer, einige Formen direkt zu zeichnen.
 Mit \latexargument{rectangle} beispielsweise lässt sich ein Rechteck zwischen zwei Ecken zeichnen.
 \begin{latexlisting}
@@ -101,7 +99,6 @@ Beim Plotten ist zu beachten, dass die Laufvariable \latexcommand{x} einen Backs
 Der zu evaluierende Ausdruck muss außerdem in geschweiften Klammern stehen.
 Mit \latexargument{domain} wird der Defintionsbereich angepasst.
 
-\subsection{Füllung}
 Für die letztgenannten Plots ist es eher selten nützlich, aber für alle anderen Formen geschieht es oft, dass sie nicht nur aus Linien bestehen sondern auch gefüllt sein sollen.
 Hierzu existiert die Alternative \latexcommand{fill} zu \latexcommand{draw}.
 \begin{latexlisting}
@@ -146,7 +143,7 @@ Als Alternative zur Transparenz sind auch Musterfüllungen mit der \latexpackage
 \end{latexlisting}
 Die verfügbaren Patterns lassen sich im Internet nachlesen.
 
-\section{Nodes}
+\subsection{Nodes}
 Möchte man seine Diagramm beschriften, verwendet man dazu in TikZ sogenannte \emph{nodes}.
 \begin{latexlisting}
 	\draw[|-|] (0,0) -- (2,0):
@@ -179,7 +176,7 @@ Nodes können auch wie alle anderen Formen gefüllt oder umrandet werden.
 	\node[left, draw=black] at (0,0) {$P_1$};
 \end{latexlisting}
 
-\section{Ausblick}
+\subsection{Ausblick}
 Die hier aufgeführten Features sind nur eine kleine Teilmenge von all dem, was in TikZ möglich ist.
 Auch wenn dieses Skript keinen Raum für eine vollständige Ausführung hat, nennen wir im Folgenden einige dieser Features -- bei Interesse kann man sich dann unter \url{tikz.dev} oder allgemein im Internet weiter informieren.
 \begin{itemize}

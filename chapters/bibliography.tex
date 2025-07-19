@@ -1,10 +1,10 @@
-\chapter{Literatur}
+\section{Literatur}
 
 Ein gutes wissenschaftliches Dokument enthält eine Vielzahl an Quellen und Referenzen.
 Natürlich stellt \LaTeX{} auch hierfür einige praktische Tools bereit, und wie üblich sind im Laufe der Geschichte einige standardmäßige Packages hinzugekommen, die wir im Folgenden kennenlernen werden.
 Zu allem, was wir im Folgenden lernen, ist zusätzlich auch das Cheatsheet \url{https://tug.ctan.org/info/biblatex-cheatsheet/biblatex-cheatsheet.pdf} wärmstens zu empfehlen.
 
-\section{Das Bibfile}
+\subsection{Das Bibfile}
 Unser gutes Prinzip der Trennung von Inhalt und Format fortführend, werden Quellen in \LaTeX{} in einem eigenen File, dem sogenannten \emph{bibfile} gespeichert.
 Dieses dient hier als eine Art Datenbank, in der Einträge für alle möglichen Quellen eingetragen werden.
 Ein Dokument kann dann eines oder mehrere solche Bibfiles einbinden und daraus zitieren, wobei die Zitationen automatisch mit den gespeicherten Daten gefüllt werden.
@@ -109,7 +109,7 @@ Ist die Package eingebunden, können wir mit
 \end{latexlisting}
 Wie bereits erwähnt können auf diese Art und Weise mehrere Bibfiles eingebunden werden.
 
-\section{Zitationen}
+\subsection{Zitationen}
 Ist die Bibliographie erst einmal verlinkt, ist das Zitieren von Quellen recht einfach.
 \begin{latexlisting}
 	Wie man Quellen zitiert, haben wir aus \cite{mussmaecher:2025} gelernt.
@@ -160,7 +160,7 @@ Neben dem gewöhnlichen Command \latexcommand{cite} existieren auch einige Alter
 	Oder hier\supercite{mussmaecher:2025a}?
 \end{latexlisting}
 
-\section{Literaturverzeichnis}\label{sec:literaturverzeichnis}
+\subsection{Literaturverzeichnis}\label{sec:literaturverzeichnis}
 Haben wir nun alle Quellen zitiert, können wir uns mittels \latexcommand{printbibliography} ein Literaturverzeichnis anzeigen lassen.
 \begin{latexlisting}
 	\printbibliography
@@ -220,7 +220,7 @@ Ein letztes nützliches Feature ist die Möglichkeit, die Bibliographie nach dem
 	\printbibliography[title={Andere Quellen}, nottype=book]
 \end{latexlisting}
 
-\section{Glossare}
+\subsection{Glossare}
 In langen Texten ist oft nützlich ein Glossar an wichtigen Begriffen und Definitionen zu halten.
 Hierzu existiert die Package \latexpackage{makeidx}.
 Mittels des Commands \latexcommand{index} können Indexeinträge erstellt werden.
