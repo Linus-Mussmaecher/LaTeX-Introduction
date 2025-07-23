@@ -6,7 +6,7 @@ Eine vollständige Spezifikation und viele nützliche Hinweise lassen sich unter
 
 Ähnlich wie \LaTeX{} selbst kann TikZ durch viele Libraries erweitert werden.
 Dies geschieht mittels des Commands \latexcommand{usetikzlibrary}.
-Libraries können klein sein und nur neue Commands hinzufügen, bestehenden Commands mehr Optionen geben (z.B. die Library \latexpackage{patters}, die Musterfüllungen erlaubt) oder gar ganz neue Umgebungen und syntaktische Konstrukte einführen (z.B. die Library \latexpackage{cd}, die zum Erstellen kommutativer Diagramme verwendet wird).
+Libraries können klein sein und nur neue Commands hinzufügen, bestehenden Commands mehr Optionen geben (z.B. die Library \latexpackage{patterns}, die Musterfüllungen erlaubt) oder gar ganz neue Umgebungen und syntaktische Konstrukte einführen (z.B. die Library \latexpackage{cd}, die zum Erstellen kommutativer Diagramme verwendet wird).
 
 Da TikZ-Code oft etwas mühsam zu schreiben ist, existieren Online-Lösungen wie \url{q.uiver.app} oder \url{tikzmaker.com}, die den User in einer graphischen Umgebungen Diagramme zeichnen und dann generierten Code in \LaTeX{} einfügen lassen.
 
@@ -39,7 +39,7 @@ Statt \latexargument{--} muss dann aber \latexargument{to} verwendet werden.
 So können wir auch die Stärke und Art der Linie anpassen:
 \begin{latexlisting}
 	\draw[thick] (0,6) to (1,6);
-	\draw[ulta thin] (0,5) to (1,5);
+	\draw[ultra thin] (0,5) to (1,5);
 	\draw[color=myownblue] (0,4) to (1,4);
 	\draw[color=red] (0,3) to (1,3);
 	\draw[dashed] (0,2) to (1,2);
@@ -48,7 +48,7 @@ So können wir auch die Stärke und Art der Linie anpassen:
 \end{latexlisting}
 Wie wir sehen, können erneut auch durch \latexpackage{xcolor} selbst definierte Farben verwendet werden.
 Die Standard-Liniendicke ist \latexargument{thin}.
-Argument können direkt an \latexargument{to} geschrieben werden, oder an \latexcommand{draw}, oder an das gesamte \latexenvironment{tikzpicture}.
+Argumente können direkt an \latexargument{to} geschrieben werden, oder an \latexcommand{draw}, oder an das gesamte \latexenvironment{tikzpicture}.
 \begin{latexlisting}
 	\begin{tikzpicture}
 		\draw (0,0) to[dashed] (1,0) -- (0.5,0.5) -- cycle;
@@ -68,8 +68,8 @@ Wichtig sind auch die optionalen Argumente \latexargument{in} und \latexargument
 \end{latexlisting}
 Schließlich existiert noch die Möglichkeit, Linien mit Pfeilspitzen zu versehen.
 \begin{latexlisting}
-	\draw[->] (0,0) to (3,0);
-	\draw[|->] (0,0) to (2,0);
+	\draw[->] (0,2) to (3,2);
+	\draw[|->] (0,1) to (2,1);
 	\draw[<->] (0,0) to (1,0);
 \end{latexlisting}
 Für eine vollständige Liste aller optionalen Argument konsultiere man \url{tikz.dev}.
@@ -146,7 +146,7 @@ Die verfügbaren Patterns lassen sich im Internet nachlesen.
 \subsection{Nodes}
 Möchte man seine Diagramm beschriften, verwendet man dazu in TikZ sogenannte \emph{nodes}.
 \begin{latexlisting}
-	\draw[|-|] (0,0) -- (2,0):
+	\draw[|-|] (0,0) -- (2,0);
 	\node at (1,0.2) {\qty{2}{cm}};
 \end{latexlisting}
 Der gewünschte Text wird innerhalb der hinteren geschweiften Klammern platziert.
