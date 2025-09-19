@@ -223,7 +223,7 @@ Ebenso wie Zeilenumbrüche verschluckt \LaTeX{} auch Leerzeichen:
 Leerzeichen am Anfang einer Zeile werden kategorisch ignoriert, was es uns erlaubt, Code in Umgebungen zur besseren Lesbarkeit einzurücken, ohne den Output zu verändern.
 Mehrere Leerzeichen an anderen Stellen in der Zeile werden zusammengefasst.
 
-\section{Kommentare}
+\section{Kommentare}\label{sec:comments}
 Ein \LaTeX{}-File besteht nicht nur aus Quellcode, sondern kann auch Anmerkungen enthalten, die nur für den Autor aber nicht für den Leser gedacht sind, beispielsweise:
 \begin{latexlisting}
 	% Wir begrüßen LaTeX:
@@ -542,6 +542,9 @@ Weiterhin sollte erwähnt werden, dass die häufig empfohlene Package \latexpack
 		\tabularnewline
 		\latexpackage{isodate} &
 		Verbessertes Datum.
+		\tabularnewline
+		\latexpackage{mleftright} &
+		Besseres Spacing für \latexcommand{left} und \latexcommand{right}.
 		\tabularnewline
 		\latexpackage{fontenc} &
 		Mit Option \latexargument{[T1]}: Besseres Output-Endocing erlaubt für Nicht-ASCII-Buchstaben wie Ä.

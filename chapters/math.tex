@@ -293,6 +293,12 @@ Für Mengen, bei denen man dann meist auch den senkrechten Trennstrich vergröß
 \begin{latexlisting}
 	\mathds{N} = \left\{ \prod_{i=1}^n p_i \middle| p_i \in \mathds{P} \right\}
 \end{latexlisting}
+An dieser Stelle sei erwähnt, dass das Spacing von \latexcommand{left} und \latexcommand{right} an einigen Stellen etwas inkonsistent ist (siehe \url{https://de.mirrors.cicku.me/ctan/macros/latex/contrib/mleftright/mleftright.pdf}).
+Die Package \latexpackage{mleftright} stellt daher die funktional identischen Command \latexcommand{mleft} und \latexcommand{mright} bereit, die über besseres Spacing verfügen.
+\begin{latexlisting}
+	\sin \mleft( x^2 \mright)
+\end{latexlisting}
+Die Alternativcommands funktionieren weiterhin mit \latexcommand{middle} zusammen.
 
 \paragraph{Griechische Buchstaben} Genügt einem das lateinische Alphabet nicht, kann man auf das griechische zurückgreifen.
 Was passiert, wenn man diese Befehle außerhalb des Mathematik-Modus verwendet?
@@ -351,6 +357,12 @@ Hier können semantisch wertvolle Commands helfen. Die Befehle \latexcommand{exp
 \end{latexlisting}
 Eine vollständige Liste dieser semantischen Makros kann unter \url{https://satztexnik.com/tex-archive/macros/latex/contrib/nchairx/doc/nchairx.pdf} (ab Kapitel 3.4) abgerufen werden.
 Ein Blick lohnt sich!
+Findet man ein Command dort nicht, kann man mittels des Befehls
+\begin{latexlisting}
+	% Präambel
+	\DeclareMathOperator{coker}
+\end{latexlisting}
+das Command \latexcommand{coker} selbst erstellen.
 
 \section{Referenzieren von Gleichungen}
 
@@ -537,6 +549,10 @@ Wir präsentieren im folgenden eine kleine Auswahl:
 		\latexpackage{tikzorbital} &
 		Chemie &
 		Molekulare Orbitaldiagramme mit \latexpackage{tikz}
+		\tabularnewline
+		\latexpackage{bytefield} &
+		Informatik &
+		Bit- und Bytefelder für Netzwerkprotokolle
 		\tabularnewline
 		\latexpackage{circuitikz} &
 		Elektrotechnik &

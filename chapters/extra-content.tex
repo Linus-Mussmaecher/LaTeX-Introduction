@@ -741,3 +741,36 @@ und das \filepath{main.tex}-File hat folgenden Inhalt:
 \end{latexlisting}
 Dieses Beispiel darf gerne als Inspiration für eigene Projekte dienen.
 Insbesondere die File \filepath{layout.tex} und \filepath{packages.tex} sowie evtl. \filepath{title.tex} lassen sich leicht zwischen ähnlichen Projekten mitnehmen.
+
+\section{Anmerkungen}
+Ein \LaTeX{}-Dokument wird selten in einem Zug geschrieben -- oft ist ein Paper, eine Abschlussarbeit oder ein ähnliches Dokument über Monate hinweg am Entstehen und wird während dieser Zeit oft überarbeitet.
+Daher kann es nötig sein, sich selbst Meta-Notizen über To-Dos oder Probleme wie fehlende Quellen, noch zu findende Bilder und vieles mehr zu hinterlassen.
+Die einfachste Lösung ist natürlich, Kommentare in den Text zu schreiben -- das haben wir bereits in \autoref{sec:comments} gelernt.
+In vielen Fällen kann es aber nützlich sein, solche To-Dos (Kommentare, die eine Aktion verlangen) von anderen Arten von Kommentaren getrennt zu behandeln und insbesondere auch im Ausgabe-PDF anzuzeigen.
+
+Hier zu existiert beispielsweise die Package \latexpackage{fixme}.
+Als grundlegendstes Command stellt diese das Command \latexcommand{fxnote} bereit:
+\begin{latexlisting}
+	Julia soll sich tot stellen, und dann kommt sie ins Grab.\\
+	Romeo kehrt zurück und sie hau'n heimlich dann ab.\\
+	Und weil alle ja denken, sie sei eh nicht mehr am Leben\\
+	Wird's weiter auch keine Probleme mehr geben!
+	\fxnote{Wobei ich mir denk sie hätte sich besser mal die Frage gestellt: Wie weit kommt man denn mit 14, und ohne Geld?}
+\end{latexlisting}
+Diese Anmerkung taucht dabei im PDF nur auf, wenn die Kompilieurng im \latexargument{draft}-Modus stattfindet.
+Zusätzlich zu \latexcommand{fxnote} existieren verschiedene Levels an Anmerkungen, die durch die Commands \latexcommand{fxwarning}, \latexcommand{fxerror} und \latexcommand{fxfatal} ausgedrückt werden.
+Insbesondere erlaubt \latexcommand{fxfatal} es nicht, das Dokument zu kompilieren, bevor der Fehler gefixt wurde.
+Weiterhin können all diese Commands noch \enquote{gezielt} werden, d.h. sie können sich statt auf einen Absatz nur auf ein Wort oder eine Wortfolge beziehen:
+\begin{latexlisting}
+	Die Flasche ist leer, kein Gift mehr da.\\
+	\enquote{Na, dann eben der Dolch!}, denkt Julia.\\
+	Sie verfehlt knapp ihr Herz aber \fxnote*{Sehr schmerzhaft! Nicht nachmachen!}{trifft immerhin ihren Bauch}.\\
+	Und über kurz oder lang stirbt sie dann auch.
+\end{latexlisting}
+Es ist auch sehr praktisch, eine Liste an noch zu erledigenden Verbesserungen mit
+\begin{latexlisting}
+	\listoffixmes
+\end{latexlisting}
+anzuzeigen.
+Die Package \latexpackage{fixme} besitzt noch einige andere nützliche Features, unter anderem das hinzufügen mehrerer Autoren oder Korrekturleser, denen Anmerkungen zugeordnet werden können, um kollaboratives Arbeiten zu ermöglichen.
+Für diese und andere Möglichkeiten sei auf die Dokumentation (\url{https://mirror.clientvps.com/CTAN/macros/latex/contrib/fixme/fixme.pdf}) verwiesen.
